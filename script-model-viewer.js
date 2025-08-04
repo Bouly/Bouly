@@ -8,7 +8,7 @@ let environmentIndex = 0;
 // URLs des modèles 3D avec de vrais burgers réalistes
 const burgerModels = {
     classic: {
-        src: 'https://cdn.glitch.me/36cb8393-65c6-408d-a538-055ada20431b/Hamburger.glb?v=1557506648635', // Vrai burger 3D
+        src: './models/burgertest.glb', // Votre modèle 3D local
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
         poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
