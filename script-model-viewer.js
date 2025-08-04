@@ -103,8 +103,8 @@ function showModel(burgerType) {
     modelViewer.fieldOfView = modelData.fieldOfView;
     modelViewer.scale = modelData.scale;
     
-    // Configuration AR ultra-stable
-    modelViewer.setAttribute('ar-scale', 'fixed');
+    // Configuration AR ultra-stable mais avec resize autorisé
+    modelViewer.setAttribute('ar-scale', 'auto');
     modelViewer.setAttribute('ar-placement', 'floor');
     modelViewer.setAttribute('shadow-intensity', '2');
     modelViewer.setAttribute('shadow-softness', '0.3');
