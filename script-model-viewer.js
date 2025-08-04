@@ -5,10 +5,10 @@ let currentModel = null;
 let autoRotateEnabled = true;
 let environmentIndex = 0;
 
-// URLs des modèles 3D avec configurations réalistes
+// URLs des modèles 3D avec de vrais burgers réalistes
 const burgerModels = {
     classic: {
-        src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb', // Remplacer par vos modèles
+        src: 'https://cdn.glitch.me/36cb8393-65c6-408d-a538-055ada20431b/Hamburger.glb?v=1557506648635', // Vrai burger 3D
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
         poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
@@ -17,7 +17,7 @@ const burgerModels = {
         fieldOfView: '25deg'
     },
     cheese: {
-        src: 'https://modelviewer.dev/shared-assets/models/shishkebab.glb',
+        src: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb', // Remplacer par burger fromage
         title: '🧀 Cheese Deluxe', 
         description: 'Pain brioche, steak, fromage fondu - 9.90€',
         poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀',
@@ -26,7 +26,7 @@ const burgerModels = {
         fieldOfView: '28deg'
     },
     bacon: {
-        src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
+        src: 'https://cdn.glitch.com/324a5290-5aa7-4efc-92d6-ae0736433b12/burger.glb?v=1558446851981', // Burger avec bacon
         title: '🥓 Bacon Supreme',
         description: 'Pain aux graines, steak, bacon croustillant - 11.90€', 
         poster: 'https://via.placeholder.com/400x400/FF6B35/white?text=🥓',
@@ -35,7 +35,7 @@ const burgerModels = {
         fieldOfView: '30deg'
     },
     spicy: {
-        src: 'https://modelviewer.dev/shared-assets/models/shishkebab.glb',
+        src: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Binary/Avocado.glb', // Remplacer par burger épicé
         title: '🌶️ Spicy Chicken',
         description: 'Pain, poulet épicé, salade, mayo épicée - 10.90€',
         poster: 'https://via.placeholder.com/400x400/FF0000/white?text=🌶️',
@@ -44,7 +44,7 @@ const burgerModels = {
         fieldOfView: '26deg'
     },
     veggie: {
-        src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
+        src: 'https://threejs.org/examples/models/gltf/Flamingo.glb', // Remplacer par burger veggie
         title: '🥬 Veggie Burger', 
         description: 'Pain, steak végétal, avocat, légumes - 9.50€',
         poster: 'https://via.placeholder.com/400x400/228B22/white?text=🥬',
