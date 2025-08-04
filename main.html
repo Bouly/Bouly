@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BurgerVision AR</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu principal -->
+    <div id="menu-container" class="container">
+        <header>
+            <h1>🍔 BurgerVision AR</h1>
+            <p>Découvrez nos burgers en réalité augmentée</p>
+        </header>
+
+        <div class="menu-grid">
+            <div class="burger-card" onclick="showAR('classic')">
+                <img src="https://via.placeholder.com/300x200/8B4513/white?text=🍔+Classic+Burger" alt="Classic Burger">
+                <h3>🍔 Classic Burger</h3>
+                <p>Pain, steak, salade, tomate</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('cheese')">
+                <img src="https://via.placeholder.com/300x200/FFD700/black?text=🧀+Cheese+Deluxe" alt="Cheese Deluxe">
+                <h3>🧀 Cheese Deluxe</h3>
+                <p>Pain, steak, fromage, cornichons</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('bacon')">
+                <img src="https://via.placeholder.com/300x200/FF6B35/white?text=🥓+Bacon+Supreme" alt="Bacon Supreme">
+                <h3>🥓 Bacon Supreme</h3>
+                <p>Pain, steak, bacon, fromage, sauce BBQ</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('spicy')">
+                <img src="https://via.placeholder.com/300x200/FF0000/white?text=🌶️+Spicy+Chicken" alt="Spicy Chicken">
+                <h3>🌶️ Spicy Chicken</h3>
+                <p>Pain, poulet épicé, salade, mayo épicée</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('veggie')">
+                <img src="https://via.placeholder.com/300x200/228B22/white?text=🥬+Veggie+Burger" alt="Veggie Burger">
+                <h3>🥬 Veggie Burger</h3>
+                <p>Pain, steak végétal, avocat, légumes</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scène AR (cachée par défaut) -->
+    <div id="ar-container" style="display: none;">
+        <div id="ar-overlay">
+            <button id="close-ar" onclick="closeAR()">❌ Fermer</button>
+            <div id="ar-instructions">
+                <p>📱 Tenez votre téléphone stable</p>
+                <p>🎯 Le burger va apparaître devant vous</p>
+                <p>✨ Patientez quelques secondes...</p>
+            </div>
+        </div>
+
+        <a-scene
+            embedded
+            arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+            id="ar-scene">
+            
+            <!-- Assets -->
+            <a-assets>
+                <a-mixin id="burger-base" 
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+                </a-mixin>
+                <a-mixin id="bounce-animation"
+                    animation="property: position; to: 0 0.1 0; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine">
+                </a-mixin>
+            </a-assets>
+            
+            <!-- Caméra -->
+            <a-camera look-controls-enabled="false" arjs-look-controls="smoothingFactor: 0.1"></a-camera>
+            
+            <!-- Éclairage professionnel -->
+            <a-light type="ambient" color="#404040" intensity="0.4"></a-light>
+            <a-light type="directional" position="2 4 2" color="#ffffff" intensity="0.8"></a-light>
+            <a-light type="point" position="0 2 0" color="#fff3cd" intensity="0.3"></a-light>
+            
+            <!-- Surface de base invisible -->
+            <a-plane position="0 -0.8 -2" rotation="-90 0 0" width="4" height="4" color="#ffffff" opacity="0.1"></a-plane>
+            
+            <!-- Burgers 3D réalistes -->
+            <a-entity id="burger-classic" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
+                <!-- Pain du bas -->
+                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
+                <!-- Salade -->
+                <a-cylinder radius="0.25" height="0.02" color="#32CD32" position="0 0.05 0"></a-cylinder>
+                <!-- Steak -->
+                <a-cylinder radius="0.28" height="0.06" color="#8B4513" position="0 0.08 0"></a-cylinder>
+                <!-- Tomate -->
+                <a-cylinder radius="0.2" height="0.02" color="#FF6347" position="0 0.12 0"></a-cylinder>
+                <!-- Pain du haut -->
+                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.2 0"></a-sphere>
+                <!-- Graines sur le pain -->
+                <a-sphere radius="0.02" color="#F4A460" position="0.1 0.25 0.1"></a-sphere>
+                <a-sphere radius="0.02" color="#F4A460" position="-0.1 0.25 0.05"></a-sphere>
+                <a-sphere radius="0.02" color="#F4A460" position="0.05 0.25 -0.1"></a-sphere>
+                
+                <a-text 
+                    value="🍔 Classic Burger\n8.90€" 
+                    position="0 0.8 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.8 0.8 0.8"
+                    geometry="primitive: plane; width: 2; height: 0.5"
+                    material="color: rgba(0,0,0,0.7)">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-cheese" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
+                <!-- Pain du bas -->
+                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
+                <!-- Salade -->
+                <a-cylinder radius="0.25" height="0.02" color="#32CD32" position="0 0.05 0"></a-cylinder>
+                <!-- Steak -->
+                <a-cylinder radius="0.28" height="0.06" color="#8B4513" position="0 0.08 0"></a-cylinder>
+                <!-- Fromage qui déborde -->
+                <a-cylinder radius="0.32" height="0.03" color="#FFD700" position="0 0.12 0"></a-cylinder>
+                <!-- Pain du haut -->
+                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.22 0"></a-sphere>
+                <!-- Graines -->
+                <a-sphere radius="0.02" color="#F4A460" position="0.1 0.27 0.1"></a-sphere>
+                <a-sphere radius="0.02" color="#F4A460" position="-0.1 0.27 0.05"></a-sphere>
+                
+                <a-text 
+                    value="🧀 Cheese Deluxe\n9.90€" 
+                    position="0 0.8 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.8 0.8 0.8"
+                    geometry="primitive: plane; width: 2; height: 0.5"
+                    material="color: rgba(0,0,0,0.7)">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-bacon" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
+                <!-- Pain du bas -->
+                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
+                <!-- Salade -->
+                <a-cylinder radius="0.25" height="0.02" color="#32CD32" position="0 0.05 0"></a-cylinder>
+                <!-- Steak -->
+                <a-cylinder radius="0.28" height="0.06" color="#8B4513" position="0 0.08 0"></a-cylinder>
+                <!-- Bacon ondulé -->
+                <a-box width="0.5" height="0.02" depth="0.1" color="#DC143C" position="0.1 0.13 0" rotation="0 0 10"></a-box>
+                <a-box width="0.5" height="0.02" depth="0.1" color="#DC143C" position="-0.1 0.13 0" rotation="0 0 -10"></a-box>
+                <!-- Fromage -->
+                <a-cylinder radius="0.32" height="0.03" color="#FFD700" position="0 0.15 0"></a-cylinder>
+                <!-- Pain du haut -->
+                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.25 0"></a-sphere>
+                
+                <a-text 
+                    value="🥓 Bacon Supreme\n11.90€" 
+                    position="0 0.8 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.8 0.8 0.8"
+                    geometry="primitive: plane; width: 2; height: 0.5"
+                    material="color: rgba(0,0,0,0.7)">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-spicy" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
+                <!-- Pain du bas -->
+                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
+                <!-- Salade -->
+                <a-cylinder radius="0.25" height="0.02" color="#32CD32" position="0 0.05 0"></a-cylinder>
+                <!-- Poulet épicé (plus clair) -->
+                <a-cylinder radius="0.28" height="0.06" color="#F4A460" position="0 0.08 0"></a-cylinder>
+                <!-- Sauce épicée -->
+                <a-cylinder radius="0.2" height="0.01" color="#FF4500" position="0 0.12 0"></a-cylinder>
+                <!-- Pain du haut -->
+                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.2 0"></a-sphere>
+                <!-- Piments déco -->
+                <a-cone radius-bottom="0.02" radius-top="0.01" height="0.08" color="#FF0000" position="0.2 0.15 0.15"></a-cone>
+                
+                <a-text 
+                    value="🌶️ Spicy Chicken\n10.90€" 
+                    position="0 0.8 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.8 0.8 0.8"
+                    geometry="primitive: plane; width: 2; height: 0.5"
+                    material="color: rgba(0,0,0,0.7)">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-veggie" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
+                <!-- Pain du bas -->
+                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
+                <!-- Salade épaisse -->
+                <a-cylinder radius="0.25" height="0.04" color="#32CD32" position="0 0.05 0"></a-cylinder>
+                <!-- Steak végétal -->
+                <a-cylinder radius="0.28" height="0.06" color="#8FBC8F" position="0 0.08 0"></a-cylinder>
+                <!-- Avocat -->
+                <a-cylinder radius="0.2" height="0.02" color="#9ACD32" position="0 0.12 0"></a-cylinder>
+                <!-- Tomate -->
+                <a-cylinder radius="0.18" height="0.02" color="#FF6347" position="0 0.14 0"></a-cylinder>
+                <!-- Pain du haut -->
+                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.22 0"></a-sphere>
+                <!-- Graines complètes -->
+                <a-sphere radius="0.015" color="#8B4513" position="0.08 0.27 0.08"></a-sphere>
+                <a-sphere radius="0.015" color="#8B4513" position="-0.08 0.27 0.03"></a-sphere>
+                <a-sphere radius="0.015" color="#8B4513" position="0.03 0.27 -0.08"></a-sphere>
+                
+                <a-text 
+                    value="🥬 Veggie Burger\n9.50€" 
+                    position="0 0.8 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.8 0.8 0.8"
+                    geometry="primitive: plane; width: 2; height: 0.5"
+                    material="color: rgba(0,0,0,0.7)">
+                </a-text>
+            </a-entity>
+        </a-scene>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

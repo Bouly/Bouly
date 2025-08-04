@@ -1,7 +1,11 @@
 // Gestion de l'affichage AR
 function showAR(burgerType) {
-    // Cacher le menu principal
-    document.getElementById('menu-container').style.display = 'none';
+    // Cacher le menu principal avec transition
+    const menuContainer = document.getElementById('menu-container');
+    menuContainer.style.opacity = '0';
+    setTimeout(() => {
+        menuContainer.style.display = 'none';
+    }, 300);
     
     // Afficher le conteneur AR
     document.getElementById('ar-container').style.display = 'block';
@@ -9,24 +13,31 @@ function showAR(burgerType) {
     // Cacher tous les burgers
     hideAllBurgers();
     
-    // Attendre que la scène soit prête puis afficher le burger
+    // Attendre que la scène soit prête puis afficher le burger avec effet
     setTimeout(() => {
         const burgerElement = document.getElementById(`burger-${burgerType}`);
         if (burgerElement) {
             burgerElement.setAttribute('visible', 'true');
+            // Effet d'apparition
+            burgerElement.setAttribute('animation', 'property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: easeOutElastic');
         }
     }, 1000);
 }
 
 function closeAR() {
+    // Cacher tous les burgers avec effet
+    hideAllBurgers();
+    
     // Cacher le conteneur AR
     document.getElementById('ar-container').style.display = 'none';
     
-    // Afficher le menu principal
-    document.getElementById('menu-container').style.display = 'block';
-    
-    // Cacher tous les burgers
-    hideAllBurgers();
+    // Afficher le menu principal avec transition
+    const menuContainer = document.getElementById('menu-container');
+    menuContainer.style.display = 'block';
+    menuContainer.style.opacity = '0';
+    setTimeout(() => {
+        menuContainer.style.opacity = '1';
+    }, 100);
 }
 
 function hideAllBurgers() {
