@@ -635,6 +635,21 @@
             transform: scale(1.05);
         }
 
+        /* Model Viewer dans les cartes */
+        .restaurant-model {
+            width: 100%;
+            height: 280px;
+            border-radius: 0;
+            background: var(--bg-primary);
+            border: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .restaurant-card:hover .restaurant-model {
+            transform: scale(1.05);
+        }
+
         .restaurant-content {
             padding: var(--space-xl);
             position: relative;
@@ -1343,7 +1358,18 @@
             
             grid.innerHTML = filteredDishes.map((dish, index) => `
                 <div class="restaurant-card scroll-reveal" onclick="openARModal(${dish.id})" style="animation-delay: ${index * 0.1}s">
-                    <img src="${dish.image}" alt="${dish.name}" class="restaurant-image" loading="lazy">
+                    <model-viewer 
+                        src="${dish.model3d || './models/burgertest.glb'}"
+                        class="restaurant-model"
+                        camera-controls 
+                        auto-rotate 
+                        shadow-intensity="1"
+                        scale="${dish.scale || '0.1 0.1 0.1'}"
+                        camera-orbit="0deg 75deg 2m"
+                        disable-zoom
+                        interaction-prompt="none"
+                        loading="lazy">
+                    </model-viewer>
                     <div class="restaurant-content">
                         <h3 class="restaurant-name">${dish.name}</h3>
                         <p class="restaurant-description">${dish.description}</p>
