@@ -3,166 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BurgerVision AR</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <title>BurgerVision Pro - Model-Viewer AR</title>
+    <!-- Model-Viewer (Google) - AR de qualité professionnelle gratuit -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        model-viewer {
+            width: 100%;
+            height: 400px;
+            background-color: transparent;
+        }
+        
+        .ar-pro-badge {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px auto;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        }
+        
+        .model-container {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .ar-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: linear-gradient(45deg, #FF6B35, #FFD700);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <!-- Menu principal -->
     <div id="menu-container" class="container">
         <header>
-            <h1>🍔 BurgerVision AR</h1>
-            <p>Découvrez nos burgers en réalité augmentée</p>
+            <h1>🍔 BurgerVision Pro</h1>
+            <div class="ar-pro-badge">✨ Powered by Google Model-Viewer ✨</div>
+            <p>AR de qualité professionnelle - 100% gratuit</p>
         </header>
 
+        <!-- Showcase des avantages -->
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="feature-icon">🎯</span>
+                <h4>Tracking Ultra-Stable</h4>
+                <p>Technologie Google</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">💎</span>
+                <h4>Qualité Photo-Réaliste</h4>
+                <p>Ombres et reflets</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📱</span>
+                <h4>AR Natif</h4>
+                <p>iOS ARKit + Android ARCore</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🚀</span>
+                <h4>Performance</h4>
+                <p>Optimisé mobile</p>
+            </div>
+        </div>
+
         <div class="menu-grid">
-            <div class="burger-card" onclick="showAR('classic')">
+            <div class="burger-card" onclick="showModel('classic')">
                 <img src="https://via.placeholder.com/300x200/8B4513/white?text=🍔+Classic+Burger" alt="Classic Burger">
                 <h3>🍔 Classic Burger</h3>
-                <p>Pain, steak, salade, tomate</p>
-                <button class="ar-btn">Voir en AR</button>
+                <p>Pain artisanal, steak grillé, salade fraîche</p>
+                <div style="color: #FFD700; font-weight: bold; margin: 10px 0;">8.90€</div>
+                <button class="ar-btn">🚀 Voir en AR Pro</button>
             </div>
 
-            <div class="burger-card" onclick="showAR('cheese')">
+            <div class="burger-card" onclick="showModel('cheese')">
                 <img src="https://via.placeholder.com/300x200/FFD700/black?text=🧀+Cheese+Deluxe" alt="Cheese Deluxe">
                 <h3>🧀 Cheese Deluxe</h3>
-                <p>Pain, steak, fromage, cornichons</p>
-                <button class="ar-btn">Voir en AR</button>
+                <p>Pain brioche, steak, fromage fondu</p>
+                <div style="color: #FFD700; font-weight: bold; margin: 10px 0;">9.90€</div>
+                <button class="ar-btn">🚀 Voir en AR Pro</button>
             </div>
 
-            <div class="burger-card" onclick="showAR('bacon')">
+            <div class="burger-card" onclick="showModel('bacon')">
                 <img src="https://via.placeholder.com/300x200/FF6B35/white?text=🥓+Bacon+Supreme" alt="Bacon Supreme">
                 <h3>🥓 Bacon Supreme</h3>
-                <p>Pain, steak, bacon, fromage, sauce BBQ</p>
-                <button class="ar-btn">Voir en AR</button>
+                <p>Pain aux graines, steak, bacon croustillant</p>
+                <div style="color: #FFD700; font-weight: bold; margin: 10px 0;">11.90€</div>
+                <button class="ar-btn">🚀 Voir en AR Pro</button>
             </div>
 
-            <div class="burger-card" onclick="showAR('spicy')">
+            <div class="burger-card" onclick="showModel('spicy')">
                 <img src="https://via.placeholder.com/300x200/FF0000/white?text=🌶️+Spicy+Chicken" alt="Spicy Chicken">
                 <h3>🌶️ Spicy Chicken</h3>
                 <p>Pain, poulet épicé, salade, mayo épicée</p>
-                <button class="ar-btn">Voir en AR</button>
+                <div style="color: #FFD700; font-weight: bold; margin: 10px 0;">10.90€</div>
+                <button class="ar-btn">🚀 Voir en AR Pro</button>
             </div>
 
-            <div class="burger-card" onclick="showAR('veggie')">
+            <div class="burger-card" onclick="showModel('veggie')">
                 <img src="https://via.placeholder.com/300x200/228B22/white?text=🥬+Veggie+Burger" alt="Veggie Burger">
                 <h3>🥬 Veggie Burger</h3>
                 <p>Pain, steak végétal, avocat, légumes</p>
-                <button class="ar-btn">Voir en AR</button>
+                <div style="color: #FFD700; font-weight: bold; margin: 10px 0;">9.50€</div>
+                <button class="ar-btn">🚀 Voir en AR Pro</button>
             </div>
         </div>
     </div>
 
-    <!-- Scène AR (cachée par défaut) -->
-    <div id="ar-container" style="display: none;">
-        <div id="ar-overlay">
-            <button id="close-ar" onclick="closeAR()">❌ Fermer</button>
-            <div id="ar-instructions">
-                <p>📱 Pointez votre caméra vers l'avant</p>
-                <p>🎯 Le burger apparaîtra dans quelques secondes</p>
+    <!-- Model-Viewer AR (caché par défaut) -->
+    <div id="model-container" style="display: none;">
+        <div class="model-container">
+            <div style="text-align: center; margin-bottom: 15px;">
+                <h2 id="model-title">🍔 Burger en AR</h2>
+                <p id="model-description">Utilisez les contrôles ci-dessous pour interagir</p>
+            </div>
+
+            <!-- Model-Viewer avec toutes les fonctionnalités pro -->
+            <model-viewer 
+                id="burger-model"
+                alt="Burger 3D interactif"
+                src=""
+                ar
+                ar-modes="webxr scene-viewer quick-look"
+                camera-controls
+                poster=""
+                shadow-intensity="1"
+                shadow-softness="0.5"
+                environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+                auto-rotate
+                auto-rotate-delay="3000"
+                rotation-per-second="30deg"
+                interaction-prompt="auto"
+                camera-orbit="0deg 90deg 2.5m"
+                min-camera-orbit="auto auto 1m"
+                max-camera-orbit="auto auto 5m"
+                loading="eager"
+                reveal="auto">
+                
+                <!-- Bouton AR personnalisé -->
+                <button 
+                    slot="ar-button" 
+                    id="ar-button"
+                    style="background: linear-gradient(45deg, #FF6B35, #FFD700); border: none; padding: 15px 30px; border-radius: 25px; color: white; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4); position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);">
+                    📱 Voir en AR
+                </button>
+
+                <!-- Loading personnalisé -->
+                <div id="lazy-load-poster" slot="poster">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; font-size: 18px;">
+                        🍔 Chargement du burger...
+                    </div>
+                </div>
+
+                <!-- Progress bar -->
+                <div slot="progress-bar">
+                    <div class="progress-bar hide" style="background: linear-gradient(45deg, #FF6B35, #FFD700); height: 4px; border-radius: 2px; transition: width 0.3s ease;"></div>
+                </div>
+            </model-viewer>
+
+            <!-- Contrôles avancés -->
+            <div class="ar-controls">
+                <button onclick="resetModel()" class="control-btn">🔄 Reset</button>
+                <button onclick="toggleAutoRotate()" class="control-btn" id="rotate-btn">⏸️ Pause</button>
+                <button onclick="changeEnvironment()" class="control-btn">🌅 Éclairage</button>
+                <button onclick="goBack()" class="control-btn">❌ Retour</button>
+            </div>
+
+            <!-- Informations techniques -->
+            <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; color: white; font-size: 14px;">
+                <h4>💡 Comment utiliser :</h4>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>Desktop :</strong> Cliquez et glissez pour tourner, molette pour zoomer</li>
+                    <li><strong>Mobile :</strong> Un doigt pour tourner, deux doigts pour zoomer</li>
+                    <li><strong>AR :</strong> Cliquez "Voir en AR" pour placer le burger dans votre espace</li>
+                </ul>
+                <p><strong>🎯 Technologie :</strong> Google Model-Viewer avec ARCore/ARKit natif</p>
             </div>
         </div>
-
-        <a-scene
-            embedded
-            arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
-            id="ar-scene">
-            
-            <!-- Assets -->
-            <a-assets>
-                <a-mixin id="burger-mixin" 
-                    geometry="primitive: cylinder"
-                    animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
-                </a-mixin>
-            </a-assets>
-            
-            <!-- Caméra -->
-            <a-camera look-controls-enabled="false" arjs-look-controls="smoothingFactor: 0.1"></a-camera>
-            
-            <!-- Burgers 3D (un seul affiché à la fois) -->
-            <a-entity id="burger-classic" visible="false" position="0 0 -2">
-                <a-cylinder 
-                    radius="0.3" 
-                    height="0.2" 
-                    color="#8B4513"
-                    mixin="burger-mixin">
-                </a-cylinder>
-                <a-text 
-                    value="Classic Burger - 8.90€" 
-                    position="0 0.5 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.5 0.5 0.5">
-                </a-text>
-            </a-entity>
-
-            <a-entity id="burger-cheese" visible="false" position="0 0 -2">
-                <a-cylinder 
-                    radius="0.3" 
-                    height="0.25" 
-                    color="#FFD700"
-                    mixin="burger-mixin">
-                </a-cylinder>
-                <a-text 
-                    value="Cheese Deluxe - 9.90€" 
-                    position="0 0.5 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.5 0.5 0.5">
-                </a-text>
-            </a-entity>
-
-            <a-entity id="burger-bacon" visible="false" position="0 0 -2">
-                <a-cylinder 
-                    radius="0.35" 
-                    height="0.3" 
-                    color="#FF6B35"
-                    mixin="burger-mixin">
-                </a-cylinder>
-                <a-text 
-                    value="Bacon Supreme - 11.90€" 
-                    position="0 0.5 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.5 0.5 0.5">
-                </a-text>
-            </a-entity>
-
-            <a-entity id="burger-spicy" visible="false" position="0 0 -2">
-                <a-cylinder 
-                    radius="0.3" 
-                    height="0.25" 
-                    color="#FF0000"
-                    mixin="burger-mixin">
-                </a-cylinder>
-                <a-text 
-                    value="Spicy Chicken - 10.90€" 
-                    position="0 0.5 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.5 0.5 0.5">
-                </a-text>
-            </a-entity>
-
-            <a-entity id="burger-veggie" visible="false" position="0 0 -2">
-                <a-cylinder 
-                    radius="0.3" 
-                    height="0.2" 
-                    color="#228B22"
-                    mixin="burger-mixin">
-                </a-cylinder>
-                <a-text 
-                    value="Veggie Burger - 9.50€" 
-                    position="0 0.5 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.5 0.5 0.5">
-                </a-text>
-            </a-entity>
-        </a-scene>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script-model-viewer.js"></script>
 </body>
 </html>
