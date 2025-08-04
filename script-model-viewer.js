@@ -12,14 +12,14 @@ const burgerModels = {
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
         poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
-        scale: '0.8 0.8 0.8',
-        cameraOrbit: '0deg 65deg 1.2m',
-        fieldOfView: '25deg'
+        scale: '0.1 0.1 0.1',
+        cameraOrbit: '0deg 65deg 3.5m',
+        fieldOfView: '45deg'
     },
     cheese: {
         src: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb', // Remplacer par burger fromage
         title: '🧀 Cheese Deluxe', 
-        description: 'Pain brioche, steak, fromage fondu - 9.90€',
+        description: 'Pain brioche, steak, fromage fondu - 9.90€',c
         poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀',
         scale: '0.9 0.9 0.9',
         cameraOrbit: '15deg 70deg 1.3m',
@@ -294,7 +294,7 @@ function adjustRealisticView() {
     
     // Angles de vue optimaux pour chaque burger
     const viewPresets = {
-        classic: { orbit: '0deg 65deg 1.2m', fov: '25deg' },
+        classic: { orbit: '0deg 65deg 3.5m', fov: '45deg' },
         cheese: { orbit: '45deg 70deg 1.3m', fov: '28deg' },
         bacon: { orbit: '-30deg 75deg 1.4m', fov: '30deg' },
         spicy: { orbit: '60deg 68deg 1.25m', fov: '26deg' },
