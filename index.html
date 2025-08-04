@@ -36,21 +36,24 @@
         
         .ar-controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             margin-top: 15px;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .control-btn {
             background: linear-gradient(45deg, #FF6B35, #FFD700);
             border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
+            padding: 10px 16px;
+            border-radius: 20px;
             color: white;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            font-size: 14px;
+            min-width: 100px;
         }
         
         .control-btn:hover {
@@ -164,27 +167,37 @@
                 <p id="model-description">Utilisez les contrôles ci-dessous pour interagir</p>
             </div>
 
-            <!-- Model-Viewer avec toutes les fonctionnalités pro -->
+            <!-- Model-Viewer avec tracking réaliste ultra-stable -->
             <model-viewer 
                 id="burger-model"
                 alt="Burger 3D interactif"
                 src=""
                 ar
                 ar-modes="webxr scene-viewer quick-look"
+                ar-scale="fixed"
+                ar-placement="floor"
                 camera-controls
                 poster=""
-                shadow-intensity="1"
-                shadow-softness="0.5"
+                shadow-intensity="2"
+                shadow-softness="0.3"
                 environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
                 auto-rotate
                 auto-rotate-delay="3000"
-                rotation-per-second="30deg"
+                rotation-per-second="15deg"
                 interaction-prompt="auto"
-                camera-orbit="0deg 90deg 2.5m"
-                min-camera-orbit="auto auto 1m"
-                max-camera-orbit="auto auto 5m"
+                camera-orbit="0deg 75deg 1.5m"
+                min-camera-orbit="auto 10deg 0.8m"
+                max-camera-orbit="auto 160deg 3m"
+                field-of-view="30deg"
                 loading="eager"
-                reveal="auto">
+                reveal="auto"
+                tone-mapping="aces"
+                exposure="1.2"
+                disable-zoom="false"
+                bounds="tight"
+                interpolation-decay="200"
+                orientation="0 0 0"
+                scale="1 1 1">
                 
                 <!-- Bouton AR personnalisé -->
                 <button 
@@ -207,23 +220,28 @@
                 </div>
             </model-viewer>
 
-            <!-- Contrôles avancés -->
+            <!-- Contrôles avancés réalistes -->
             <div class="ar-controls">
                 <button onclick="resetModel()" class="control-btn">🔄 Reset</button>
                 <button onclick="toggleAutoRotate()" class="control-btn" id="rotate-btn">⏸️ Pause</button>
+                <button onclick="enableTableMode()" class="control-btn">🍽️ Mode Table</button>
+                <button onclick="adjustRealisticView()" class="control-btn">🎯 Vue Optimale</button>
                 <button onclick="changeEnvironment()" class="control-btn">🌅 Éclairage</button>
                 <button onclick="goBack()" class="control-btn">❌ Retour</button>
             </div>
 
-            <!-- Informations techniques -->
+            <!-- Informations techniques réalistes -->
             <div style="margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; color: white; font-size: 14px;">
-                <h4>💡 Comment utiliser :</h4>
+                <h4>💡 Contrôles réalistes :</h4>
                 <ul style="margin: 10px 0; padding-left: 20px;">
-                    <li><strong>Desktop :</strong> Cliquez et glissez pour tourner, molette pour zoomer</li>
-                    <li><strong>Mobile :</strong> Un doigt pour tourner, deux doigts pour zoomer</li>
-                    <li><strong>AR :</strong> Cliquez "Voir en AR" pour placer le burger dans votre espace</li>
+                    <li><strong>🖱️ Tourner :</strong> Cliquez et glissez autour du burger</li>
+                    <li><strong>🔍 Zoomer :</strong> Molette (PC) ou pinch (mobile)</li>
+                    <li><strong>🍽️ Mode Table :</strong> Vue réaliste posé sur table</li>
+                    <li><strong>🎯 Vue Optimale :</strong> Meilleur angle pour chaque burger</li>
+                    <li><strong>📱 AR :</strong> Placement stable au sol avec ombres réelles</li>
                 </ul>
-                <p><strong>🎯 Technologie :</strong> Google Model-Viewer avec ARCore/ARKit natif</p>
+                <p><strong>✨ Technologie :</strong> Google Model-Viewer + ARCore/ARKit natif</p>
+                <p><strong>🎯 Qualité :</strong> Tracking ultra-stable, rendu photo-réaliste</p>
             </div>
         </div>
     </div>

@@ -5,37 +5,52 @@ let currentModel = null;
 let autoRotateEnabled = true;
 let environmentIndex = 0;
 
-// URLs des modèles 3D (exemple avec modèles de démonstration)
+// URLs des modèles 3D avec configurations réalistes
 const burgerModels = {
     classic: {
         src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb', // Remplacer par vos modèles
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
-        poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔'
+        poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
+        scale: '0.8 0.8 0.8',
+        cameraOrbit: '0deg 65deg 1.2m',
+        fieldOfView: '25deg'
     },
     cheese: {
         src: 'https://modelviewer.dev/shared-assets/models/shishkebab.glb',
         title: '🧀 Cheese Deluxe', 
         description: 'Pain brioche, steak, fromage fondu - 9.90€',
-        poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀'
+        poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀',
+        scale: '0.9 0.9 0.9',
+        cameraOrbit: '15deg 70deg 1.3m',
+        fieldOfView: '28deg'
     },
     bacon: {
         src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
         title: '🥓 Bacon Supreme',
         description: 'Pain aux graines, steak, bacon croustillant - 11.90€', 
-        poster: 'https://via.placeholder.com/400x400/FF6B35/white?text=🥓'
+        poster: 'https://via.placeholder.com/400x400/FF6B35/white?text=🥓',
+        scale: '1.0 1.0 1.0',
+        cameraOrbit: '-10deg 75deg 1.4m',
+        fieldOfView: '30deg'
     },
     spicy: {
         src: 'https://modelviewer.dev/shared-assets/models/shishkebab.glb',
         title: '🌶️ Spicy Chicken',
         description: 'Pain, poulet épicé, salade, mayo épicée - 10.90€',
-        poster: 'https://via.placeholder.com/400x400/FF0000/white?text=🌶️'
+        poster: 'https://via.placeholder.com/400x400/FF0000/white?text=🌶️',
+        scale: '0.85 0.85 0.85',
+        cameraOrbit: '20deg 68deg 1.25m',
+        fieldOfView: '26deg'
     },
     veggie: {
         src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
         title: '🥬 Veggie Burger', 
         description: 'Pain, steak végétal, avocat, légumes - 9.50€',
-        poster: 'https://via.placeholder.com/400x400/228B22/white?text=🥬'
+        poster: 'https://via.placeholder.com/400x400/228B22/white?text=🥬',
+        scale: '0.75 0.75 0.75',
+        cameraOrbit: '5deg 72deg 1.15m',
+        fieldOfView: '24deg'
     }
 };
 
@@ -54,7 +69,7 @@ const environmentNames = [
     '🎭 Salle de concert'
 ];
 
-// Affichage du modèle sélectionné
+// Affichage du modèle sélectionné avec configuration réaliste
 function showModel(burgerType) {
     console.log(`🚀 Affichage du modèle: ${burgerType}`);
     
@@ -76,24 +91,41 @@ function showModel(burgerType) {
     document.getElementById('model-title').textContent = modelData.title;
     document.getElementById('model-description').textContent = modelData.description;
     
-    // Configurer le model-viewer
+    // Configurer le model-viewer avec paramètres réalistes
     const modelViewer = document.getElementById('burger-model');
     
-    // Réinitialiser les propriétés
+    // Configuration du modèle
     modelViewer.src = modelData.src;
     modelViewer.poster = modelData.poster;
     
-    // Réinitialiser la rotation automatique
+    // Configuration réaliste de la caméra et du placement
+    modelViewer.cameraOrbit = modelData.cameraOrbit;
+    modelViewer.fieldOfView = modelData.fieldOfView;
+    modelViewer.scale = modelData.scale;
+    
+    // Configuration AR ultra-stable
+    modelViewer.setAttribute('ar-scale', 'fixed');
+    modelViewer.setAttribute('ar-placement', 'floor');
+    modelViewer.setAttribute('shadow-intensity', '2');
+    modelViewer.setAttribute('shadow-softness', '0.3');
+    modelViewer.setAttribute('tone-mapping', 'aces');
+    modelViewer.setAttribute('exposure', '1.2');
+    
+    // Limites de caméra adaptées pour chaque burger
+    const minOrbit = `auto 10deg ${parseFloat(modelData.cameraOrbit.split(' ')[2]) * 0.6}`;
+    const maxOrbit = `auto 160deg ${parseFloat(modelData.cameraOrbit.split(' ')[2]) * 2}`;
+    modelViewer.setAttribute('min-camera-orbit', minOrbit);
+    modelViewer.setAttribute('max-camera-orbit', maxOrbit);
+    
+    // Réinitialiser la rotation automatique avec vitesse réaliste
     autoRotateEnabled = true;
     modelViewer.autoRotate = true;
+    modelViewer.setAttribute('rotation-per-second', '15deg');
     document.getElementById('rotate-btn').textContent = '⏸️ Pause';
     
     // Réinitialiser l'environnement
     environmentIndex = 0;
     modelViewer.environmentImage = environments[0];
-    
-    // Réinitialiser la caméra
-    modelViewer.cameraOrbit = '0deg 90deg 2.5m';
     
     // Effet de fondu d'entrée
     modelViewer.style.opacity = '0';
@@ -105,7 +137,55 @@ function showModel(burgerType) {
     // Ajouter les événements
     setupModelEvents(modelViewer);
     
-    console.log('✅ Modèle configuré avec succès');
+    // Configuration spécifique AR pour placement réaliste
+    setupRealisticAR(modelViewer, modelData);
+    
+    console.log('✅ Modèle configuré avec placement réaliste');
+}
+
+// Configuration AR réaliste pour placement stable
+function setupRealisticAR(modelViewer, modelData) {
+    // Gestion de la session AR
+    modelViewer.addEventListener('ar-status', (event) => {
+        if (event.detail.status === 'session-started') {
+            console.log('🎯 Session AR démarrée - Placement au sol activé');
+            
+            // Optimisations pour AR réaliste
+            modelViewer.setAttribute('interaction-prompt', 'none');
+            modelViewer.setAttribute('auto-rotate', 'false');
+            
+            // Feedback utilisateur
+            showToast('🎯 Posez le burger sur une surface plane');
+            
+        } else if (event.detail.status === 'not-presenting') {
+            console.log('🔚 Session AR terminée');
+            
+            // Restaurer les paramètres normaux
+            modelViewer.setAttribute('interaction-prompt', 'auto');
+            if (autoRotateEnabled) {
+                modelViewer.setAttribute('auto-rotate', 'true');
+            }
+        }
+    });
+    
+    // Gestion du placement AR
+    modelViewer.addEventListener('ar-tracking', (event) => {
+        if (event.detail.status === 'tracking') {
+            console.log('📍 Tracking AR stable');
+        } else if (event.detail.status === 'not-tracking') {
+            console.log('⚠️ Perte de tracking AR');
+            showToast('⚠️ Déplacez lentement pour retrouver le tracking');
+        }
+    });
+    
+    // Optimisation de performance en AR
+    modelViewer.addEventListener('model-visibility', (event) => {
+        if (event.detail.visible) {
+            console.log('👁️ Modèle visible en AR');
+        } else {
+            console.log('🙈 Modèle caché en AR');
+        }
+    });
 }
 
 // Configuration des événements du model-viewer
@@ -180,24 +260,77 @@ function setupModelEvents(modelViewer) {
     });
 }
 
-// Reset du modèle
+// Reset du modèle avec paramètres réalistes
 function resetModel() {
     const modelViewer = document.getElementById('burger-model');
+    const modelData = burgerModels[currentModel];
+    
+    if (!modelData) return;
     
     // Animation de reset
     modelViewer.style.transform = 'scale(0.9) rotateY(180deg)';
     
     setTimeout(() => {
-        // Réinitialiser la position de la caméra
-        modelViewer.cameraOrbit = '0deg 90deg 2.5m';
-        modelViewer.fieldOfView = 'auto';
+        // Réinitialiser avec les paramètres spécifiques au burger
+        modelViewer.cameraOrbit = modelData.cameraOrbit;
+        modelViewer.fieldOfView = modelData.fieldOfView;
+        modelViewer.scale = modelData.scale;
         
         // Animation de retour
         modelViewer.style.transition = 'transform 0.8s ease';
         modelViewer.style.transform = 'scale(1) rotateY(0deg)';
         
-        console.log('🔄 Modèle réinitialisé');
+        console.log('🔄 Modèle réinitialisé avec paramètres réalistes');
+        showToast('🔄 Position réinitialisée');
     }, 300);
+}
+
+// Fonction pour ajuster la vue de manière réaliste
+function adjustRealisticView() {
+    const modelViewer = document.getElementById('burger-model');
+    const modelData = burgerModels[currentModel];
+    
+    if (!modelData) return;
+    
+    // Angles de vue optimaux pour chaque burger
+    const viewPresets = {
+        classic: { orbit: '0deg 65deg 1.2m', fov: '25deg' },
+        cheese: { orbit: '45deg 70deg 1.3m', fov: '28deg' },
+        bacon: { orbit: '-30deg 75deg 1.4m', fov: '30deg' },
+        spicy: { orbit: '60deg 68deg 1.25m', fov: '26deg' },
+        veggie: { orbit: '15deg 72deg 1.15m', fov: '24deg' }
+    };
+    
+    const preset = viewPresets[currentModel] || viewPresets.classic;
+    
+    // Transition fluide vers la nouvelle vue
+    modelViewer.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    modelViewer.cameraOrbit = preset.orbit;
+    modelViewer.fieldOfView = preset.fov;
+    
+    showToast(`🎯 Vue optimisée pour ${modelData.title}`);
+}
+
+// Fonction pour activer le mode table réaliste
+function enableTableMode() {
+    const modelViewer = document.getElementById('burger-model');
+    
+    // Configuration pour simulation de table
+    modelViewer.setAttribute('ar-placement', 'floor');
+    modelViewer.setAttribute('shadow-intensity', '3');
+    modelViewer.setAttribute('shadow-softness', '0.2');
+    
+    // Angle de vue de table réaliste
+    const tableOrbit = '0deg 45deg 1.0m';
+    modelViewer.cameraOrbit = tableOrbit;
+    modelViewer.fieldOfView = '35deg';
+    
+    // Désactiver la rotation auto pour vue stable
+    modelViewer.autoRotate = false;
+    autoRotateEnabled = false;
+    document.getElementById('rotate-btn').textContent = '▶️ Play';
+    
+    showToast('🍽️ Mode table activé - Vue réaliste');
 }
 
 // Toggle rotation automatique
