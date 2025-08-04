@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BurgerVision AR</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu principal -->
+    <div id="menu-container" class="container">
+        <header>
+            <h1>🍔 BurgerVision AR</h1>
+            <p>Découvrez nos burgers en réalité augmentée</p>
+        </header>
+
+        <div class="menu-grid">
+            <div class="burger-card" onclick="showAR('classic')">
+                <img src="https://via.placeholder.com/300x200/8B4513/white?text=🍔+Classic+Burger" alt="Classic Burger">
+                <h3>🍔 Classic Burger</h3>
+                <p>Pain, steak, salade, tomate</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('cheese')">
+                <img src="https://via.placeholder.com/300x200/FFD700/black?text=🧀+Cheese+Deluxe" alt="Cheese Deluxe">
+                <h3>🧀 Cheese Deluxe</h3>
+                <p>Pain, steak, fromage, cornichons</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('bacon')">
+                <img src="https://via.placeholder.com/300x200/FF6B35/white?text=🥓+Bacon+Supreme" alt="Bacon Supreme">
+                <h3>🥓 Bacon Supreme</h3>
+                <p>Pain, steak, bacon, fromage, sauce BBQ</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('spicy')">
+                <img src="https://via.placeholder.com/300x200/FF0000/white?text=🌶️+Spicy+Chicken" alt="Spicy Chicken">
+                <h3>🌶️ Spicy Chicken</h3>
+                <p>Pain, poulet épicé, salade, mayo épicée</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+
+            <div class="burger-card" onclick="showAR('veggie')">
+                <img src="https://via.placeholder.com/300x200/228B22/white?text=🥬+Veggie+Burger" alt="Veggie Burger">
+                <h3>🥬 Veggie Burger</h3>
+                <p>Pain, steak végétal, avocat, légumes</p>
+                <button class="ar-btn">Voir en AR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scène AR (cachée par défaut) -->
+    <div id="ar-container" style="display: none;">
+        <div id="ar-overlay">
+            <button id="close-ar" onclick="closeAR()">❌ Fermer</button>
+            <div id="ar-instructions">
+                <p>📱 Pointez votre caméra vers l'avant</p>
+                <p>🎯 Le burger apparaîtra dans quelques secondes</p>
+            </div>
+        </div>
+
+        <a-scene
+            embedded
+            arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+            id="ar-scene">
+            
+            <!-- Assets -->
+            <a-assets>
+                <a-mixin id="burger-mixin" 
+                    geometry="primitive: cylinder"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+                </a-mixin>
+            </a-assets>
+            
+            <!-- Caméra -->
+            <a-camera look-controls-enabled="false" arjs-look-controls="smoothingFactor: 0.1"></a-camera>
+            
+            <!-- Burgers 3D (un seul affiché à la fois) -->
+            <a-entity id="burger-classic" visible="false" position="0 0 -2">
+                <a-cylinder 
+                    radius="0.3" 
+                    height="0.2" 
+                    color="#8B4513"
+                    mixin="burger-mixin">
+                </a-cylinder>
+                <a-text 
+                    value="Classic Burger - 8.90€" 
+                    position="0 0.5 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.5 0.5 0.5">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-cheese" visible="false" position="0 0 -2">
+                <a-cylinder 
+                    radius="0.3" 
+                    height="0.25" 
+                    color="#FFD700"
+                    mixin="burger-mixin">
+                </a-cylinder>
+                <a-text 
+                    value="Cheese Deluxe - 9.90€" 
+                    position="0 0.5 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.5 0.5 0.5">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-bacon" visible="false" position="0 0 -2">
+                <a-cylinder 
+                    radius="0.35" 
+                    height="0.3" 
+                    color="#FF6B35"
+                    mixin="burger-mixin">
+                </a-cylinder>
+                <a-text 
+                    value="Bacon Supreme - 11.90€" 
+                    position="0 0.5 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.5 0.5 0.5">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-spicy" visible="false" position="0 0 -2">
+                <a-cylinder 
+                    radius="0.3" 
+                    height="0.25" 
+                    color="#FF0000"
+                    mixin="burger-mixin">
+                </a-cylinder>
+                <a-text 
+                    value="Spicy Chicken - 10.90€" 
+                    position="0 0.5 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.5 0.5 0.5">
+                </a-text>
+            </a-entity>
+
+            <a-entity id="burger-veggie" visible="false" position="0 0 -2">
+                <a-cylinder 
+                    radius="0.3" 
+                    height="0.2" 
+                    color="#228B22"
+                    mixin="burger-mixin">
+                </a-cylinder>
+                <a-text 
+                    value="Veggie Burger - 9.50€" 
+                    position="0 0.5 0" 
+                    align="center" 
+                    color="#FFFFFF"
+                    scale="0.5 0.5 0.5">
+                </a-text>
+            </a-entity>
+        </a-scene>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
