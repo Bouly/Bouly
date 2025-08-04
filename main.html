@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BurgerVision AR</title>
+    <title>BurgerVision AR Pro</title>
+    <!-- 8th Wall SDK -->
+    <script async src="https://apps.8thwall.com/xrweb"></script>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/8thwall/web@1.0.0/aframe/dist/8frame.min.js"></script>
+    <script src="8thwall-config.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -67,56 +70,144 @@
 
         <a-scene
             embedded
-            arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+            xrweb="allowedDevices: any; disableWorldTracking: false"
+            renderer="colorManagement: true; physicallyCorrectLights: true"
             id="ar-scene">
             
-            <!-- Assets -->
+            <!-- Assets avec modèles 3D réalistes -->
             <a-assets>
-                <a-mixin id="burger-base" 
-                    animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+                <!-- Textures réalistes -->
+                <img id="bun-texture" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==" crossorigin="anonymous">
+                
+                <!-- Animations améliorées -->
+                <a-mixin id="burger-enter" 
+                    animation__scale="property: scale; from: 0 0 0; to: 1 1 1; dur: 1200; easing: easeOutElastic; startEvents: showBurger"
+                    animation__float="property: position; from: 0 -0.2 0; to: 0 0.05 0; dir: alternate; dur: 3000; loop: true; easing: easeInOutSine"
+                    animation__rotate="property: rotation; to: 0 360 0; dur: 15000; loop: true; easing: linear">
                 </a-mixin>
-                <a-mixin id="bounce-animation"
-                    animation="property: position; to: 0 0.1 0; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine">
+                
+                <!-- Matériaux PBR -->
+                <a-mixin id="bun-material" 
+                    material="roughness: 0.8; metalness: 0.1; color: #D2691E">
+                </a-mixin>
+                <a-mixin id="meat-material" 
+                    material="roughness: 0.9; metalness: 0; color: #8B4513">
+                </a-mixin>
+                <a-mixin id="cheese-material" 
+                    material="roughness: 0.6; metalness: 0.2; color: #FFD700">
                 </a-mixin>
             </a-assets>
             
-            <!-- Caméra -->
-            <a-camera look-controls-enabled="false" arjs-look-controls="smoothingFactor: 0.1"></a-camera>
+            <!-- Caméra 8th Wall -->
+            <a-camera 
+                id="camera"
+                position="0 1.6 0"
+                xrweb-camera=""></a-camera>
             
-            <!-- Éclairage professionnel -->
-            <a-light type="ambient" color="#404040" intensity="0.4"></a-light>
-            <a-light type="directional" position="2 4 2" color="#ffffff" intensity="0.8"></a-light>
-            <a-light type="point" position="0 2 0" color="#fff3cd" intensity="0.3"></a-light>
+            <!-- Éclairage réaliste PBR -->
+            <a-light type="ambient" color="#404040" intensity="0.3"></a-light>
+            <a-light type="directional" 
+                position="3 5 3" 
+                color="#ffffff" 
+                intensity="1.2"
+                shadow="cast: true; mapSize: 2048 2048">
+            </a-light>
+            <a-light type="point" 
+                position="0 2 1" 
+                color="#fff3cd" 
+                intensity="0.8"
+                distance="10">
+            </a-light>
             
-            <!-- Surface de base invisible -->
-            <a-plane position="0 -0.8 -2" rotation="-90 0 0" width="4" height="4" color="#ffffff" opacity="0.1"></a-plane>
+            <!-- Surface de réception d'ombres -->
+            <a-plane 
+                id="ground"
+                position="0 0 0" 
+                rotation="-90 0 0" 
+                width="10" 
+                height="10" 
+                material="color: #ffffff; opacity: 0; transparent: true"
+                shadow="receive: true"
+                xrextras-hittest-target>
+            </a-plane>
             
-            <!-- Burgers 3D réalistes -->
-            <a-entity id="burger-classic" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">
-                <!-- Pain du bas -->
-                <a-cylinder radius="0.3" height="0.08" color="#D2691E" position="0 0 0"></a-cylinder>
-                <!-- Salade -->
-                <a-cylinder radius="0.25" height="0.02" color="#32CD32" position="0 0.05 0"></a-cylinder>
-                <!-- Steak -->
-                <a-cylinder radius="0.28" height="0.06" color="#8B4513" position="0 0.08 0"></a-cylinder>
-                <!-- Tomate -->
-                <a-cylinder radius="0.2" height="0.02" color="#FF6347" position="0 0.12 0"></a-cylinder>
-                <!-- Pain du haut -->
-                <a-sphere radius="0.3" scale="1 0.6 1" color="#DEB887" position="0 0.2 0"></a-sphere>
-                <!-- Graines sur le pain -->
-                <a-sphere radius="0.02" color="#F4A460" position="0.1 0.25 0.1"></a-sphere>
-                <a-sphere radius="0.02" color="#F4A460" position="-0.1 0.25 0.05"></a-sphere>
-                <a-sphere radius="0.02" color="#F4A460" position="0.05 0.25 -0.1"></a-sphere>
+            <!-- Burgers 3D Ultra-Réalistes avec 8th Wall -->
+            <a-entity id="burger-classic" 
+                visible="false" 
+                position="0 0 0" 
+                mixin="burger-enter"
+                shadow="cast: true"
+                xrextras-hold-cursor
+                xrextras-curve-follow="lookAt: camera">
                 
-                <a-text 
-                    value="🍔 Classic Burger\n8.90€" 
-                    position="0 0.8 0" 
-                    align="center" 
-                    color="#FFFFFF"
-                    scale="0.8 0.8 0.8"
-                    geometry="primitive: plane; width: 2; height: 0.5"
-                    material="color: rgba(0,0,0,0.7)">
-                </a-text>
+                <!-- Pain du bas avec détails -->
+                <a-cylinder 
+                    radius="0.35" 
+                    height="0.12" 
+                    position="0 0 0"
+                    mixin="bun-material"
+                    shadow="cast: true; receive: true">
+                    <!-- Texture de graines -->
+                    <a-sphere radius="0.015" color="#8B4513" position="0.2 0.07 0.1"></a-sphere>
+                    <a-sphere radius="0.012" color="#8B4513" position="-0.15 0.07 0.2"></a-sphere>
+                    <a-sphere radius="0.018" color="#8B4513" position="0.1 0.07 -0.15"></a-sphere>
+                </a-cylinder>
+                
+                <!-- Salade croustillante -->
+                <a-entity position="0 0.08 0">
+                    <a-cylinder radius="0.28" height="0.03" color="#228B22" material="roughness: 0.9"></a-cylinder>
+                    <!-- Feuilles qui dépassent -->
+                    <a-box width="0.1" height="0.05" depth="0.02" color="#32CD32" position="0.25 0 0.1" rotation="0 45 15"></a-box>
+                    <a-box width="0.08" height="0.04" depth="0.02" color="#32CD32" position="-0.2 0 0.15" rotation="0 -30 -10"></a-box>
+                </a-entity>
+                
+                <!-- Steak juteux -->
+                <a-cylinder 
+                    radius="0.32" 
+                    height="0.08" 
+                    position="0 0.14 0"
+                    mixin="meat-material"
+                    shadow="cast: true">
+                    <!-- Marques de grill -->
+                    <a-box width="0.4" height="0.005" depth="0.02" color="#654321" position="0 0.04 0" rotation="0 45 0"></a-box>
+                    <a-box width="0.4" height="0.005" depth="0.02" color="#654321" position="0 0.04 0" rotation="0 -45 0"></a-box>
+                </a-cylinder>
+                
+                <!-- Tomate fraîche -->
+                <a-cylinder radius="0.22" height="0.03" color="#FF6347" position="0 0.19 0" material="roughness: 0.4; metalness: 0.1"></a-cylinder>
+                
+                <!-- Pain du haut -->
+                <a-sphere 
+                    radius="0.35" 
+                    scale="1 0.7 1" 
+                    color="#DEB887" 
+                    position="0 0.28 0"
+                    mixin="bun-material"
+                    shadow="cast: true">
+                    <!-- Graines du dessus -->
+                    <a-sphere radius="0.02" color="#F4A460" position="0.15 0.15 0.15"></a-sphere>
+                    <a-sphere radius="0.018" color="#F4A460" position="-0.12 0.15 0.08"></a-sphere>
+                    <a-sphere radius="0.025" color="#F4A460" position="0.08 0.15 -0.18"></a-sphere>
+                    <a-sphere radius="0.015" color="#F4A460" position="-0.18 0.15 -0.05"></a-sphere>
+                </a-sphere>
+                
+                <!-- Prix flottant avec design moderne -->
+                <a-entity position="0 0.6 0" look-at="[camera]">
+                    <a-rounded 
+                        width="1.8" 
+                        height="0.6" 
+                        radius="0.1"
+                        material="color: rgba(0,0,0,0.8); transparent: true"
+                        position="0 0 0.01">
+                    </a-rounded>
+                    <a-text 
+                        value="🍔 Classic Burger\n8.90€" 
+                        align="center" 
+                        color="#FFFFFF"
+                        scale="0.8 0.8 0.8"
+                        font="dejavu">
+                    </a-text>
+                </a-entity>
             </a-entity>
 
             <a-entity id="burger-cheese" visible="false" position="0 -0.5 -2" mixin="burger-base bounce-animation">

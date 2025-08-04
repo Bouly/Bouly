@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BurgerVision WebXR</title>
+    <!-- WebXR + A-Frame -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/immersive-web/webxr-polyfill@latest/build/webxr-polyfill.min.js"></script>
+    <script src="https://mixedreality.mozilla.org/ammo.js/builds/ammo.wasm.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Menu principal -->
+    <div id="menu-container" class="container">
+        <header>
+            <h1>🍔 BurgerVision WebXR</h1>
+            <p>Réalité augmentée avec la technologie du futur</p>
+        </header>
+
+        <div class="menu-grid">
+            <div class="burger-card" onclick="startWebXR('classic')">
+                <img src="https://via.placeholder.com/300x200/8B4513/white?text=🍔+Classic+Burger" alt="Classic Burger">
+                <h3>🍔 Classic Burger</h3>
+                <p>Pain, steak, salade, tomate</p>
+                <button class="ar-btn">Voir en WebXR</button>
+            </div>
+
+            <div class="burger-card" onclick="startWebXR('cheese')">
+                <img src="https://via.placeholder.com/300x200/FFD700/black?text=🧀+Cheese+Deluxe" alt="Cheese Deluxe">
+                <h3>🧀 Cheese Deluxe</h3>
+                <p>Pain, steak, fromage, cornichons</p>
+                <button class="ar-btn">Voir en WebXR</button>
+            </div>
+
+            <div class="burger-card" onclick="startWebXR('bacon')">
+                <img src="https://via.placeholder.com/300x200/FF6B35/white?text=🥓+Bacon+Supreme" alt="Bacon Supreme">
+                <h3>🥓 Bacon Supreme</h3>
+                <p>Pain, steak, bacon, fromage, sauce BBQ</p>
+                <button class="ar-btn">Voir en WebXR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scène WebXR -->
+    <a-scene 
+        id="webxr-scene"
+        embedded 
+        style="display: none;"
+        background="color: transparent"
+        webxr="requiredFeatures: hit-test,local-floor; optionalFeatures: dom-overlay; overlayElement: #overlay"
+        renderer="colorManagement: true; physicallyCorrectLights: true"
+        physics="driver: ammo; debug: false">
+        
+        <!-- Assets ultra-réalistes -->
+        <a-assets>
+            <!-- Matériaux PBR avancés -->
+            <a-mixin id="realistic-bun" 
+                geometry="primitive: cylinder; radiusTop: 0.35; radiusBottom: 0.3"
+                material="roughness: 0.8; metalness: 0.1; color: #D2691E; normalMap: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==)">
+            </a-mixin>
+            
+            <a-mixin id="realistic-meat"
+                geometry="primitive: cylinder; radius: 0.32; height: 0.08"
+                material="roughness: 0.9; metalness: 0; color: #8B4513">
+            </a-mixin>
+            
+            <a-mixin id="realistic-cheese"
+                geometry="primitive: cylinder; radius: 0.34; height: 0.03"
+                material="roughness: 0.6; metalness: 0.2; color: #FFD700; transparent: true; opacity: 0.9">
+            </a-mixin>
+            
+            <!-- Animations fluides -->
+            <a-mixin id="burger-animation"
+                animation__rotation="property: rotation; to: 0 360 0; dur: 20000; loop: true; easing: linear"
+                animation__float="property: position; from: 0 0 0; to: 0 0.1 0; dir: alternate; dur: 4000; loop: true; easing: easeInOutSine"
+                animation__scale="property: scale; from: 0.8 0.8 0.8; to: 1.1 1.1 1.1; dir: alternate; dur: 6000; loop: true; easing: easeInOutQuad">
+            </a-mixin>
+        </a-assets>
+
+        <!-- Éclairage cinématographique -->
+        <a-light type="ambient" color="#404040" intensity="0.4"></a-light>
+        <a-light type="directional" position="5 10 5" color="#ffffff" intensity="1.5" 
+                shadow="cast: true; mapSize: 4096 4096" target="#burger-container"></a-light>
+        <a-light type="point" position="2 3 2" color="#fff3cd" intensity="0.8" distance="15"></a-light>
+        <a-light type="point" position="-2 3 2" color="#ffeecc" intensity="0.6" distance="10"></a-light>
+
+        <!-- Caméra WebXR -->
+        <a-camera position="0 1.6 3" look-controls="enabled: true" wasd-controls="enabled: true"></a-camera>
+
+        <!-- Surface avec ombres réalistes -->
+        <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" 
+                material="color: #ffffff; roughness: 0.9; metalness: 0.1; transparent: true; opacity: 0.1"
+                shadow="receive: true"></a-plane>
+
+        <!-- Container pour burgers -->
+        <a-entity id="burger-container" position="0 0.5 -2">
+            
+            <!-- Burger Classic Ultra-Réaliste -->
+            <a-entity id="webxr-burger-classic" visible="false" mixin="burger-animation" shadow="cast: true">
+                <!-- Base du burger -->
+                <a-entity position="0 0 0">
+                    <!-- Pain du bas -->
+                    <a-entity mixin="realistic-bun" position="0 0 0" shadow="cast: true">
+                        <!-- Graines détaillées -->
+                        <a-sphere radius="0.015" color="#8B4513" position="0.2 0.05 0.15" shadow="cast: true"></a-sphere>
+                        <a-sphere radius="0.012" color="#8B4513" position="-0.15 0.05 0.2" shadow="cast: true"></a-sphere>
+                        <a-sphere radius="0.018" color="#654321" position="0.1 0.05 -0.18" shadow="cast: true"></a-sphere>
+                    </a-entity>
+                    
+                    <!-- Salade croustillante -->
+                    <a-entity position="0 0.1 0">
+                        <a-cylinder radius="0.28" height="0.04" color="#228B22" 
+                                   material="roughness: 0.9; metalness: 0" shadow="cast: true"></a-cylinder>
+                        <!-- Feuilles qui sortent -->
+                        <a-dodecahedron radius="0.05" color="#32CD32" position="0.25 0 0.1" 
+                                       rotation="45 30 60" material="roughness: 0.8" shadow="cast: true"></a-dodecahedron>
+                        <a-dodecahedron radius="0.04" color="#2E8B57" position="-0.2 0 0.15" 
+                                       rotation="-30 60 -45" material="roughness: 0.8" shadow="cast: true"></a-dodecahedron>
+                    </a-entity>
+                    
+                    <!-- Steak grillé -->
+                    <a-entity mixin="realistic-meat" position="0 0.16 0" shadow="cast: true">
+                        <!-- Marques de grill réalistes -->
+                        <a-box width="0.5" height="0.008" depth="0.03" color="#654321" 
+                               position="0 0.045 0" rotation="0 45 0" shadow="cast: true"></a-box>
+                        <a-box width="0.5" height="0.008" depth="0.03" color="#654321" 
+                               position="0 0.045 0" rotation="0 -45 0" shadow="cast: true"></a-box>
+                        <a-box width="0.4" height="0.008" depth="0.03" color="#5D4E37" 
+                               position="0.1 0.045 0.1" rotation="0 30 0" shadow="cast: true"></a-box>
+                    </a-entity>
+                    
+                    <!-- Tomate juteuse -->
+                    <a-cylinder radius="0.22" height="0.04" color="#FF6347" position="0 0.22 0"
+                               material="roughness: 0.3; metalness: 0.1" shadow="cast: true">
+                        <!-- Graines de tomate -->
+                        <a-sphere radius="0.008" color="#FFE4E1" position="0.1 0 0.05"></a-sphere>
+                        <a-sphere radius="0.006" color="#FFE4E1" position="-0.08 0 0.12"></a-sphere>
+                    </a-cylinder>
+                    
+                    <!-- Pain du haut avec relief -->
+                    <a-sphere radius="0.35" scale="1 0.8 1" color="#DEB887" position="0 0.35 0"
+                             material="roughness: 0.7; metalness: 0.1" shadow="cast: true">
+                        <!-- Graines du dessus -->
+                        <a-sphere radius="0.025" color="#F4A460" position="0.15 0.2 0.15" shadow="cast: true"></a-sphere>
+                        <a-sphere radius="0.02" color="#F4A460" position="-0.12 0.2 0.08" shadow="cast: true"></a-sphere>
+                        <a-sphere radius="0.03" color="#DAA520" position="0.08 0.2 -0.18" shadow="cast: true"></a-sphere>
+                        <a-sphere radius="0.018" color="#F4A460" position="-0.18 0.2 -0.05" shadow="cast: true"></a-sphere>
+                    </a-sphere>
+                </a-entity>
+                
+                <!-- Prix avec design moderne -->
+                <a-entity position="0 0.8 0" look-at="[camera]">
+                    <a-plane width="2" height="0.6" color="rgba(0,0,0,0.8)" 
+                            material="transparent: true" position="0 0 0.01"></a-plane>
+                    <a-text value="🍔 Classic Burger\n8.90€" align="center" color="#FFFFFF"
+                           scale="0.8 0.8 0.8" font="dejavu" position="0 0 0.02"></a-text>
+                </a-entity>
+            </a-entity>
+            
+        </a-entity>
+    </a-scene>
+
+    <!-- Overlay UI -->
+    <div id="overlay" style="position: fixed; top: 20px; left: 20px; z-index: 1000; display: none;">
+        <button onclick="exitWebXR()" style="background: rgba(0,0,0,0.8); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px;">
+            ❌ Quitter WebXR
+        </button>
+    </div>
+
+    <script src="webxr-script.js"></script>
+</body>
+</html>
