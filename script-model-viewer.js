@@ -19,7 +19,7 @@ const burgerModels = {
     cheese: {
         src: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb', // Remplacer par burger fromage
         title: '🧀 Cheese Deluxe', 
-        description: 'Pain brioche, steak, fromage fondu - 9.90€',c
+        description: 'Pain brioche, steak, fromage fondu - 9.90€',
         poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀',
         scale: '0.9 0.9 0.9',
         cameraOrbit: '15deg 70deg 1.3m',
