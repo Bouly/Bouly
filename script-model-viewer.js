@@ -12,7 +12,7 @@ const burgerModels = {
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
         poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
-        scale: '0.01 0.01 0.01',
+        scale: '0.1 0.1 0.1',
         cameraOrbit: '0deg 65deg 2m',
         fieldOfView: '60deg'
     },
