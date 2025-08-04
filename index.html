@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Court AR - Restaurant Moderne</title>
+    <title>FOOD COURT AR</title>
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,148 +16,187 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* Header exact comme 6avenues */
         .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 0;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            height: 80px;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
             text-decoration: none;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 3rem;
         }
 
         .nav-links a {
-            color: white;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .nav-links a:hover {
-            color: #FFD700;
+            color: #cccccc;
         }
 
+        /* Main content comme 6avenues */
         .main-content {
-            margin-top: 100px;
-            padding: 2rem;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-top: 80px;
+            min-height: 100vh;
         }
 
         .hero-section {
             text-align: center;
-            margin-bottom: 3rem;
-            color: white;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 900;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            line-height: 0.9;
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #cccccc;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .food-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+        /* Grid de restaurants comme 6avenues */
+        .restaurants-section {
+            padding: 0 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .food-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .food-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
-        }
-
-        .food-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 15px;
-            object-fit: cover;
-            margin-bottom: 1rem;
-        }
-
-        .food-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .food-description {
-            color: #666;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .food-price {
-            font-size: 1.3rem;
+        .section-title {
+            font-size: 2rem;
             font-weight: 700;
-            color: #FF6B35;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .restaurant-card {
+            background-color: #000000;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .restaurant-card:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .restaurant-card:hover .restaurant-image {
+            filter: grayscale(0%);
+        }
+
+        .restaurant-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .restaurant-description {
+            font-size: 0.95rem;
+            color: #cccccc;
             margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .restaurant-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
         }
 
         .ar-button {
-            background: linear-gradient(45deg, #FF6B35, #FFD700);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.8rem 2rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
         }
 
         .ar-button:hover {
-            transform: scale(1.05);
+            background-color: #ffffff;
+            color: #000000;
         }
 
+        /* Modal style 6avenues */
         .modal {
             display: none;
             position: fixed;
@@ -165,98 +204,159 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background-color: rgba(0, 0, 0, 0.95);
             z-index: 2000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
         }
 
         .modal-content {
             position: relative;
-            background: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 20px;
-            max-width: 800px;
-            max-height: 80vh;
+            background-color: #000000;
+            margin: 2% auto;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            max-height: 90vh;
             overflow-y: auto;
         }
 
         .close-btn {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #ff4757;
-            color: white;
-            border: none;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             width: 40px;
             height: 40px;
-            border-radius: 50%;
             cursor: pointer;
             font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .modal-description {
+            color: #cccccc;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .modal-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
         }
 
         model-viewer {
             width: 100%;
             height: 400px;
-            border-radius: 15px;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
+            background-color: #111111;
         }
 
         .ar-controls {
             display: flex;
-            gap: 10px;
+            gap: 0;
             justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .control-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
+            background-color: transparent;
+            color: #ffffff;
             border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: transform 0.2s ease;
+            font-size: 0.85rem;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+
+        .control-btn:last-child {
+            border-right: none;
         }
 
         .control-btn:hover {
-            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
-        .food-categories {
+        /* Navigation categories style 6avenues */
+        .categories-nav {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            gap: 0;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem;
         }
 
         .category-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
+            background-color: transparent;
+            color: #ffffff;
+            border: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease;
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        .category-btn:last-child {
+            border-right: none;
         }
 
         .category-btn.active,
         .category-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            border-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
+        /* Footer style 6avenues */
+        .footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+            background-color: #000000;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            color: #cccccc;
+            font-weight: 300;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             
-            .food-grid {
+            .restaurants-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -264,22 +364,44 @@
                 display: none;
             }
             
-            .main-content {
-                padding: 1rem;
+            .categories-nav {
+                flex-direction: column;
+            }
+            
+            .category-btn {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .category-btn:last-child {
+                border-bottom: none;
+            }
+            
+            .ar-controls {
+                flex-direction: column;
+            }
+            
+            .control-btn {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .control-btn:last-child {
+                border-bottom: none;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header exact comme 6avenues -->
     <header class="header">
         <div class="nav-container">
-            <a href="#" class="logo">🍽️ Food Court AR</a>
+            <a href="#" class="logo">FOOD COURT</a>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#menu">Menu</a></li>
-                    <li><a href="#about">À propos</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#menu">MENU</a></li>
+                    <li><a href="#restaurants">RESTAURANTS</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
                 </ul>
             </nav>
         </div>
@@ -287,34 +409,43 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Hero Section -->
+        <!-- Hero Section style 6avenues -->
         <section class="hero-section">
-            <h1 class="hero-title">Découvrez nos plats en AR</h1>
-            <p class="hero-subtitle">Une expérience culinaire immersive avec la réalité augmentée</p>
+            <h1 class="hero-title">FOOD COURT</h1>
+            <p class="hero-subtitle">6 Restaurants - Une seule Adresse<br>Découvrez nos plats en Réalité Augmentée</p>
         </section>
 
-        <!-- Categories -->
-        <div class="food-categories">
-            <button class="category-btn active" data-category="all">Tous</button>
-            <button class="category-btn" data-category="burgers">Burgers</button>
-            <button class="category-btn" data-category="pizzas">Pizzas</button>
-            <button class="category-btn" data-category="asiatique">Asiatique</button>
-            <button class="category-btn" data-category="desserts">Desserts</button>
+        <!-- Categories Navigation -->
+        <div class="categories-nav">
+            <button class="category-btn active" data-category="all">TOUS</button>
+            <button class="category-btn" data-category="burgers">BURGERS</button>
+            <button class="category-btn" data-category="pizzas">PIZZAS</button>
+            <button class="category-btn" data-category="asiatique">ASIATIQUE</button>
+            <button class="category-btn" data-category="desserts">DESSERTS</button>
         </div>
 
-        <!-- Food Grid -->
-        <div class="food-grid" id="foodGrid">
-            <!-- Les plats seront générés par JavaScript -->
-        </div>
+        <!-- Restaurants Section -->
+        <section class="restaurants-section">
+            <div class="restaurants-grid" id="restaurantsGrid">
+                <!-- Les restaurants seront générés par JavaScript -->
+            </div>
+        </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">© 2024 FOOD COURT AR - Tous droits réservés</p>
+        </div>
+    </footer>
 
     <!-- Modal AR -->
     <div id="arModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeARModal()">&times;</button>
-            <h2 id="modalTitle">Nom du plat</h2>
-            <p id="modalDescription">Description du plat</p>
-            <p id="modalPrice">Prix</p>
+            <h2 id="modalTitle" class="modal-title">PLAT</h2>
+            <p id="modalDescription" class="modal-description">Description</p>
+            <p id="modalPrice" class="modal-price">Prix</p>
             
             <model-viewer 
                 id="foodModel"
@@ -329,80 +460,80 @@
             </model-viewer>
             
             <div class="ar-controls">
-                <button class="control-btn" onclick="resetModel()">🔄 Reset</button>
-                <button class="control-btn" onclick="toggleRotation()">⏸️ Pause</button>
-                <button class="control-btn" onclick="changeEnvironment()">💡 Éclairage</button>
-                <button class="control-btn" onclick="tableMode()">🍽️ Mode Table</button>
+                <button class="control-btn" onclick="resetModel()">RESET</button>
+                <button class="control-btn" onclick="toggleRotation()">PAUSE</button>
+                <button class="control-btn" onclick="changeEnvironment()">ÉCLAIRAGE</button>
+                <button class="control-btn" onclick="tableMode()">MODE TABLE</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuration des plats
+        // Configuration des plats style 6avenues
         const dishes = [
             {
                 id: 1,
-                name: "Burger Classic",
-                description: "Pain artisanal, steak de bœuf, salade, tomate, oignons",
+                name: "BURGER CLASSIC",
+                description: "Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons",
                 price: "12.90€",
                 category: "burgers",
-                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 2,
-                name: "Pizza Margherita",
-                description: "Sauce tomate, mozzarella, basilic frais",
+                name: "PIZZA MARGHERITA",
+                description: "Sauce tomate artisanale, mozzarella di bufala, basilic frais",
                 price: "14.50€",
                 category: "pizzas",
-                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 3,
-                name: "Pad Thaï aux Crevettes",
-                description: "Nouilles de riz, crevettes, légumes croquants, sauce traditionnelle",
+                name: "PAD THAÏ CREVETTES",
+                description: "Nouilles de riz sautées, crevettes fraîches, légumes croquants, sauce traditionnelle",
                 price: "16.90€",
                 category: "asiatique",
-                image: "https://images.unsplash.com/photo-1559314809-0f31657def5e?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1559314809-0f31657def5e?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 4,
-                name: "Burger Végétarien",
-                description: "Steak végétal, avocat, roquette, tomate, sauce vegan",
+                name: "BURGER VÉGÉTARIEN",
+                description: "Steak végétal maison, avocat, roquette, tomate, sauce vegan",
                 price: "13.50€",
                 category: "burgers",
-                image: "https://images.unsplash.com/photo-1525059696034-4967a729002e?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1525059696034-4967a729002e?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 5,
-                name: "Pizza 4 Fromages",
-                description: "Mozzarella, gorgonzola, parmesan, chèvre",
+                name: "PIZZA 4 FROMAGES",
+                description: "Mozzarella, gorgonzola AOP, parmesan 24 mois, chèvre",
                 price: "16.90€",
                 category: "pizzas",
-                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 6,
-                name: "Bo Bun Bœuf",
-                description: "Vermicelles de riz, bœuf grillé, légumes frais, nems",
+                name: "BO BUN BŒUF",
+                description: "Vermicelles de riz, bœuf grillé, légumes frais, nems, sauce nuoc-mâm",
                 price: "15.90€",
                 category: "asiatique",
-                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 7,
-                name: "Tiramisu Maison",
-                description: "Mascarpone, café, cacao, biscuits cuillère",
+                name: "TIRAMISU MAISON",
+                description: "Mascarpone, café espresso, cacao pur, biscuits cuillère",
                 price: "7.50€",
                 category: "desserts",
-                image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500&h=300&fit=crop&auto=format"
             },
             {
                 id: 8,
-                name: "Burger BBQ",
-                description: "Pain brioche, steak, bacon, oignons caramélisés, sauce BBQ",
+                name: "BURGER BBQ",
+                description: "Pain brioche, steak premium, bacon croustillant, oignons caramélisés, sauce BBQ",
                 price: "15.90€",
                 category: "burgers",
-                image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=400&h=300&fit=crop"
+                image: "https://images.unsplash.com/photo-1553979459-d2229ba7433a?w=500&h=300&fit=crop&auto=format"
             }
         ];
 
@@ -420,22 +551,22 @@
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            renderDishes('all');
+            renderRestaurants('all');
             setupCategoryFilters();
         });
 
-        // Rendu des plats
-        function renderDishes(category) {
-            const grid = document.getElementById('foodGrid');
+        // Rendu des restaurants style 6avenues
+        function renderRestaurants(category) {
+            const grid = document.getElementById('restaurantsGrid');
             const filteredDishes = category === 'all' ? dishes : dishes.filter(dish => dish.category === category);
             
             grid.innerHTML = filteredDishes.map(dish => `
-                <div class="food-card" onclick="openARModal(${dish.id})">
-                    <img src="${dish.image}" alt="${dish.name}" class="food-image">
-                    <h3 class="food-title">${dish.name}</h3>
-                    <p class="food-description">${dish.description}</p>
-                    <p class="food-price">${dish.price}</p>
-                    <button class="ar-button">👁️ Voir en AR</button>
+                <div class="restaurant-card" onclick="openARModal(${dish.id})">
+                    <img src="${dish.image}" alt="${dish.name}" class="restaurant-image">
+                    <h3 class="restaurant-name">${dish.name}</h3>
+                    <p class="restaurant-description">${dish.description}</p>
+                    <p class="restaurant-price">${dish.price}</p>
+                    <button class="ar-button">VOIR EN AR</button>
                 </div>
             `).join('');
         }
@@ -447,7 +578,7 @@
                 btn.addEventListener('click', function() {
                     categoryBtns.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    renderDishes(this.dataset.category);
+                    renderRestaurants(this.dataset.category);
                 });
             });
         }
@@ -462,18 +593,12 @@
             document.getElementById('modalPrice').textContent = currentDish.price;
 
             const modelViewer = document.getElementById('foodModel');
-            modelViewer.src = './models/burgertest.glb'; // Même modèle pour tous les plats
+            modelViewer.src = './models/burgertest.glb';
             modelViewer.scale = '0.1 0.1 0.1';
             modelViewer.cameraOrbit = '0deg 75deg 2m';
             modelViewer.environmentImage = environments[0];
 
             document.getElementById('arModal').style.display = 'block';
-            
-            // Animation d'entrée
-            setTimeout(() => {
-                document.querySelector('.modal-content').style.transform = 'scale(1)';
-                document.querySelector('.modal-content').style.opacity = '1';
-            }, 10);
         }
 
         // Fermer le modal AR
@@ -481,7 +606,6 @@
             const modal = document.getElementById('arModal');
             modal.style.display = 'none';
             
-            // Nettoyer le modèle
             const modelViewer = document.getElementById('foodModel');
             modelViewer.src = '';
         }
@@ -491,7 +615,7 @@
             const modelViewer = document.getElementById('foodModel');
             modelViewer.cameraOrbit = '0deg 75deg 2m';
             modelViewer.scale = '0.1 0.1 0.1';
-            showToast('🔄 Position réinitialisée');
+            showToast('POSITION RÉINITIALISÉE');
         }
 
         // Toggle rotation
@@ -501,9 +625,9 @@
             
             autoRotateEnabled = !autoRotateEnabled;
             modelViewer.autoRotate = autoRotateEnabled;
-            btn.textContent = autoRotateEnabled ? '⏸️ Pause' : '▶️ Play';
+            btn.textContent = autoRotateEnabled ? 'PAUSE' : 'PLAY';
             
-            showToast(autoRotateEnabled ? '▶️ Rotation activée' : '⏸️ Rotation pausée');
+            showToast(autoRotateEnabled ? 'ROTATION ACTIVÉE' : 'ROTATION PAUSÉE');
         }
 
         // Changer l'environnement
@@ -512,8 +636,8 @@
             environmentIndex = (environmentIndex + 1) % environments.length;
             modelViewer.environmentImage = environments[environmentIndex];
             
-            const envNames = ['🌅 Lever de soleil', '🏭 Atelier', '🌲 Forêt'];
-            showToast(`💡 ${envNames[environmentIndex]}`);
+            const envNames = ['LEVER DE SOLEIL', 'ATELIER', 'FORÊT'];
+            showToast(`ÉCLAIRAGE: ${envNames[environmentIndex]}`);
         }
 
         // Mode table
@@ -521,26 +645,28 @@
             const modelViewer = document.getElementById('foodModel');
             modelViewer.cameraOrbit = '0deg 45deg 1.5m';
             modelViewer.setAttribute('shadow-intensity', '3');
-            showToast('🍽️ Mode table activé');
+            showToast('MODE TABLE ACTIVÉ');
         }
 
-        // Toast notification
+        // Toast notification style 6avenues
         function showToast(message) {
             const toast = document.createElement('div');
             toast.textContent = message;
             toast.style.cssText = `
                 position: fixed;
-                top: 20px;
+                top: 100px;
                 left: 50%;
-                transform: translateX(-50%) translateY(-100px);
-                background: linear-gradient(45deg, #667eea, #764ba2);
-                color: white;
-                padding: 12px 24px;
-                border-radius: 25px;
-                font-weight: bold;
+                transform: translateX(-50%) translateY(-50px);
+                background-color: rgba(0, 0, 0, 0.9);
+                color: #ffffff;
+                padding: 1rem 2rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                font-weight: 500;
                 z-index: 10000;
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
                 transition: transform 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                font-size: 0.85rem;
             `;
             
             document.body.appendChild(toast);
@@ -550,7 +676,7 @@
             }, 100);
             
             setTimeout(() => {
-                toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                toast.style.transform = 'translateX(-50%) translateY(-50px)';
                 setTimeout(() => {
                     if (toast.parentNode) {
                         document.body.removeChild(toast);
