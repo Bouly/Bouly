@@ -14,7 +14,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Curseur personnalisé */
+        }
+
+        /* Curseur personnalisé uniquement sur desktop */
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none;
+            }
         }
 
         /* Curseur interactif magique */
@@ -891,18 +897,6 @@
             transform: translateY(-3px);
             border-color: var(--primary);
             background: rgba(253, 189, 17, 0.1);
-        }
-
-        .hero-trust {
-            margin-top: 30px;
-            padding: 12px 25px;
-            background: rgba(76, 175, 80, 0.1);
-            border-radius: 25px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(76, 175, 80, 0.3);
         }
 
         /* Éléments 3D flottants révolutionnaires */
@@ -2225,17 +2219,14 @@
                 </div>
                 <div class="hero-actions">
                     <a href="#menu" class="hero-cta-primary">
-                        <i class="fas fa-utensils"></i>
-                        <span>COMMANDER MAINTENANT</span>
-                        <span class="cta-subtitle">Livraison en 15 min</span>
+                        <i class="fas fa-eye"></i>
+                        <span>DÉCOUVRIR EN AR</span>
+                        <span class="cta-subtitle">Expérience immersive</span>
                     </a>
                     <button class="hero-cta-secondary" onclick="startQuickGame('Découverte')">
                         <i class="fas fa-gift"></i>
                         <span>JOUER POUR GAGNER</span>
                     </button>
-                </div>
-                <div class="hero-trust">
-                    <span>🚀 Plus de 1000 plats livrés cette semaine</span>
                 </div>
             </div>
             
@@ -2597,18 +2588,14 @@
                         <p class="card-description">${dish.description}</p>
                         <div class="card-footer">
                             <span class="card-price">${dish.price}</span>
-                            <button class="card-cta" onclick="event.stopPropagation(); alert('🎉 Produit ajouté au panier!')">
-                                COMMANDER
+                            <button class="card-cta" onclick="event.stopPropagation(); openARModal(${dish.id})">
+                                VOIR EN AR
                             </button>
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <button class="ar-button" onclick="event.stopPropagation(); openARModal(${dish.id})">
-                                <i class="fas fa-eye"></i>
-                                VOIR EN AR
-                            </button>
                             <button class="ar-game-btn" onclick="event.stopPropagation(); startQuickGame('${dish.name}')">
                                 <i class="fas fa-gamepad"></i>
-                                JOUER
+                                JOUER POUR GAGNER
                             </button>
                         </div>
                     </div>
@@ -3062,41 +3049,61 @@
 
         // === SYSTÈME D'EFFETS RÉVOLUTIONNAIRE ===
 
-        // Curseur personnalisé magique
+        // Détection mobile
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   window.innerWidth <= 768 || 
+                   ('ontouchstart' in window);
+        }
+
+        // Curseur personnalisé magique (desktop uniquement)
         document.addEventListener('DOMContentLoaded', function() {
             const cursor = document.querySelector('.custom-cursor');
             const magicParticles = document.getElementById('magicParticles');
             const header = document.querySelector('.header');
+            const isMobile = isMobileDevice();
             
-            // Suivre la souris
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX - 10 + 'px';
-                cursor.style.top = e.clientY - 10 + 'px';
-                
-                // Créer des particules de traînée
-                if (Math.random() < 0.3) {
-                    createTrailParticle(e.clientX, e.clientY);
-                }
-            });
-
-            // Effets hover sur les éléments interactifs
-            const interactiveElements = document.querySelectorAll('a, button, .restaurant-card, .category-btn');
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hover');
+            // Masquer le curseur sur mobile
+            if (isMobile) {
+                cursor.style.display = 'none';
+                // Réactiver le curseur normal sur mobile
+                document.body.style.cursor = 'auto';
+                document.querySelectorAll('*').forEach(el => {
+                    el.style.cursor = 'auto';
                 });
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
+            }
+            
+            // Suivre la souris (desktop uniquement)
+            if (!isMobile) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX - 10 + 'px';
+                    cursor.style.top = e.clientY - 10 + 'px';
+                    
+                    // Créer des particules de traînée
+                    if (Math.random() < 0.3) {
+                        createTrailParticle(e.clientX, e.clientY);
+                    }
                 });
-            });
 
-            // Effet click
-            document.addEventListener('mousedown', () => {
-                cursor.classList.add('click');
-            });
-            document.addEventListener('mouseup', () => {
-                cursor.classList.remove('click');
-            });
+                // Effets hover sur les éléments interactifs (desktop uniquement)
+                const interactiveElements = document.querySelectorAll('a, button, .restaurant-card, .category-btn');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.classList.add('hover');
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.classList.remove('hover');
+                    });
+                });
+
+                // Effet click
+                document.addEventListener('mousedown', () => {
+                    cursor.classList.add('click');
+                });
+                document.addEventListener('mouseup', () => {
+                    cursor.classList.remove('click');
+                });
+            }
 
             // Générer des particules magiques
             function createMagicParticles() {
@@ -3116,8 +3123,10 @@
                 }
             }
 
-            // Particules de traînée du curseur
+            // Particules de traînée du curseur (desktop uniquement)
             function createTrailParticle(x, y) {
+                if (isMobile) return; // Ne pas créer de particules sur mobile
+                
                 const trail = document.createElement('div');
                 trail.style.position = 'fixed';
                 trail.style.left = x + 'px';
@@ -3173,9 +3182,9 @@
                 }, 150);
             });
 
-            // Effets de parallax sur la souris pour le hero
+            // Effets de parallax sur la souris pour le hero (desktop uniquement)
             const heroSection = document.querySelector('.hero-section');
-            if (heroSection) {
+            if (heroSection && !isMobile) {
                 document.addEventListener('mousemove', (e) => {
                     const x = (e.clientX / window.innerWidth) * 100;
                     const y = (e.clientY / window.innerHeight) * 100;
