@@ -1183,61 +1183,6 @@
             transform: translateY(0);
         }
 
-        /* Notifications live simulées */
-        .live-notifications {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 9998;
-            width: 300px;
-            pointer-events: none;
-        }
-
-        .notification {
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-accent);
-            border-radius: var(--radius-lg);
-            padding: var(--space-md);
-            margin-bottom: var(--space-sm);
-            transform: translateX(100%);
-            transition: all 0.4s var(--ease-out-expo);
-            box-shadow: var(--shadow-large), var(--shadow-glow);
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .notification-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--bg-primary);
-        }
-
-        .notification-text {
-            flex: 1;
-            font-size: 14px;
-            color: var(--text-primary);
-        }
-
-        .notification-time {
-            font-size: 12px;
-            color: var(--text-tertiary);
-        }
-
         /* Compteur animé pour les prix */
         @keyframes countUp {
             from {
@@ -1252,112 +1197,6 @@
 
         .price-counter {
             animation: countUp 0.8s var(--ease-out-expo);
-        }
-
-        /* Effets sonores visuels */
-        .sound-ripple {
-            position: absolute;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            animation: ripple 0.6s ease-out;
-            pointer-events: none;
-        }
-
-        @keyframes ripple {
-            from {
-                width: 0;
-                height: 0;
-                opacity: 1;
-            }
-            to {
-                width: 80px;
-                height: 80px;
-                opacity: 0;
-            }
-        }
-
-        /* Mode présentation */
-        .presentation-mode {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 9999;
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            padding: var(--space-sm);
-        }
-
-        .presentation-btn {
-            background: var(--gradient-primary);
-            color: var(--bg-primary);
-            border: none;
-            border-radius: var(--radius-sm);
-            padding: var(--space-xs) var(--space-sm);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .presentation-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* Analytics en temps réel */
-        .analytics-panel {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-primary);
-            border-radius: var(--radius-lg);
-            padding: var(--space-md);
-            z-index: 9998;
-            width: 250px;
-            transform: translateY(100%);
-            transition: all 0.4s var(--ease-out-expo);
-        }
-
-        .analytics-panel.visible {
-            transform: translateY(0);
-        }
-
-        .analytics-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: var(--space-sm);
-        }
-
-        .analytics-stat {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--space-xs);
-            font-size: 12px;
-        }
-
-        .analytics-value {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .analytics-label {
-            color: var(--text-tertiary);
-        }
-
-        .heatmap-indicator {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: pulse 2s infinite;
-            pointer-events: none;
         }
 
         /* Loading animation dark */
@@ -1400,47 +1239,6 @@
     <!-- Loading Screen -->
     <div class="loading">
         <div class="spinner"></div>
-    </div>
-
-    <!-- Notifications Live -->
-    <div class="live-notifications" id="liveNotifications"></div>
-
-    <!-- Mode Présentation -->
-    <div class="presentation-mode">
-        <button class="presentation-btn" onclick="togglePresentationMode()">
-            <i class="fas fa-presentation"></i> DÉMO
-        </button>
-        <button class="presentation-btn" onclick="toggleAnalytics()">
-            <i class="fas fa-chart-line"></i> STATS
-        </button>
-        <button class="presentation-btn" onclick="simulateActivity()">
-            <i class="fas fa-bolt"></i> LIVE
-        </button>
-    </div>
-
-    <!-- Analytics Panel -->
-    <div class="analytics-panel" id="analyticsPanel">
-        <div class="analytics-title">📊 Analytics Temps Réel</div>
-        <div class="analytics-stat">
-            <span class="analytics-label">Visiteurs actifs</span>
-            <span class="analytics-value" id="activeUsers">247</span>
-        </div>
-        <div class="analytics-stat">
-            <span class="analytics-label">Plats vus en AR</span>
-            <span class="analytics-value" id="arViews">1,832</span>
-        </div>
-        <div class="analytics-stat">
-            <span class="analytics-label">Engagement</span>
-            <span class="analytics-value" id="engagement">94%</span>
-        </div>
-        <div class="analytics-stat">
-            <span class="analytics-label">Temps moyen</span>
-            <span class="analytics-value" id="avgTime">4m 23s</span>
-        </div>
-        <div class="analytics-stat">
-            <span class="analytics-label">Conversion AR</span>
-            <span class="analytics-value" id="conversion">+67%</span>
-        </div>
     </div>
 
     <!-- Header minimaliste -->
@@ -1583,7 +1381,7 @@
                 price: "12.90€",
                 category: "burgers",
                 image: "./img/6th-avenues-Yankee-menu.jpg",
-                model3d: "./models/burgertest.glb",
+                model3d: "./models/test.fbx",
                 scale: "0.1 0.1 0.1",
                 realSize: "12cm x 12cm x 8cm"
             },
