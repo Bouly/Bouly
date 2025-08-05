@@ -8,7 +8,7 @@ let environmentIndex = 0;
 // URLs des modèles 3D avec de vrais burgers réalistes
 const burgerModels = {
     classic: {
-        src: './models/test.glb', // Votre modèle 3D local
+        src: './models/burgertest.glb', // Votre modèle 3D local
         title: '🍔 Classic Burger',
         description: 'Pain artisanal, steak grillé, salade fraîche - 8.90€',
         poster: 'https://via.placeholder.com/400x400/8B4513/white?text=🍔',
