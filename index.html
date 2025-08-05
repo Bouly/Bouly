@@ -14,6 +14,100 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: none; /* Curseur personnalisé */
+        }
+
+        /* Curseur interactif magique */
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+            transition: transform 0.15s ease;
+        }
+
+        .custom-cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid rgba(253, 189, 17, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .custom-cursor.hover {
+            transform: scale(1.5);
+        }
+
+        .custom-cursor.hover::after {
+            width: 60px;
+            height: 60px;
+            border-color: var(--primary);
+            border-width: 3px;
+        }
+
+        .custom-cursor.click {
+            transform: scale(0.8);
+        }
+
+        /* Particules flottantes magiques */
+        .magic-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        .particle:nth-child(2n) {
+            background: var(--accent-orange);
+            animation-duration: 12s;
+        }
+
+        .particle:nth-child(3n) {
+            background: var(--accent-red);
+            animation-duration: 18s;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         :root {
@@ -296,34 +390,48 @@
             }
         }
 
-        /* Header niveau restaurant premium */
+        /* Header révolutionnaire avec effets morphing */
         .header {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px;
+            height: 90px;
+            background: transparent;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            z-index: 1000;
+            border-bottom: none;
+            animation: headerMorph 0.8s var(--ease-smooth);
+            will-change: transform, backdrop-filter, background;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+        }
+
+        .header.scrolled {
+            height: 70px;
             background: var(--bg-glass-warm);
             backdrop-filter: blur(40px) saturate(180%);
             -webkit-backdrop-filter: blur(40px) saturate(180%);
-            z-index: 1000;
             border-bottom: 1px solid var(--border-warm);
-            animation: slideInLeft 0.8s var(--ease-smooth);
-            will-change: transform;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .header::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             right: 0;
             bottom: 0;
-            background: linear-gradient(180deg, 
-                rgba(45, 27, 14, 0.95) 0%, 
-                rgba(45, 27, 14, 0.8) 50%,
-                rgba(13, 13, 13, 0.9) 100%);
-            z-index: -1;
+            background: var(--gradient-crispy);
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: -2;
+        }
+
+        .header.scrolled::before {
+            left: 0;
+            opacity: 0.1;
         }
 
         .header::after {
@@ -332,11 +440,20 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 2px;
+            height: 3px;
             background: var(--gradient-food);
-            opacity: 0.6;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.6s ease;
+            transform-origin: left;
         }
 
+        .header.scrolled::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        /* Effet de morphing sur le container */
         .nav-container {
             max-width: 1440px;
             margin: 0 auto;
@@ -345,8 +462,32 @@
             align-items: center;
             padding: 0 var(--space-lg);
             height: 100%;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
+        .nav-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: -1;
+        }
+
+        .header.scrolled .nav-container::before {
+            width: 200%;
+            height: 200%;
+            opacity: 0.05;
+        }
+
+        /* Logo holographique révolutionnaire */
         .logo {
             display: flex;
             align-items: center;
@@ -357,32 +498,83 @@
             color: var(--text-primary);
             text-decoration: none;
             letter-spacing: -0.5px;
-            transition: var(--transition-medium);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, var(--primary), var(--accent-orange), var(--accent-red), var(--primary));
+            opacity: 0;
+            animation: hologramRotate 3s linear infinite;
+            border-radius: 50%;
+            filter: blur(20px);
+            transition: opacity 0.6s ease;
+        }
+
+        .logo:hover::before {
+            opacity: 0.3;
+        }
+
+        @keyframes hologramRotate {
+            0% { transform: rotate(0deg) scale(0.8); }
+            100% { transform: rotate(360deg) scale(1.2); }
         }
 
         .logo img {
-            height: 48px;
+            height: 52px;
             width: auto;
             filter: brightness(1.3) contrast(1.1) saturate(1.2);
-            transition: var(--transition-medium);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             border-radius: var(--radius-sm);
+            position: relative;
+            z-index: 2;
         }
 
         .logo:hover {
-            transform: scale(1.08) translateY(-2px);
+            transform: scale(1.12) translateY(-3px) rotateY(5deg);
         }
 
         .logo:hover img {
-            filter: brightness(1.5) contrast(1.2) saturate(1.4);
-            box-shadow: var(--shadow-glow);
+            filter: brightness(1.6) contrast(1.3) saturate(1.5) hue-rotate(10deg);
+            box-shadow: 
+                0 20px 40px rgba(253, 189, 17, 0.4),
+                0 0 60px rgba(255, 107, 53, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: rotateX(10deg);
         }
 
+        /* Navigation avec effets liquides */
         .nav-links {
             display: flex;
             list-style: none;
             gap: var(--space-sm);
             align-items: center;
+            position: relative;
+        }
+
+        .nav-links::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-food);
+            transform: translateY(-50%) scaleX(0);
+            transition: transform 0.6s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links:hover::before {
+            transform: translateY(-50%) scaleX(1);
         }
 
         .nav-links li {
@@ -398,34 +590,53 @@
             font-weight: 500;
             font-size: 15px;
             border-radius: var(--radius-lg);
-            transition: var(--transition-medium);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .nav-links a::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--primary) 0%, var(--accent-orange) 50%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
             bottom: 0;
-            background: var(--bg-glass-light);
-            opacity: 0;
-            transition: var(--transition-fast);
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-food);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
         }
 
         .nav-links a:hover {
             color: var(--text-primary);
-            transform: translateY(-1px);
-        }
-
-        .nav-links a:hover::before {
-            opacity: 1;
-        }
-
-        .nav-links a:active {
-            transform: translateY(0);
+            transform: translateY(-2px) scale(1.05);
+            text-shadow: 0 4px 8px rgba(253, 189, 17, 0.3);
+            box-shadow: 0 10px 30px rgba(253, 189, 17, 0.2);
         }
 
         /* Main content */
@@ -692,6 +903,137 @@
             display: inline-block;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        /* Éléments 3D flottants révolutionnaires */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-orb {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--primary), transparent);
+            opacity: 0.1;
+            animation: floatOrb 20s infinite linear;
+            filter: blur(2px);
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 10%;
+            animation-duration: 25s;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            top: 60%;
+            right: 15%;
+            animation-duration: 18s;
+            animation-delay: -5s;
+            background: radial-gradient(circle at 30% 30%, var(--accent-orange), transparent);
+        }
+
+        .orb-3 {
+            bottom: 20%;
+            left: 20%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+            background: radial-gradient(circle at 30% 30%, var(--accent-red), transparent);
+        }
+
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translate(50px, -30px) rotate(90deg) scale(1.2);
+            }
+            50% {
+                transform: translate(-20px, -60px) rotate(180deg) scale(0.8);
+            }
+            75% {
+                transform: translate(-40px, 20px) rotate(270deg) scale(1.1);
+            }
+        }
+
+        .floating-food-3d {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.3;
+            animation: float3D 15s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .food-3d-1 {
+            top: 15%;
+            right: 20%;
+            animation-delay: 0s;
+        }
+
+        .food-3d-2 {
+            top: 50%;
+            left: 5%;
+            animation-delay: -3s;
+        }
+
+        .food-3d-3 {
+            bottom: 30%;
+            right: 10%;
+            animation-delay: -6s;
+        }
+
+        .food-3d-4 {
+            top: 70%;
+            left: 80%;
+            animation-delay: -9s;
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg) rotateY(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-20px) rotateX(10deg) rotateY(90deg) scale(1.1);
+            }
+            50% {
+                transform: translateY(-40px) rotateX(0deg) rotateY(180deg) scale(0.9);
+            }
+            75% {
+                transform: translateY(-20px) rotateX(-10deg) rotateY(270deg) scale(1.1);
+            }
+        }
+
+        .hologram-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(253, 189, 17, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(253, 189, 17, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 30s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
         }
 
         /* Categories style food court premium */
@@ -1826,7 +2168,13 @@
         </style>
     </head>
 <body>
-    <!-- Loading Screen -->
+    <!-- Curseur personnalisé -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Particules magiques -->
+    <div class="magic-particles" id="magicParticles"></div>
+    
+    <!-- Loading Screen révolutionnaire -->
     <div class="loading">
         <div class="spinner"></div>
     </div>
@@ -1889,6 +2237,18 @@
                 <div class="hero-trust">
                     <span>🚀 Plus de 1000 plats livrés cette semaine</span>
                 </div>
+            </div>
+            
+            <!-- Éléments 3D flottants -->
+            <div class="floating-elements">
+                <div class="floating-orb orb-1"></div>
+                <div class="floating-orb orb-2"></div>
+                <div class="floating-orb orb-3"></div>
+                <div class="floating-food-3d food-3d-1">🍔</div>
+                <div class="floating-food-3d food-3d-2">🍕</div>
+                <div class="floating-food-3d food-3d-3">🍟</div>
+                <div class="floating-food-3d food-3d-4">🥗</div>
+                <div class="hologram-grid"></div>
             </div>
         </section>
 
@@ -2699,6 +3059,194 @@
                 startARGame();
             }
         }
+
+        // === SYSTÈME D'EFFETS RÉVOLUTIONNAIRE ===
+
+        // Curseur personnalisé magique
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursor = document.querySelector('.custom-cursor');
+            const magicParticles = document.getElementById('magicParticles');
+            const header = document.querySelector('.header');
+            
+            // Suivre la souris
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+                
+                // Créer des particules de traînée
+                if (Math.random() < 0.3) {
+                    createTrailParticle(e.clientX, e.clientY);
+                }
+            });
+
+            // Effets hover sur les éléments interactifs
+            const interactiveElements = document.querySelectorAll('a, button, .restaurant-card, .category-btn');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('hover');
+                });
+            });
+
+            // Effet click
+            document.addEventListener('mousedown', () => {
+                cursor.classList.add('click');
+            });
+            document.addEventListener('mouseup', () => {
+                cursor.classList.remove('click');
+            });
+
+            // Générer des particules magiques
+            function createMagicParticles() {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.animationDelay = Math.random() * 15 + 's';
+                        magicParticles.appendChild(particle);
+                        
+                        // Supprimer après animation
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 20000);
+                    }, i * 500);
+                }
+            }
+
+            // Particules de traînée du curseur
+            function createTrailParticle(x, y) {
+                const trail = document.createElement('div');
+                trail.style.position = 'fixed';
+                trail.style.left = x + 'px';
+                trail.style.top = y + 'px';
+                trail.style.width = '4px';
+                trail.style.height = '4px';
+                trail.style.background = `hsl(${Math.random() * 60 + 30}, 100%, 60%)`;
+                trail.style.borderRadius = '50%';
+                trail.style.pointerEvents = 'none';
+                trail.style.zIndex = '9998';
+                trail.style.animation = 'trailFade 1s ease-out forwards';
+                document.body.appendChild(trail);
+                
+                setTimeout(() => trail.remove(), 1000);
+            }
+
+            // Animation de fondu pour les particules de traînée
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes trailFade {
+                    0% { opacity: 1; transform: scale(1); }
+                    100% { opacity: 0; transform: scale(0); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Démarrer les particules
+            createMagicParticles();
+            setInterval(createMagicParticles, 10000);
+
+            // Effet de scroll sur le header
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                
+                if (scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // Parallax léger sur les éléments flottants
+                const floatingElements = document.querySelectorAll('.floating-orb, .floating-food-3d');
+                floatingElements.forEach((el, index) => {
+                    const speed = (index + 1) * 0.5;
+                    el.style.transform = `translateY(${scrollY * speed}px)`;
+                });
+
+                // Debounce pour optimiser les performances
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    // Actions après l'arrêt du scroll
+                }, 150);
+            });
+
+            // Effets de parallax sur la souris pour le hero
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                document.addEventListener('mousemove', (e) => {
+                    const x = (e.clientX / window.innerWidth) * 100;
+                    const y = (e.clientY / window.innerHeight) * 100;
+                    
+                    const floatingOrbs = document.querySelectorAll('.floating-orb');
+                    floatingOrbs.forEach((orb, index) => {
+                        const speed = (index + 1) * 0.02;
+                        const moveX = (x - 50) * speed;
+                        const moveY = (y - 50) * speed;
+                        orb.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    });
+                });
+            }
+
+            // Animation d'apparition des cartes avec effet de vague
+            function animateCards() {
+                const cards = document.querySelectorAll('.restaurant-card');
+                cards.forEach((card, index) => {
+                    card.style.animationDelay = (index * 0.1) + 's';
+                    card.classList.add('wave-animation');
+                });
+            }
+
+            // Effet de secousse sur les éléments important
+            function addShakeEffect() {
+                const shakeElements = document.querySelectorAll('.hero-cta-primary, .card-cta');
+                shakeElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        el.style.animation = 'shake 0.5s ease-in-out';
+                    });
+                    el.addEventListener('animationend', () => {
+                        el.style.animation = '';
+                    });
+                });
+            }
+
+            // Animation de secousse
+            const shakeStyle = document.createElement('style');
+            shakeStyle.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0) translateY(-3px) scale(1.05); }
+                    25% { transform: translateX(-2px) translateY(-3px) scale(1.05); }
+                    75% { transform: translateX(2px) translateY(-3px) scale(1.05); }
+                }
+                @keyframes wave-animation {
+                    0% { transform: translateY(50px) rotateX(-10deg); opacity: 0; }
+                    100% { transform: translateY(0) rotateX(0deg); opacity: 1; }
+                }
+                .wave-animation {
+                    animation: wave-animation 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+                }
+            `;
+            document.head.appendChild(shakeStyle);
+
+            // Initialiser les effets
+            setTimeout(() => {
+                animateCards();
+                addShakeEffect();
+            }, 1000);
+
+            // Effet de respiration sur les badges
+            const badges = document.querySelectorAll('.card-badge');
+            badges.forEach(badge => {
+                badge.addEventListener('mouseenter', () => {
+                    badge.style.animation = 'pulse 0.6s ease-in-out infinite';
+                });
+                badge.addEventListener('mouseleave', () => {
+                    badge.style.animation = 'pulse 2s infinite';
+                });
+            });
+        });
     </script>
 </body>
 </html>
