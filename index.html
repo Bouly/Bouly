@@ -1381,7 +1381,7 @@
                 price: "12.90€",
                 category: "burgers",
                 image: "./img/6th-avenues-Yankee-menu.jpg",
-                model3d: "./models/test.fbx",
+                model3d: "./models/test.glb",
                 scale: "0.1 0.1 0.1",
                 realSize: "12cm x 12cm x 8cm"
             },
@@ -1496,160 +1496,18 @@
             'https://modelviewer.dev/shared-assets/environments/whipple_creek_regional_park_04_1k.hdr'
         ];
 
-        // Variables pour les fonctionnalités WOW
-        let analyticsVisible = false;
-        let presentationMode = false;
-        let liveActivityInterval;
-        let userInteractions = 0;
-        let totalViews = 0;
-
-        // Messages de notifications simulées
-        const notificationMessages = [
-            { name: "Marie L.", action: "vient de voir le Burger Classic en AR", time: "à l'instant" },
-            { name: "Thomas K.", action: "a exploré la Pizza Margherita", time: "il y a 2min" },
-            { name: "Sarah B.", action: "découvre le menu Asiatique", time: "il y a 1min" },
-            { name: "Alex D.", action: "teste l'AR du Steak Argentino", time: "il y a 30s" },
-            { name: "Julie M.", action: "navigue dans les catégories", time: "maintenant" },
-            { name: "Pierre R.", action: "utilise les contrôles AR", time: "il y a 45s" }
-        ];
-
         document.addEventListener('DOMContentLoaded', function() {
             renderRestaurants('all');
             setupCategoryFilters();
-            initializeWowFeatures();
-            startLiveActivity();
         });
 
-        // Initialisation des fonctionnalités WOW
-        function initializeWowFeatures() {
-            // Effet sonore visuel sur les clics
-            document.addEventListener('click', createSoundRipple);
-            
-            // Tracking des interactions
-            document.addEventListener('click', () => userInteractions++);
-            document.addEventListener('scroll', () => userInteractions++);
-            
-            // Mise à jour des analytics
-            setInterval(updateAnalytics, 3000);
-        }
-
-        // Effet visuel de clic
-        function createSoundRipple(e) {
-            const ripple = document.createElement('div');
-            ripple.className = 'sound-ripple';
-            ripple.style.left = (e.clientX - 40) + 'px';
-            ripple.style.top = (e.clientY - 40) + 'px';
-            document.body.appendChild(ripple);
-            
-            setTimeout(() => ripple.remove(), 600);
-        }
-
-        // Notifications live simulées
-        function showLiveNotification() {
-            const container = document.getElementById('liveNotifications');
-            const message = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
-            
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <div class="notification-avatar">${message.name.charAt(0)}</div>
-                    <div>
-                        <div class="notification-text"><strong>${message.name}</strong> ${message.action}</div>
-                        <div class="notification-time">${message.time}</div>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(notification);
-            
-            // Animation d'entrée
-            setTimeout(() => notification.classList.add('show'), 100);
-            
-            // Suppression après 4 secondes
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => notification.remove(), 400);
-            }, 4000);
-        }
-
-        // Analytics en temps réel
-        function updateAnalytics() {
-            if (!analyticsVisible) return;
-            
-            const activeUsers = document.getElementById('activeUsers');
-            const arViews = document.getElementById('arViews');
-            const engagement = document.getElementById('engagement');
-            const avgTime = document.getElementById('avgTime');
-            const conversion = document.getElementById('conversion');
-            
-            // Simulation de données en temps réel
-            const currentUsers = 247 + Math.floor(Math.random() * 20) - 10;
-            const currentViews = 1832 + Math.floor(Math.random() * 10);
-            const currentEngagement = 92 + Math.floor(Math.random() * 6);
-            
-            animateNumber(activeUsers, currentUsers);
-            animateNumber(arViews, currentViews);
-            animateNumber(engagement, currentEngagement, '%');
-        }
-
-        // Animation des nombres
-        function animateNumber(element, targetValue, suffix = '') {
-            const currentValue = parseInt(element.textContent) || 0;
-            const increment = (targetValue - currentValue) / 10;
-            let current = currentValue;
-            
-            const animation = setInterval(() => {
-                current += increment;
-                if ((increment > 0 && current >= targetValue) || (increment < 0 && current <= targetValue)) {
-                    current = targetValue;
-                    clearInterval(animation);
-                }
-                element.textContent = Math.round(current) + suffix;
-            }, 50);
-        }
-
-        // Mode présentation
-        function togglePresentationMode() {
-            presentationMode = !presentationMode;
-            if (presentationMode) {
-                document.body.style.cursor = 'none';
-                document.querySelector('.header').style.opacity = '0.3';
-            } else {
-                document.body.style.cursor = 'default';
-                document.querySelector('.header').style.opacity = '1';
-            }
-        }
-
-        // Toggle analytics
-        function toggleAnalytics() {
-            analyticsVisible = !analyticsVisible;
-            const panel = document.getElementById('analyticsPanel');
-            panel.classList.toggle('visible', analyticsVisible);
-            if (analyticsVisible) updateAnalytics();
-        }
-
-        // Simulation d'activité live
-        function startLiveActivity() {
-            liveActivityInterval = setInterval(showLiveNotification, 5000);
-        }
-
-        function simulateActivity() {
-            // Rafale de notifications
-            for (let i = 0; i < 3; i++) {
-                setTimeout(showLiveNotification, i * 1000);
-            }
-            
-            // Mise à jour forcée des analytics
-            setTimeout(updateAnalytics, 2000);
-        }
-
+        // Rendu des restaurants avec possibilité de filtrage
         function renderRestaurants(category) {
             const grid = document.getElementById('restaurantsGrid');
             const filteredDishes = category === 'all' ? dishes : dishes.filter(dish => dish.category === category);
             
             grid.innerHTML = filteredDishes.map((dish, index) => `
-                <div class="restaurant-card scroll-reveal" onclick="openARModal(${dish.id}); trackCardClick('${dish.name}')" style="animation-delay: ${index * 0.1}s">
+                <div class="restaurant-card scroll-reveal" onclick="openARModal(${dish.id})" style="animation-delay: ${index * 0.1}s">
                     <div style="position: relative;">
                         <model-viewer 
                             src="${dish.model3d || './models/burgertest.glb'}"
@@ -1677,7 +1535,7 @@
                         <h3 class="restaurant-name">${dish.name}</h3>
                         <p class="restaurant-description">${dish.description}</p>
                         <p class="restaurant-price price-counter">${dish.price}</p>
-                        <button class="ar-button" onclick="event.stopPropagation(); openARModal(${dish.id}); trackARView('${dish.name}')">
+                        <button class="ar-button" onclick="event.stopPropagation(); openARModal(${dish.id})">
                             <i class="fas fa-eye"></i>
                             VOIR EN AR
                         </button>
@@ -1693,42 +1551,6 @@
                     }, index * 100);
                 });
             }, 100);
-        }
-
-        // Tracking des interactions
-        function trackCardClick(dishName) {
-            totalViews++;
-            console.log(`🎯 Card clicked: ${dishName} (Total views: ${totalViews})`);
-        }
-
-        function trackARView(dishName) {
-            console.log(`🚀 AR View: ${dishName}`);
-            // Simulation notification
-            setTimeout(() => {
-                showCustomNotification(`Quelqu'un explore ${dishName} en AR !`);
-            }, 1000);
-        }
-
-        function showCustomNotification(message) {
-            const container = document.getElementById('liveNotifications');
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <div class="notification-avatar">🔥</div>
-                    <div>
-                        <div class="notification-text">${message}</div>
-                        <div class="notification-time">à l'instant</div>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(notification);
-            setTimeout(() => notification.classList.add('show'), 100);
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => notification.remove(), 400);
-            }, 3000);
         }
 
         function setupCategoryFilters() {
