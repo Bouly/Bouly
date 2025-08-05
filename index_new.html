@@ -12,9 +12,9 @@
         /* === VARIABLES GLOBALES PROFESSIONNELLES === */
         :root {
             /* Couleurs inspirées des grandes chaînes */
-            --primary-red: #FDBD11;
-            --primary-yellow: #FDBD11;
-            --secondary-red: #FDBD11;
+            --primary-red: #D62300;      /* Rouge McDonald's */
+            --primary-yellow: #FFC72C;   /* Jaune McDonald's */
+            --secondary-red: #E4002B;    /* Rouge KFC */
             --dark-text: #292929;        /* Texte foncé professionnel */
             --light-text: #666666;       /* Texte secondaire */
             --white: #FFFFFF;
@@ -68,8 +68,8 @@
             font-family: var(--font-family);
             font-weight: var(--font-weight-regular);
             line-height: 1.6;
-            color: #f3f3f3;
-            background: #FFDDAC;
+            color: var(--dark-text);
+            background-color: var(--white);
             overflow-x: hidden;
             cursor: auto;
         }
@@ -80,8 +80,8 @@
             top: 0;
             left: 0;
             right: 0;
-            background: #232526;
-            border-bottom: 1px solid #222;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-gray);
             z-index: 1000;
             transition: var(--transition-normal);
         }
@@ -114,7 +114,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #f3f3f3;
+            color: var(--dark-text);
             font-weight: var(--font-weight-medium);
             font-size: 15px;
             transition: var(--transition-fast);
@@ -122,7 +122,7 @@
         }
 
         .nav-links a:hover {
-            color: #FFA726;
+            color: var(--primary-red);
         }
 
         .nav-links a::after {
@@ -147,7 +147,7 @@
 
         /* === HERO SECTION CLEAN === */
         .hero-section {
-            background: #5E070F;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
             padding: var(--space-3xl) 0;
             text-align: center;
             position: relative;
@@ -164,22 +164,21 @@
 
         .hero-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #FDBD11 0%, #FDBD11 100%);
-            color: #232526;
+            background: var(--primary-red);
+            color: var(--white);
             padding: var(--space-sm) var(--space-lg);
-            border-radius: 50px;
+            border-radius: var(--radius-xl);
             font-size: 14px;
-            font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-semibold);
             margin-bottom: var(--space-lg);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
         }
 
         .hero-title {
             font-size: clamp(48px, 8vw, 72px);
             font-weight: var(--font-weight-black);
-            color: #FDBD11;
+            color: var(--dark-text);
             margin-bottom: var(--space-md);
             letter-spacing: -2px;
         }
@@ -208,7 +207,7 @@
             display: block;
             font-size: 32px;
             font-weight: var(--font-weight-black);
-            color: #FDBD11;
+            color: var(--primary-red);
             line-height: 1;
         }
 
@@ -229,18 +228,18 @@
         }
 
         .hero-cta-primary {
-            background: linear-gradient(135deg, #FDBD11 0%, #FDBD11 100%);
-            color: #232526;
+            background: var(--primary-red);
+            color: var(--white);
             padding: var(--space-lg) var(--space-xl);
-            border-radius: 50px;
+            border-radius: var(--radius-lg);
             text-decoration: none;
-            font-weight: var(--font-weight-bold);
+            font-weight: var(--font-weight-semibold);
             font-size: 16px;
             transition: var(--transition-normal);
             display: flex;
             align-items: center;
             gap: var(--space-sm);
-            box-shadow: 0 6px 20px rgba(214, 35, 0, 0.3);
+            box-shadow: var(--shadow-md);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: none;
@@ -248,146 +247,50 @@
         }
 
         .hero-cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(214, 35, 0, 0.4);
+            background: #B01F00;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .hero-cta-secondary {
-            background: linear-gradient(90deg, #FDBD11 0%, #FFA726 100%);
-            color: #232526;
-            border: none;
-            padding: var(--space-xl) var(--space-2xl);
-            border-radius: 60px;
-            font-weight: var(--font-weight-black);
-            font-size: 18px;
+            background: var(--white);
+            color: var(--primary-red);
+            border: 2px solid var(--primary-red);
+            padding: var(--space-lg) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: var(--transition-normal);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: var(--space-sm);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 32px rgba(253,189,17,0.25), 0 2px 8px rgba(255, 167, 38, 0.15);
-            position: relative;
-            overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
         .hero-cta-secondary:hover {
-            background: linear-gradient(90deg, #FFA726 0%, #FDBD11 100%);
-            color: #232526;
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 16px 48px rgba(253,189,17,0.35), 0 4px 16px rgba(255, 167, 38, 0.25);
-        }
-
-        /* === CARD SIMPLE UNICOLORE === */
-        .simple-burger-card {
-            background: radial-gradient(at center center, #FDB958 36%, #F79321 80%);
-            border-radius: 70px;
-            width: 300px;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            margin: 30px auto;
-            transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
-        }
-
-        .simple-burger-card .PG-product-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .simple-burger-card .PG-product-info {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: left 0.3s ease-in-out;
-            z-index: 2;
-        }
-
-        .simple-burger-card:hover .PG-product-info {
-            left: 0;
-        }
-
-        .simple-burger-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.8em;
-            color: #5E070F;
-            font-weight: 900;
-            text-align: center;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: absolute;
-            top: 20px;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .simple-burger-img {
-            width: 95%;
-            max-width: 280px;
-            height: auto;
-            object-fit: contain;
-            border-radius: 15px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .PG-product-description {
-            margin-top: 10%;
-            margin-bottom: 5%;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            color: #5E070F;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .PG-product-ingredients {
-            margin-top: 30%;
-            font-weight: 800;
-            color: #5E070F;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            background: var(--primary-red);
+            color: var(--white);
+            transform: translateY(-2px);
         }
 
         /* === CATEGORIES NAVIGATION === */
         .categories-section {
-            background: linear-gradient(135deg, rgba(24,24,24,0.85) 0%, rgba(35,37,38,0.85) 100%), url('./img/menu.jpg') center center/cover no-repeat;
-            padding: var(--space-2xl) 0;
+            background: var(--white);
+            padding: var(--space-xl) 0;
             border-bottom: 1px solid var(--border-gray);
         }
 
         .categories-nav {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-xl);
-            max-width: 1600px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: var(--space-2xl);
+            padding: 0 var(--space-lg);
+            display: flex;
+            gap: var(--space-md);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .categories-nav::-webkit-scrollbar {
@@ -395,306 +298,190 @@
         }
 
         .category-btn {
-            position: relative;
-            background: var(--white);
-            border: 2px solid var(--border-gray);
-            border-radius: var(--radius-xl);
+            background: var(--light-gray);
+            border: 1px solid var(--border-gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md) var(--space-lg);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-            height: 160px;
+            transition: var(--transition-fast);
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 0;
-            font-family: inherit;
-            box-shadow: var(--shadow-md);
-            user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-
-        .category-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, 
-                transparent 0%, 
-                rgba(0, 0, 0, 0.4) 40%, 
-                rgba(13, 13, 13, 0.9) 100%);
-            z-index: 2;
-            transition: var(--transition-normal);
-        }
-
-        .category-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-yellow) 100%);
-            opacity: 0;
-            transition: var(--transition-normal);
-            z-index: 1;
-        }
-
-        .category-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition-slow);
-            z-index: 1;
-            filter: brightness(1.1) contrast(1.2) saturate(1.3);
-        }
-
-        .category-label {
-            position: relative;
-            z-index: 3;
-            color: var(--white);
-            font-weight: var(--font-weight-black);
-            font-size: 16px;
-            text-align: center;
-            padding: var(--space-lg);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.8);
-            transition: var(--transition-normal);
-        }
-
-        .category-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            border-color: var(--primary-red);
-            box-shadow: var(--shadow-xl), 0 0 30px rgba(214, 35, 0, 0.3);
-        }
-
-        .category-btn:hover::after {
-            opacity: 0.2;
-        }
-
-        .category-btn:hover .category-image {
-            transform: scale(1.15);
-            filter: brightness(1.3) contrast(1.3) saturate(1.5);
-        }
-
-        .category-btn:hover .category-label {
-            color: var(--primary-yellow);
-            text-shadow: 0 0 20px rgba(255, 199, 44, 0.9);
+            align-items: center;
+            gap: var(--space-sm);
+            min-width: 120px;
+            white-space: nowrap;
         }
 
         .category-btn.active {
+            background: var(--primary-red);
             border-color: var(--primary-red);
-            box-shadow: 0 0 60px #FDBD11, 0 0 30px rgba(253,189,17,0.25);
-            transform: translateY(-12px) scale(1.08);
-            animation: glowCat 1.2s infinite alternate;
+            color: var(--white);
         }
 
-        @keyframes glowCat {
-            0% { box-shadow: 0 0 60px #FDBD11, 0 0 30px rgba(253,189,17,0.25); }
-            100% { box-shadow: 0 0 80px #FDBD11, 0 0 50px rgba(253,189,17,0.35); }
+        .category-btn:hover:not(.active) {
+            background: var(--border-gray);
         }
 
-        .category-btn.active::after {
-            opacity: 0.25;
+        .category-image {
+            width: 40px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
         }
 
-        .category-btn.active .category-label {
-            color: var(--primary-yellow);
-            text-shadow: 0 0 25px rgba(255, 199, 44, 1);
+        .category-label {
+            font-size: 12px;
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .category-btn.active .category-image {
-            transform: scale(1.2);
-            filter: brightness(1.4) contrast(1.4) saturate(1.6);
-        }
-
-        .category-btn:active {
-            transform: translateY(-4px) scale(1.02);
-        }
-
-        /* === GRID DES RESTAURANTS STYLE CRISPY === */
+        /* === GRID DES RESTAURANTS === */
         .restaurants-section {
-            background: #5E070F;
+            background: var(--light-gray);
             padding: var(--space-3xl) 0;
         }
 
         .restaurants-grid {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--space-lg);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: var(--space-2xl);
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-xl);
         }
 
-        /* === CARTES PRODUITS STYLE CRISPY BIELBI === */
+        /* === CARTES PRODUITS PROFESSIONNELLES === */
         .restaurant-card {
             background: var(--white);
-            border-radius: 32px;
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            transition: all 0.4s ease;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-normal);
             cursor: pointer;
-            border: none;
+            border: 1px solid var(--border-gray);
             position: relative;
-            display: flex;
-            flex-direction: row;
-            height: 280px;
-            min-height: 280px;
         }
 
         .restaurant-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
         }
 
         .card-image {
             position: relative;
-            width: 50%;
-            height: 100%;
+            height: 220px;
             overflow: hidden;
-            background: linear-gradient(135deg, #FF8F00 0%, #FFA726 50%, #FFB74D 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--space-lg);
-            border-radius: 32px 0 0 32px;
-            flex-shrink: 0;
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+
+        .restaurant-card:hover .restaurant-image {
+            transform: scale(1.05);
         }
 
         .card-badge {
             position: absolute;
-            top: 16px;
-            left: 16px;
-            background: var(--white);
-            color: var(--primary-red);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            top: var(--space-md);
+            left: var(--space-md);
+            background: var(--primary-red);
+            color: var(--white);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-size: 11px;
             font-weight: var(--font-weight-bold);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            z-index: 2;
         }
 
         .premium-indicators {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: var(--space-md);
+            right: var(--space-md);
             display: flex;
-            gap: 4px;
-            z-index: 2;
+            gap: 2px;
         }
 
         .quality-star {
-            color: #FFD700;
-            font-size: 14px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        .restaurant-image {
-            width: auto;
-            height: 75%;
-            max-width: 75%;
-            object-fit: contain;
-            transition: var(--transition-slow);
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
-        }
-
-        .restaurant-card:hover .restaurant-image {
-            transform: scale(1.08);
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.3));
+            color: var(--primary-yellow);
+            font-size: 12px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .card-content {
-            padding: var(--space-xl);
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            width: 50%;
+            padding: var(--space-lg);
         }
 
         .card-title {
-            font-size: 28px;
-            font-weight: var(--font-weight-black);
+            font-size: 20px;
+            font-weight: var(--font-weight-bold);
             color: var(--dark-text);
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-sm);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            line-height: 1.1;
         }
 
         .card-description {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--light-text);
             margin-bottom: var(--space-lg);
             line-height: 1.5;
-            flex: 1;
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-lg);
         }
 
         .card-price {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: var(--font-weight-black);
             color: var(--primary-red);
-            line-height: 1;
         }
 
         .card-cta {
             background: var(--primary-red);
             color: var(--white);
             border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: var(--font-weight-bold);
-            font-size: 13px;
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-fast);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(214, 35, 0, 0.3);
         }
 
         .card-cta:hover {
             background: #B01F00;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(214, 35, 0, 0.4);
         }
 
         .ar-game-btn {
-            background: linear-gradient(135deg, #FFA726 0%, #FF8F00 100%);
-            color: var(--white);
+            background: var(--primary-yellow);
+            color: var(--dark-text);
             border: none;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-weight: var(--font-weight-bold);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--radius-lg);
+            font-weight: var(--font-weight-semibold);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-fast);
             width: 100%;
-            font-size: 13px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
         }
 
         .ar-game-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 167, 38, 0.4);
+            background: #E6B429;
+            transform: translateY(-1px);
         }
 
         /* === MODAL AR PROFESSIONNEL === */
@@ -902,22 +689,6 @@
                 padding: 0 var(--space-md);
             }
             
-            .restaurant-card {
-                flex-direction: column;
-                height: auto;
-                min-height: auto;
-            }
-            
-            .card-image {
-                width: 100%;
-                height: 220px;
-                border-radius: 32px 32px 0 0;
-            }
-            
-            .card-content {
-                width: 100%;
-            }
-            
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -938,13 +709,13 @@
 
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            transition: all 0.6s cubic-bezier(0.4,0.2,0.2,1);
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
 
         .scroll-reveal.revealed {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         /* Loading Screen */
@@ -1214,7 +985,9 @@
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-content">
-                
+                <div class="hero-badge">
+                    🔥 NOUVEAU ! Expérience AR
+                </div>
                 <h1 class="hero-title">6AVENUES</h1>
                 <p class="hero-subtitle">
                     6 Restaurants - Une seule Adresse<br>
@@ -1235,14 +1008,13 @@
                     </div>
                 </div>
                 <div class="hero-actions">
-                    <!-- <a href="#menu" class="hero-cta-primary">
+                    <a href="#menu" class="hero-cta-primary">
                         <i class="fas fa-eye"></i>
                         <span>Découvrir en AR</span>
-                    </a> -->
-                    <!-- <button class="hero-cta-secondary" onclick="startQuickGame('Découverte')"> -->
-                    <button class="hero-cta-secondary">
+                    </a>
+                    <button class="hero-cta-secondary" onclick="startQuickGame('Découverte')">
                         <i class="fas fa-gift"></i>
-                        <span>Tenter de gagner du caca !</span>
+                        <span>Jouer pour gagner</span>
                     </button>
                 </div>
             </div>
@@ -1251,6 +1023,10 @@
         <!-- Categories Navigation -->
         <section class="categories-section">
             <div class="categories-nav">
+                <button class="category-btn active" data-category="all">
+                    <img src="./img/6th-AVENUES-butchery-fratelli-yankee-food-pollos-mexico-cook-asia-candy-bar-1-1024x80.png" alt="Tous" class="category-image">
+                    <span class="category-label">Tous</span>
+                </button>
                 <button class="category-btn" data-category="burgers">
                     <img src="./img/6th-avenues-Yankee-menu.jpg" alt="Burgers" class="category-image">
                     <span class="category-label">Burgers</span>
@@ -1275,22 +1051,6 @@
         </section>
 
         <!-- Restaurants Section -->
-        <!-- Card simple unicolore -->
-        <div class="simple-burger-card">
-            <div class="PG-product-content">
-                <h3 class="simple-burger-title">BURGER CHILI</h3>
-                <img src="./img/burger-300x233.png" alt="Burger Chili" class="simple-burger-img">
-            </div>
-            <div class="PG-product-info">
-                <h3 class="simple-burger-title">BURGER CHILI</h3>
-                <div class="PG-product-description">
-                    Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons rouges, sauce spéciale
-                </div>
-                <div class="PG-product-ingredients">
-                    Ingrédients: Bœuf, Salade, Tomate, Oignons, Sauce maison
-                </div>
-            </div>
-        </div>
         <section class="restaurants-section" id="menu">
             <div class="restaurants-grid" id="restaurantsGrid">
                 <!-- Les restaurants seront générés par JavaScript -->
@@ -1339,14 +1099,14 @@
             </model-viewer>
             
             <div class="ar-controls">
-                <!-- <button class="control-btn" onclick="resetModel()">
+                <button class="control-btn" onclick="resetModel()">
                     <i class="fas fa-undo"></i>
                     Reset
                 </button>
                 <button class="control-btn" onclick="toggleRotation()">
                     <i class="fas fa-pause"></i>
                     Pause
-                </button> -->
+                </button>
                 <button class="control-btn primary" onclick="startARGame()">
                     <i class="fas fa-gamepad"></i>
                     Mini-jeu AR
@@ -1398,7 +1158,7 @@
                 description: "Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons",
                 price: "12.90€",
                 category: "burgers",
-                image: "./img/burger-300x233.png",
+                image: "./img/6th-avenues-Yankee-menu.jpg",
                 model3d: "./models/burgertest.glb",
                 scale: "0.1 0.1 0.1",
                 badge: "BESTSELLER",
