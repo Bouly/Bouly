@@ -927,7 +927,7 @@
                 price: "12.90€",
                 category: "burgers",
                 image: "./img/burger-300x233.png",
-                model3d: "./models/burgertest.glb",
+                model3d: "./models/burgertest2.glb",
                 scale: "0.1 0.1 0.1",
                 badge: "BESTSELLER",
                 badgeColor: "#E53935"
@@ -1097,7 +1097,7 @@
             document.getElementById('modalPrice').textContent = currentDish.price;
 
             const modelViewer = document.getElementById('foodModel');
-            modelViewer.src = currentDish.model3d || './models/burgertest.glb';
+            modelViewer.src = currentDish.model3d || './models/burgertest2.glb';
             modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
 
             document.getElementById('arModal').classList.add('active');

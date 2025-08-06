@@ -17,7 +17,7 @@ const burgerModels = {
         fieldOfView: '60deg'
     },
     cheese: {
-        src: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb', // Remplacer par burger fromage
+        src: 'https://modelviewer.dev/shared-assets/models/burgertest2.glb', // Remplacer par burger fromage
         title: '🧀 Cheese Deluxe', 
         description: 'Pain brioche, steak, fromage fondu - 9.90€',
         poster: 'https://via.placeholder.com/400x400/FFD700/black?text=🧀',
