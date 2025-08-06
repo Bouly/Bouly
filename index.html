@@ -48,7 +48,7 @@
             --space-lg: 24px;
             --space-xl: 32px;
             --space-2xl: 48px;
-            --space-3xl: 64px;
+            --space-3xl: 100px;
             
             /* Rayons de bordure */
             --radius-sm: 4px;
@@ -351,6 +351,8 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: var(--space-3xl);
+            margin-bottom: var(--space-3xl);
+            padding-bottom: var(--space-3xl);
         }
 
         .hero-cta-primary {
@@ -1692,12 +1694,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Enhanced scroll effects
+            // Enhanced scroll effects (retardé pour encore plus d'espace)
             window.addEventListener('scroll', () => {
                 const header = document.querySelector('.header');
                 const scrollY = window.scrollY;
                 
-                if (scrollY > 50) {
+                if (scrollY > 800) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
