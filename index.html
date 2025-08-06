@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6AVENUES - Restaurant & Fast Food</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&family=Gettalk:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     
     <style>
+        /* === POLICES PERSONNALISEES === */
+        @font-face {
+            font-family: 'gettalk';
+            src: url('./fonts/Gettalk.otf') format('opentype');
+        }
+        
+        @font-face {
+            font-family: 'Kenyan Coffee';
+            src: url('./fonts/Kenyan Coffee Rg.otf') format('opentype');
+        }
+
         /* === VARIABLES GLOBALES PROFESSIONNELLES === */
         :root {
             /* Couleurs inspirées des grandes chaînes */
@@ -74,7 +85,7 @@
             cursor: auto;
         }
 
-        /* === HEADER PROFESSIONNEL === */
+        /* === HEADER CINÉMATIQUE === */
         .header {
             position: fixed;
             top: 0;
@@ -83,57 +94,71 @@
             background: #232526;
             border-bottom: 1px solid #222;
             z-index: 1000;
-            transition: var(--transition-normal);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .header.scrolled {
-            box-shadow: var(--shadow-md);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(247, 147, 33, 0.1);
+            background: #232526;
+            border-bottom-color: rgba(247, 147, 33, 0.4);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 var(--space-lg);
+            padding: 0 var(--space-xl);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 70px;
+            height: 80px;
         }
 
         .logo img {
-            height: 40px;
+            height: 50px;
             width: auto;
+            filter: drop-shadow(0 0 15px rgba(247, 147, 33, 0.4));
+            transition: all 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(247, 147, 33, 0.6));
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: var(--space-xl);
+            gap: var(--space-2xl);
             align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #f3f3f3;
-            font-weight: var(--font-weight-medium);
-            font-size: 15px;
-            transition: var(--transition-fast);
+            font-weight: var(--font-weight-semibold);
+            font-size: 16px;
+            transition: all 0.3s ease;
             position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .nav-links a:hover {
             color: #FFA726;
+            transform: translateY(-2px);
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -8px;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 3px;
             background: var(--primary-red);
-            transition: var(--transition-fast);
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover::after {
@@ -142,149 +167,269 @@
 
         /* === LAYOUT PRINCIPAL === */
         .main-content {
-            margin-top: 70px;
+            margin-top: 80px;
         }
 
-        /* === HERO SECTION CLEAN === */
+        /* === HERO SECTION CINÉMATIQUE === */
         .hero-section {
-            background: #5E070F;
+            background: radial-gradient(at center center, #ffd79c 10%, #f79321 70%, #5E070F 100%);
             padding: var(--space-3xl) 0;
             text-align: center;
             position: relative;
             overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 215, 156, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(247, 147, 33, 0.2) 0%, transparent 50%);
+            z-index: 1;
+            animation: heroGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 var(--space-lg);
             position: relative;
             z-index: 2;
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #FDBD11 0%, #FDBD11 100%);
-            color: #232526;
-            padding: var(--space-sm) var(--space-lg);
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: var(--font-weight-bold);
-            margin-bottom: var(--space-lg);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
+        .hero-logo {
+            margin-bottom: var(--space-2xl);
+            position: relative;
+        }
+
+        .hero-logo-img {
+            height: 120px;
+            width: auto;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 156, 0.6)) drop-shadow(0 0 60px rgba(247, 147, 33, 0.4));
+            transition: all 0.3s ease;
+        }
+
+        .hero-logo-img:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 40px rgba(255, 215, 156, 0.8)) drop-shadow(0 0 80px rgba(247, 147, 33, 0.6));
         }
 
         .hero-title {
-            font-size: clamp(48px, 8vw, 72px);
-            font-weight: var(--font-weight-black);
-            color: #FDBD11;
-            margin-bottom: var(--space-md);
-            letter-spacing: -2px;
+            position: relative;
+            margin-bottom: var(--space-2xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
         }
 
-        .hero-subtitle {
-            font-size: 20px;
-            color: var(--light-text);
-            margin-bottom: var(--space-xl);
-            line-height: 1.5;
-            font-weight: var(--font-weight-regular);
+        .hero-main-text {
+            font-family: 'gettalk';
+            font-size: clamp(80px, 12vw, 180px);
+            font-weight: normal;
+            color: #ffddac;
+            text-shadow: 4px 4px 8px rgba(94, 7, 15, 0.8);
+            letter-spacing: -4px;
+            position: relative;
+            z-index: 2;
+            animation: titleFloat 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleFloat {
+            0% { 
+                transform: translateY(0px) scale(1);
+            }
+            100% { 
+                transform: translateY(-15px) scale(1.02);
+            }
+        }
+
+        .hero-sub-text {
+            font-family: 'Kenyan Coffee';
+            font-size: clamp(50px, 8vw, 100px);
+            font-weight: bold;
+            color: #5E070F;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(255, 221, 172, 0.8);
+            letter-spacing: 8px;
+            position: relative;
+            z-index: 1;
+            margin-top: -30px;
+        }
+
+        .hero-tagline {
+            font-size: clamp(18px, 3vw, 28px);
+            color: #ffddac;
+            margin-bottom: var(--space-2xl);
+            line-height: 1.6;
+            font-weight: var(--font-weight-medium);
+            text-shadow: 2px 2px 4px rgba(94, 7, 15, 0.7);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: 1px;
         }
 
         .hero-stats {
             display: flex;
             justify-content: center;
-            gap: var(--space-xl);
-            margin-bottom: var(--space-xl);
+            gap: var(--space-3xl);
+            margin-bottom: var(--space-3xl);
             flex-wrap: wrap;
         }
 
         .stat {
             text-align: center;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 32px;
-            font-weight: var(--font-weight-black);
-            color: #FDBD11;
-            line-height: 1;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: var(--light-text);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: var(--font-weight-medium);
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: var(--space-lg);
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: var(--space-xl);
-        }
-
-        .hero-cta-primary {
-            background: linear-gradient(135deg, #FDBD11 0%, #FDBD11 100%);
-            color: #232526;
-            padding: var(--space-lg) var(--space-xl);
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: var(--font-weight-bold);
-            font-size: 16px;
-            transition: var(--transition-normal);
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-            box-shadow: 0 6px 20px rgba(214, 35, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .hero-cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(214, 35, 0, 0.4);
-        }
-
-        .hero-cta-secondary {
-            background: linear-gradient(90deg, #FDBD11 0%, #FFA726 100%);
-            color: #232526;
-            border: none;
-            padding: var(--space-xl) var(--space-2xl);
-            border-radius: 60px;
-            font-weight: var(--font-weight-black);
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 32px rgba(253,189,17,0.25), 0 2px 8px rgba(255, 167, 38, 0.15);
+            background: radial-gradient(at center center, rgba(255, 215, 156, 0.2) 20%, rgba(247, 147, 33, 0.1) 80%);
+            padding: var(--space-2xl) var(--space-xl);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 221, 172, 0.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 180px;
             position: relative;
             overflow: hidden;
         }
 
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .stat:hover::before {
+            left: 100%;
+        }
+
+        .stat:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(247, 147, 33, 0.4);
+            border-color: rgba(255, 221, 172, 0.6);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 54px;
+            font-weight: var(--font-weight-black);
+            color: #ffddac;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(94, 7, 15, 0.8);
+            font-family: 'Kenyan Coffee';
+            margin-bottom: var(--space-sm);
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #ffd79c;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: var(--font-weight-bold);
+            text-shadow: 1px 1px 2px rgba(94, 7, 15, 0.6);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-2xl);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: var(--space-3xl);
+        }
+
+        .hero-cta-primary {
+            background: radial-gradient(at center center, #ffd79c 36%, #f79321 80%);
+            color: #5E070F;
+            padding: var(--space-xl) var(--space-3xl);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: var(--font-weight-black);
+            font-size: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            box-shadow: 0 8px 32px rgba(247, 147, 33, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 3px solid #ffddac;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .hero-cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta-primary:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(247, 147, 33, 0.6);
+            border-color: #ffffff;
+        }
+
+        .hero-cta-secondary {
+            background: linear-gradient(135deg, rgba(94, 7, 15, 0.9) 0%, rgba(139, 12, 22, 0.9) 100%);
+            color: #ffddac;
+            border: 3px solid #ffd79c;
+            padding: var(--space-xl) var(--space-3xl);
+            border-radius: 50px;
+            font-weight: var(--font-weight-black);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 32px rgba(94, 7, 15, 0.4);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
         .hero-cta-secondary:hover {
-            background: linear-gradient(90deg, #FFA726 0%, #FDBD11 100%);
-            color: #232526;
-            transform: translateY(-6px) scale(1.04);
-            box-shadow: 0 16px 48px rgba(253,189,17,0.35), 0 4px 16px rgba(255, 167, 38, 0.25);
+            background: linear-gradient(135deg, rgba(139, 12, 22, 0.9) 0%, rgba(94, 7, 15, 0.9) 100%);
+            color: #ffffff;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(94, 7, 15, 0.6);
+            border-color: #ffffff;
         }
 
         /* === CARD SIMPLE UNICOLORE === */
         .simple-burger-card {
-            background: radial-gradient(at center center, #FDB958 36%, #F79321 80%);
-            border-radius: 70px;
-            width: 300px;
-            height: 400px;
+            background: radial-gradient(at center center, #ffd79c 36%, #f79321 80%);
+            border-radius: 45px;
+            width: 380px;
+            height: 420px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
@@ -300,9 +445,6 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px 20px;
             transition: transform 0.3s ease;
         }
 
@@ -313,11 +455,8 @@
             width: 100%;
             height: 100%;
             background: inherit;
-            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             transition: left 0.3s ease-in-out;
             z-index: 2;
         }
@@ -326,32 +465,58 @@
             left: 0;
         }
 
+        /* Position the titles at the top */
         .simple-burger-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.8em;
-            color: #5E070F;
-            font-weight: 900;
-            text-align: center;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             position: absolute;
             top: 20px;
             left: 0;
             width: 100%;
             z-index: 1;
+            text-align: center;
+            margin-bottom: 0;
+            display: block;
+            height: 80px;
         }
 
+        .burger-text {
+            width: 100%;
+            font-family: gettalk;
+            font-size: 60px;
+            font-weight: normal;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-bottom: 0;
+            color: #ffddac;
+            z-index: 2;
+        }
+
+        .chili-text {
+            width: 100%;
+            font-family: 'Kenyan Coffee';
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration: solid;
+            margin-bottom: 0;
+            color: #5e070f;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Position the image at the bottom */
         .simple-burger-img {
-            width: 95%;
-            max-width: 280px;
-            height: auto;
-            object-fit: contain;
-            border-radius: 15px;
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            object-fit: contain;
+            width: 120%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
         }
 
         .PG-product-description {
@@ -363,6 +528,7 @@
             color: #5E070F;
             font-weight: 500;
             line-height: 1.4;
+            padding: 0 20px;
         }
 
         .PG-product-ingredients {
@@ -372,6 +538,136 @@
             text-align: center;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
+            padding: 0 20px;
+        }
+
+        /* === ABOUT SECTION === */
+        .about-section {
+            background: #FFDDAC;
+            padding: var(--space-3xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-title {
+            position: relative;
+            margin-bottom: var(--space-3xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .about-text {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .about-text p {
+            font-size: 22px;
+            color: #5E070F;
+            line-height: 1.8;
+            margin-bottom: var(--space-2xl);
+            font-weight: var(--font-weight-medium);
+            letter-spacing: 0.5px;
+        }
+
+        .about-text strong {
+            color: #f79321;
+            font-weight: var(--font-weight-black);
+        }
+
+        /* === CONTACT SECTION === */
+        .contact-section {
+            background: radial-gradient(at center center, #ffd79c 10%, #f79321 70%, #5E070F 100%);
+            padding: var(--space-3xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-title {
+            position: relative;
+            margin-bottom: var(--space-3xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-3xl);
+            margin-top: var(--space-3xl);
+        }
+
+        .contact-item {
+            background: radial-gradient(at center center, rgba(255, 215, 156, 0.2) 20%, rgba(247, 147, 33, 0.1) 80%);
+            padding: var(--space-2xl);
+            border-radius: 25px;
+            border: 2px solid rgba(255, 221, 172, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 12px 32px rgba(247, 147, 33, 0.4);
+            border-color: rgba(255, 221, 172, 0.6);
+        }
+
+        .contact-item i {
+            font-size: 40px;
+            color: #ffddac;
+            background: rgba(94, 7, 15, 0.8);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item h3 {
+            font-size: 22px;
+            color: #ffddac;
+            margin-bottom: var(--space-md);
+            font-family: 'Kenyan Coffee';
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-item p {
+            font-size: 18px;
+            color: #ffd79c;
+            line-height: 1.6;
+            font-weight: var(--font-weight-medium);
         }
 
         /* === CATEGORIES NAVIGATION === */
@@ -520,7 +816,7 @@
 
         /* === GRID DES RESTAURANTS STYLE CRISPY === */
         .restaurants-section {
-            background: #5E070F;
+            background: #FFDDAC;
             padding: var(--space-3xl) 0;
         }
 
@@ -529,8 +825,9 @@
             margin: 0 auto;
             padding: 0 var(--space-lg);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: var(--space-2xl);
+            justify-items: center;
         }
 
         /* === CARTES PRODUITS STYLE CRISPY BIELBI === */
@@ -815,12 +1112,13 @@
             background: #B01F00;
         }
 
-        /* === FOOTER CLEAN === */
+        /* === FOOTER === */
         .footer {
             background: var(--dark-text);
             color: var(--white);
-            padding: var(--space-xl) 0;
+            padding: var(--space-2xl) 0;
             text-align: center;
+            position: relative;
         }
 
         .footer-content {
@@ -832,95 +1130,152 @@
             align-items: center;
             flex-wrap: wrap;
             gap: var(--space-lg);
+            position: relative;
+            z-index: 1;
         }
 
         .footer-text {
-            font-size: 14px;
+            font-size: 16px;
             color: #CCCCCC;
+            font-weight: var(--font-weight-medium);
         }
 
         .footer-text a {
             color: var(--primary-yellow);
             text-decoration: none;
+            font-weight: var(--font-weight-bold);
+            transition: all 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: #ffffff;
         }
 
         .social-links {
             display: flex;
-            gap: var(--space-md);
+            gap: var(--space-lg);
         }
 
         .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: var(--light-text);
             color: var(--white);
             border-radius: 50%;
             text-decoration: none;
-            transition: var(--transition-fast);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 20px;
         }
 
         .social-link:hover {
             background: var(--primary-red);
-            transform: translateY(-2px);
+            transform: translateY(-5px) scale(1.1);
         }
 
-        /* === RESPONSIVE === */
+        /* === RESPONSIVE PREMIUM === */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
             
-            .hero-title {
+            .nav-container {
+                height: 70px;
+                padding: 0 var(--space-lg);
+            }
+            
+            .main-content {
+                margin-top: 70px;
+            }
+            
+            .hero-main-text {
+                font-size: clamp(50px, 12vw, 100px);
+            }
+            
+            .hero-sub-text {
+                font-size: clamp(30px, 8vw, 60px);
+            }
+            
+            .hero-tagline {
+                font-size: 16px;
+                padding: 0 var(--space-md);
+            }
+            
+            .hero-stats {
+                gap: var(--space-lg);
+                margin-bottom: var(--space-2xl);
+            }
+            
+            .stat {
+                min-width: 120px;
+                padding: var(--space-lg);
+            }
+            
+            .stat-number {
                 font-size: 36px;
             }
             
-            .hero-subtitle {
-                font-size: 16px;
+            .stat-label {
+                font-size: 12px;
             }
             
             .hero-actions {
                 flex-direction: column;
                 align-items: center;
+                gap: var(--space-lg);
             }
             
             .hero-cta-primary,
             .hero-cta-secondary {
                 width: 100%;
-                max-width: 280px;
+                max-width: 300px;
                 justify-content: center;
+                padding: var(--space-lg) var(--space-xl);
+                font-size: 16px;
             }
             
-            .categories-nav {
-                padding: 0 var(--space-md);
+            .hero-logo-img {
+                height: 80px;
             }
             
-            .restaurants-grid {
+            .about-text p {
+                font-size: 16px;
+            }
+            
+            .contact-info {
                 grid-template-columns: 1fr;
-                padding: 0 var(--space-md);
+                gap: var(--space-lg);
             }
             
-            .restaurant-card {
+            .contact-item {
                 flex-direction: column;
-                height: auto;
-                min-height: auto;
+                text-align: center;
+                gap: var(--space-md);
+                padding: var(--space-lg);
             }
             
-            .card-image {
-                width: 100%;
-                height: 220px;
-                border-radius: 32px 32px 0 0;
-            }
-            
-            .card-content {
-                width: 100%;
+            .contact-item i {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
             }
             
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+                gap: var(--space-md);
+            }
+            
+            .social-links {
+                gap: var(--space-md);
+            }
+            
+            .social-link {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
             }
         }
 
@@ -959,21 +1314,23 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            transition: all 0.5s ease;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .loading.hidden {
             opacity: 0;
             pointer-events: none;
+            transform: scale(0.9);
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid var(--border-gray);
-            border-top: 3px solid var(--primary-red);
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--border-gray);
+            border-top: 4px solid var(--primary-red);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            position: relative;
         }
 
         @keyframes spin {
@@ -1200,7 +1557,7 @@
             </a>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="menu.html">Menu</a></li>
                     <li><a href="#about">À propos</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="https://6avenues.com/" target="_blank">Site Principal</a></li>
@@ -1214,86 +1571,103 @@
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="./img/6avenues-logo-1.png" alt="6AVENUES" class="hero-logo-img" />
+                </div>
                 
-                <h1 class="hero-title">6AVENUES</h1>
-                <p class="hero-subtitle">
-                    6 Restaurants - Une seule Adresse<br>
-                    <strong>Découvrez nos plats en Réalité Augmentée</strong>
+                <h1 class="hero-title">
+                    <!-- <span class="hero-main-text">6AVENUES</span> -->
+                    <!-- <span class="hero-sub-text">EXPERIENCE</span> -->
+                </h1>
+                <p class="hero-tagline">
+                    <strong>6 RESTAURANTS • UNE RÉVOLUTION</strong><br>
+                    Plongez dans une expérience culinaire révolutionnaire où la gastronomie rencontre la technologie de pointe.
                 </p>
                 <div class="hero-stats">
                     <div class="stat">
-                        <span class="stat-number">10K+</span>
-                        <span class="stat-label">Clients satisfaits</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5★</span>
-                        <span class="stat-label">Note moyenne</span>
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Univers Culinaires</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">AR</span>
-                        <span class="stat-label">Technologie unique</span>
+                        <span class="stat-label">Tech Immersive</span>
                     </div>
+                    <!-- <div class="stat"> -->
+                        <!-- <span class="stat-number">∞</span> -->
+                        <!-- <span class="stat-label">Possibilités</span> -->
+                    <!-- </div> -->
                 </div>
                 <div class="hero-actions">
-                    <!-- <a href="#menu" class="hero-cta-primary">
-                        <i class="fas fa-eye"></i>
-                        <span>Découvrir en AR</span>
-                    </a> -->
-                    <!-- <button class="hero-cta-secondary" onclick="startQuickGame('Découverte')"> -->
+                    <a href="menu.html" class="hero-cta-primary">
+                        <i class="fas fa-rocket"></i>
+                        <span>EXPLORER MAINTENANT</span>
+                    </a>
                     <button class="hero-cta-secondary">
-                        <i class="fas fa-gift"></i>
-                        <span>Tenter de gagner du caca !</span>
+                        <i class="fas fa-gamepad"></i>
+                        <span>MODE AR GAMING</span>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- Categories Navigation -->
-        <section class="categories-section">
-            <div class="categories-nav">
-                <button class="category-btn" data-category="burgers">
-                    <img src="./img/6th-avenues-Yankee-menu.jpg" alt="Burgers" class="category-image">
-                    <span class="category-label">Burgers</span>
-                </button>
-                <button class="category-btn" data-category="pizzas">
-                    <img src="./img/6th-avenues-FRATELLI-menu.jpg" alt="Pizzas" class="category-image">
-                    <span class="category-label">Pizzas</span>
-                </button>
-                <button class="category-btn" data-category="asiatique">
-                    <img src="./img/6th-avenues-Asia-menu.jpg" alt="Asiatique" class="category-image">
-                    <span class="category-label">Asiatique</span>
-                </button>
-                <button class="category-btn" data-category="sandwichs">
-                    <img src="./img/6th-avenues-los-pollos-menu.jpg" alt="Sandwichs" class="category-image">
-                    <span class="category-label">Sandwichs</span>
-                </button>
-                <button class="category-btn" data-category="desserts">
-                    <img src="./img/6th-avenues-CANDY-Bar-menu.jpg" alt="Desserts" class="category-image">
-                    <span class="category-label">Desserts</span>
-                </button>
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="about-content">
+                <h2 class="about-title">
+                    <span class="hero-main-text">À PROPOS</span>
+                    <span class="hero-sub-text">6AVENUES</span>
+                </h2>
+                <div class="about-text">
+                    <p>6AVENUES réunit 6 restaurants différents sous un même toit. Chaque cuisine a sa spécialité, son identité, mais tous partagent la même passion : vous offrir une expérience culinaire unique.</p>
+                    <p>Nous sommes fiers d'être les premiers à intégrer la <strong>Réalité Augmentée</strong> dans l'expérience restaurant, vous permettant de visualiser vos plats avant de commander.</p>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">6</span>
+                        <span class="stat-label">Restaurants</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Plats différents</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">AR</span>
+                        <span class="stat-label">Innovation Tech</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Restaurants Section -->
-        <!-- Card simple unicolore -->
-        <div class="simple-burger-card">
-            <div class="PG-product-content">
-                <h3 class="simple-burger-title">BURGER CHILI</h3>
-                <img src="./img/burger-300x233.png" alt="Burger Chili" class="simple-burger-img">
-            </div>
-            <div class="PG-product-info">
-                <h3 class="simple-burger-title">BURGER CHILI</h3>
-                <div class="PG-product-description">
-                    Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons rouges, sauce spéciale
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-content">
+                <h2 class="contact-title">
+                    <span class="hero-main-text">NOUS</span>
+                    <span class="hero-sub-text">CONTACTER</span>
+                </h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Adresse</h3>
+                            <p>123 Avenue des Saveurs<br>75001 Paris</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Téléphone</h3>
+                            <p>01 23 45 67 89</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Horaires</h3>
+                            <p>Tous les jours<br>11h30 - 23h00</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="PG-product-ingredients">
-                    Ingrédients: Bœuf, Salade, Tomate, Oignons, Sauce maison
-                </div>
-            </div>
-        </div>
-        <section class="restaurants-section" id="menu">
-            <div class="restaurants-grid" id="restaurantsGrid">
-                <!-- Les restaurants seront générés par JavaScript -->
             </div>
         </section>
     </main>
@@ -1316,570 +1690,120 @@
         </div>
     </footer>
 
-    <!-- Modal AR -->
-    <div id="arModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeARModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 id="modalTitle" class="modal-title">PLAT</h2>
-            <p id="modalDescription" class="modal-description">Description</p>
-            <p id="modalPrice" class="modal-price">Prix</p>
-            
-            <model-viewer 
-                id="foodModel"
-                camera-controls 
-                auto-rotate 
-                ar 
-                ar-scale="auto"
-                ar-placement="floor"
-                shadow-intensity="1"
-                tone-mapping="neutral"
-                exposure="1">
-            </model-viewer>
-            
-            <div class="ar-controls">
-                <!-- <button class="control-btn" onclick="resetModel()">
-                    <i class="fas fa-undo"></i>
-                    Reset
-                </button>
-                <button class="control-btn" onclick="toggleRotation()">
-                    <i class="fas fa-pause"></i>
-                    Pause
-                </button> -->
-                <button class="control-btn primary" onclick="startARGame()">
-                    <i class="fas fa-gamepad"></i>
-                    Mini-jeu AR
-                </button>
-            </div>
-            
-            <!-- Interface du jeu AR -->
-            <div class="ar-game-overlay" id="arGameOverlay">
-                <div class="game-hud">
-                    <div class="score-display">
-                        <i class="fas fa-star"></i> Score: <span id="gameScore">0</span>
-                    </div>
-                    <div class="timer-display">
-                        <i class="fas fa-clock"></i> Temps: <span id="gameTimer">30</span>s
-                    </div>
-                </div>
-                <div class="game-instructions" id="gameInstructions">
-                    🎯 Attrapez les ingrédients qui tombent !<br>
-                    Plus vous en attrapez, plus vous gagnez de récompenses !
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de résultats du jeu -->
-    <div id="gameResultModal" class="game-result-modal">
-        <div class="game-result-content">
-            <h2 class="game-result-title">🎊 Résultats du jeu</h2>
-            <div class="final-score" id="finalScore">0</div>
-            <div class="reward-announcement" id="rewardAnnouncement"></div>
-            <div class="reward-code" id="rewardCode"></div>
-            <div class="game-actions">
-                <button class="game-btn primary" onclick="closeGameResult()">
-                    <i class="fas fa-trophy"></i> Super !
-                </button>
-                <button class="game-btn secondary" onclick="restartGame()">
-                    <i class="fas fa-redo"></i> Rejouer
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Configuration des plats
-        const dishes = [
-            {
-                id: 1,
-                name: "Burger Classic",
-                description: "Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons",
-                price: "12.90€",
-                category: "burgers",
-                image: "./img/burger-300x233.png",
-                model3d: "./models/burgertest.glb",
-                scale: "0.1 0.1 0.1",
-                badge: "BESTSELLER",
-                badgeColor: "#E53935"
-            },
-            {
-                id: 2,
-                name: "Pizza Margherita",
-                description: "Sauce tomate artisanale, mozzarella di bufala, basilic frais",
-                price: "14.50€",
-                category: "pizzas",
-                image: "./img/6th-avenues-FRATELLI-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.08 0.08 0.08",
-                badge: "POPULAIRE",
-                badgeColor: "#FF8F00"
-            },
-            {
-                id: 3,
-                name: "Bo Bun Bœuf",
-                description: "Vermicelles de riz, bœuf grillé, légumes frais, nems, sauce nuoc-mam",
-                price: "16.90€",
-                category: "asiatique",
-                image: "./img/6th-avenues-Asia-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.12 0.12 0.12"
-            },
-            {
-                id: 4,
-                name: "Pizza Rimini",
-                description: "Sauce tomate, mozzarella, jambon de Parme, roquette, parmesan",
-                price: "18.50€",
-                category: "pizzas",
-                image: "./img/6th-avenues-FRATELLI-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.08 0.08 0.08"
-            },
-            {
-                id: 5,
-                name: "Pizza Chèvre Miel",
-                description: "Crème fraîche, mozzarella, fromage de chèvre, miel, noix",
-                price: "17.90€",
-                category: "pizzas",
-                image: "./img/6th-avenues-FRATELLI-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.08 0.08 0.08",
-                badge: "NOUVEAU",
-                badgeColor: "#4CAF50"
-            },
-            {
-                id: 6,
-                name: "Sandwich Monsieur Lee",
-                description: "Pain de mie grillé, poulet mariné, crudités, sauce spéciale",
-                price: "11.90€",
-                category: "sandwichs",
-                image: "./img/6th-avenues-los-pollos-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.1 0.1 0.1"
-            },
-            {
-                id: 7,
-                name: "Pad Thaï Crevettes",
-                description: "Nouilles de riz sautées, crevettes fraîches, légumes croquants, cacahuètes",
-                price: "16.90€",
-                category: "asiatique",
-                image: "./img/6th-avenues-Asia-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.12 0.12 0.12",
-                badge: "BESTSELLER",
-                badgeColor: "#E53935"
-            },
-            {
-                id: 8,
-                name: "Tiramisu Maison",
-                description: "Mascarpone, café espresso, cacao pur, biscuits cuillère",
-                price: "7.50€",
-                category: "desserts",
-                image: "./img/6th-avenues-CANDY-Bar-menu.jpg",
-                model3d: "./models/burgertest.glb",
-                scale: "0.08 0.08 0.08"
-            }
-        ];
-
-        let currentDish = null;
-        let autoRotateEnabled = true;
-        let gameActive = false;
-        let gameScore = 0;
-        let gameTimer = 30;
-        let gameInterval;
-        let ingredientInterval;
-        let currentGameDish = null;
-
-        // Ingrédients pour le jeu
-        const gameIngredients = [
-            { emoji: '🍔', points: 10, name: 'burger' },
-            { emoji: '🍟', points: 5, name: 'frites' },
-            { emoji: '🍕', points: 8, name: 'pizza' },
-            { emoji: '🥗', points: 6, name: 'salade' },
-            { emoji: '🍤', points: 12, name: 'crevette' },
-            { emoji: '🥩', points: 15, name: 'steak' },
-            { emoji: '🧀', points: 7, name: 'fromage' },
-            { emoji: '🍅', points: 4, name: 'tomate' }
-        ];
-
-        // Système de récompenses
-        const gameRewards = [
-            { minScore: 0, maxScore: 49, reward: "Code promo : RETRY10", description: "10% de réduction sur votre prochaine commande" },
-            { minScore: 50, maxScore: 99, reward: "Code promo : FRITES50", description: "Portion de frites GRATUITE !" },
-            { minScore: 100, maxScore: 149, reward: "Code promo : BURGER20", description: "20% de réduction sur tous les burgers" },
-            { minScore: 150, maxScore: 199, reward: "Code promo : DRINK100", description: "Boisson GRATUITE avec votre menu" },
-            { minScore: 200, maxScore: 299, reward: "Code promo : DESSERT100", description: "Dessert GRATUIT de votre choix" },
-            { minScore: 300, maxScore: 499, reward: "Code promo : MENU30", description: "30% sur un menu complet" },
-            { minScore: 500, maxScore: 999, reward: "Code promo : PLAT100", description: "PLAT PRINCIPAL GRATUIT !" },
-            { minScore: 1000, maxScore: 9999, reward: "Code promo : VIP50", description: "50% sur TOUTE votre commande !" }
-        ];
-
         document.addEventListener('DOMContentLoaded', function() {
-            renderRestaurants('all');
-            setupCategoryFilters();
-            
-            // Header scroll effect
+            // Enhanced scroll effects
             window.addEventListener('scroll', () => {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 50) {
+                const scrollY = window.scrollY;
+                
+                if (scrollY > 50) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
                 }
+                
+                // Parallax effect for hero section
+                const heroContent = document.querySelector('.hero-content');
+                if (heroContent && scrollY < window.innerHeight) {
+                    const parallaxSpeed = scrollY * 0.5;
+                    heroContent.style.transform = `translateY(${parallaxSpeed}px)`;
+                }
             });
             
-            // Loading screen
+            // Loading screen with enhanced animation
             setTimeout(() => {
                 const loading = document.querySelector('.loading');
                 if (loading) {
-                    loading.classList.add('hidden');
-                    setTimeout(() => loading.remove(), 500);
+                    loading.style.opacity = '0';
+                    loading.style.transform = 'scale(0.9)';
+                    setTimeout(() => loading.remove(), 800);
                 }
-            }, 1000);
-        });
+            }, 1500);
 
-        function renderRestaurants(category) {
-            const grid = document.getElementById('restaurantsGrid');
-            const filteredDishes = category === 'all' ? dishes : dishes.filter(dish => dish.category === category);
-            
-            grid.innerHTML = filteredDishes.map((dish, index) => `
-                <div class="restaurant-card scroll-reveal" onclick="openARModal(${dish.id})" style="animation-delay: ${index * 0.1}s">
-                    <div class="card-image">
-                        <img src="${dish.image}" alt="${dish.name}" class="restaurant-image">
-                        ${dish.badge ? `<div class="card-badge" style="background-color: ${dish.badgeColor}">${dish.badge}</div>` : ''}
-                        <div class="premium-indicators">
-                            <span class="quality-star">⭐</span>
-                            <span class="quality-star">⭐</span>
-                            <span class="quality-star">⭐</span>
-                            <span class="quality-star">⭐</span>
-                            <span class="quality-star">⭐</span>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">${dish.name}</h3>
-                        <p class="card-description">${dish.description}</p>
-                        <div class="card-footer">
-                            <span class="card-price">${dish.price}</span>
-                            <button class="card-cta" onclick="event.stopPropagation(); openARModal(${dish.id})">
-                                Voir en AR
-                            </button>
-                        </div>
-                        <div style="margin-top: 15px;">
-                            <button class="ar-game-btn" onclick="event.stopPropagation(); startQuickGame('${dish.name}')">
-                                <i class="fas fa-gamepad"></i>
-                                Jouer pour gagner
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Trigger scroll reveal animation
-            setTimeout(() => {
-                document.querySelectorAll('.scroll-reveal').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('revealed');
-                    }, index * 100);
-                });
-            }, 100);
-        }
-
-        function setupCategoryFilters() {
-            const categoryBtns = document.querySelectorAll('.category-btn');
-            categoryBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    categoryBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    renderRestaurants(this.dataset.category);
+            // Enhanced smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const headerHeight = document.querySelector('.header').offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 });
             });
-        }
 
-        function openARModal(dishId) {
-            currentDish = dishes.find(dish => dish.id === dishId);
-            if (!currentDish) return;
+            // Enhanced scroll reveal with stagger effect
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
 
-            document.getElementById('modalTitle').textContent = currentDish.name;
-            document.getElementById('modalDescription').textContent = currentDish.description;
-            document.getElementById('modalPrice').textContent = currentDish.price;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, index * 100); // Stagger animation
+                    }
+                });
+            }, observerOptions);
 
-            const modelViewer = document.getElementById('foodModel');
-            modelViewer.src = currentDish.model3d || './models/burgertest.glb';
-            modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
+            // Observe elements with enhanced animations
+            document.querySelectorAll('.about-section, .contact-section, .stat, .contact-item').forEach(section => {
+                section.classList.add('scroll-reveal');
+                observer.observe(section);
+            });
 
-            document.getElementById('arModal').classList.add('active');
-        }
-
-        function closeARModal() {
-            document.getElementById('arModal').classList.remove('active');
-            document.getElementById('foodModel').src = '';
-        }
-
-        function resetModel() {
-            const modelViewer = document.getElementById('foodModel');
-            modelViewer.cameraOrbit = '0deg 75deg 2m';
-        }
-
-        function toggleRotation() {
-            const modelViewer = document.getElementById('foodModel');
-            const btn = event.target.closest('.control-btn');
-            autoRotateEnabled = !autoRotateEnabled;
-            modelViewer.autoRotate = autoRotateEnabled;
-            
-            if (autoRotateEnabled) {
-                btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-            } else {
-                btn.innerHTML = '<i class="fas fa-play"></i> Play';
+            // Add particle effect on hero hover
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.addEventListener('mousemove', (e) => {
+                    const rect = heroSection.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: absolute;
+                        left: ${x}px;
+                        top: ${y}px;
+                        width: 4px;
+                        height: 4px;
+                        background: radial-gradient(circle, #f79321, transparent);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 5;
+                        animation: particle-fade 2s ease-out forwards;
+                    `;
+                    
+                    heroSection.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 2000);
+                });
             }
-        }
 
-        // === SYSTÈME DE MINI-JEU ===
-        function startQuickGame(dishName) {
-            currentGameDish = dishName;
-            
-            const quickGameModal = document.createElement('div');
-            quickGameModal.className = 'modal active';
-            quickGameModal.id = 'quickGameModal';
-            quickGameModal.innerHTML = `
-                <div class="modal-content">
-                    <button class="close-btn" onclick="closeQuickGame()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                    <h2 class="modal-title">🎮 Mini-jeu AR</h2>
-                    <p class="modal-description">Attrapez des ingrédients pour gagner des réductions sur ${dishName} !</p>
-                    
-                    <div style="position: relative; height: 400px; background: linear-gradient(45deg, #000 0%, #111 100%); border-radius: 16px; overflow: hidden; margin: 20px 0;">
-                        <div class="ar-game-overlay active" id="quickGameOverlay">
-                            <div class="game-hud">
-                                <div class="score-display">
-                                    <i class="fas fa-star"></i> Score: <span id="quickGameScore">0</span>
-                                </div>
-                                <div class="timer-display">
-                                    <i class="fas fa-clock"></i> Temps: <span id="quickGameTimer">20</span>s
-                                </div>
-                            </div>
-                            <div class="game-instructions">
-                                🎯 Cliquez sur les ingrédients qui tombent !
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="ar-controls">
-                        <button class="control-btn primary" onclick="initializeQuickGame()">
-                            <i class="fas fa-play"></i>
-                            Commencer le jeu
-                        </button>
-                        <button class="control-btn" onclick="closeQuickGame()">
-                            <i class="fas fa-times"></i>
-                            Fermer
-                        </button>
-                    </div>
-                </div>
+            // Add CSS for particle animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particle-fade {
+                    0% {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: scale(0) translateY(-50px);
+                    }
+                }
             `;
-            
-            document.body.appendChild(quickGameModal);
-        }
-
-        function closeQuickGame() {
-            const quickGameModal = document.getElementById('quickGameModal');
-            if (quickGameModal) {
-                if (gameActive) stopGame();
-                quickGameModal.remove();
-            }
-        }
-
-        function initializeQuickGame() {
-            gameTimer = 20;
-            initializeGame('quickGame');
-        }
-
-        function startARGame() {
-            if (gameActive) return;
-            currentGameDish = currentDish ? currentDish.name : "Plat mystère";
-            initializeGame();
-        }
-
-        function initializeGame(gameType = 'ar') {
-            gameActive = true;
-            gameScore = 0;
-            
-            const gameOverlay = gameType === 'quickGame' ? 
-                document.getElementById('quickGameOverlay') : 
-                document.getElementById('arGameOverlay');
-            
-            const scoreElement = gameType === 'quickGame' ? 
-                document.getElementById('quickGameScore') : 
-                document.getElementById('gameScore');
-            
-            const timerElement = gameType === 'quickGame' ? 
-                document.getElementById('quickGameTimer') : 
-                document.getElementById('gameTimer');
-            
-            gameOverlay.classList.add('active');
-            
-            scoreElement.textContent = '0';
-            timerElement.textContent = gameTimer;
-            
-            gameInterval = setInterval(() => {
-                gameTimer--;
-                timerElement.textContent = gameTimer;
-                
-                if (gameTimer <= 0) {
-                    endGame(gameType);
-                }
-            }, 1000);
-            
-            ingredientInterval = setInterval(() => {
-                if (gameActive) {
-                    spawnIngredient(gameOverlay);
-                }
-            }, 800);
-            
-            setTimeout(() => {
-                const instructions = gameOverlay.querySelector('.game-instructions');
-                if (instructions) instructions.style.display = 'none';
-            }, 3000);
-        }
-
-        function spawnIngredient(gameContainer) {
-            const ingredient = gameIngredients[Math.floor(Math.random() * gameIngredients.length)];
-            const ingredientElement = document.createElement('div');
-            
-            ingredientElement.className = 'falling-ingredient';
-            ingredientElement.textContent = ingredient.emoji;
-            ingredientElement.style.left = Math.random() * (gameContainer.offsetWidth - 40) + 'px';
-            ingredientElement.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            
-            ingredientElement.dataset.points = ingredient.points;
-            ingredientElement.dataset.name = ingredient.name;
-            
-            ingredientElement.addEventListener('click', catchIngredient);
-            
-            gameContainer.appendChild(ingredientElement);
-            
-            setTimeout(() => {
-                if (ingredientElement.parentNode) {
-                    ingredientElement.parentNode.removeChild(ingredientElement);
-                }
-            }, 5000);
-        }
-
-        function catchIngredient(event) {
-            const ingredient = event.target;
-            const points = parseInt(ingredient.dataset.points);
-            
-            gameScore += points;
-            
-            const scoreElements = [
-                document.getElementById('gameScore'),
-                document.getElementById('quickGameScore')
-            ];
-            
-            scoreElements.forEach(element => {
-                if (element) element.textContent = gameScore;
-            });
-            
-            const catchEffect = document.createElement('div');
-            catchEffect.className = 'catch-effect';
-            catchEffect.textContent = `+${points}`;
-            catchEffect.style.left = ingredient.style.left;
-            catchEffect.style.top = ingredient.offsetTop + 'px';
-            
-            ingredient.parentNode.appendChild(catchEffect);
-            
-            ingredient.remove();
-            setTimeout(() => {
-                if (catchEffect.parentNode) {
-                    catchEffect.remove();
-                }
-            }, 1000);
-        }
-
-        function endGame(gameType = 'ar') {
-            gameActive = false;
-            clearInterval(gameInterval);
-            clearInterval(ingredientInterval);
-            
-            const gameOverlay = gameType === 'quickGame' ? 
-                document.getElementById('quickGameOverlay') : 
-                document.getElementById('arGameOverlay');
-            
-            gameOverlay.classList.remove('active');
-            
-            const remainingIngredients = gameOverlay.querySelectorAll('.falling-ingredient');
-            remainingIngredients.forEach(ingredient => ingredient.remove());
-            
-            showGameResults();
-        }
-
-        function stopGame() {
-            if (!gameActive) return;
-            
-            gameActive = false;
-            clearInterval(gameInterval);
-            clearInterval(ingredientInterval);
-            
-            document.getElementById('arGameOverlay').classList.remove('active');
-            const quickOverlay = document.getElementById('quickGameOverlay');
-            if (quickOverlay) quickOverlay.classList.remove('active');
-            
-            gameScore = 0;
-            gameTimer = 30;
-        }
-
-        function showGameResults() {
-            const reward = gameRewards.find(r => gameScore >= r.minScore && gameScore <= r.maxScore);
-            
-            document.getElementById('finalScore').textContent = gameScore;
-            document.getElementById('rewardAnnouncement').textContent = reward.description;
-            document.getElementById('rewardCode').textContent = reward.reward;
-            document.getElementById('gameResultModal').classList.add('active');
-        }
-
-        function closeGameResult() {
-            document.getElementById('gameResultModal').classList.remove('active');
-            
-            const quickGameModal = document.getElementById('quickGameModal');
-            if (quickGameModal) {
-                quickGameModal.remove();
-            }
-            
-            gameScore = 0;
-            gameTimer = 30;
-        }
-
-        function restartGame() {
-            closeGameResult();
-            
-            if (document.getElementById('quickGameModal')) {
-                initializeQuickGame();
-            } else if (currentDish) {
-                startARGame();
-            }
-        }
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+            document.head.appendChild(style);
         });
-
-        // Modal click outside to close
-        window.onclick = function(event) {
-            const modal = document.getElementById('arModal');
-            if (event.target === modal) {
-                closeARModal();
-            }
-        }
     </script>
 </body>
 </html>
