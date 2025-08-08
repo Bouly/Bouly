@@ -255,11 +255,59 @@ function openARModal(dishId) {
             });
             
         }, 100);
+        
+        // Initialiser les contrôles d'éclairage
+        setupLightingControls(modelViewer);
     }
 
     // Bloquer le scroll de la page en arrière-plan
     document.body.classList.add('modal-open');
     document.getElementById('arModal').classList.add('active');
+}
+
+// Fonction pour configurer les contrôles d'éclairage
+function setupLightingControls(modelViewer) {
+    // Contrôle de l'intensité des ombres
+    const shadowIntensitySlider = document.getElementById('shadowIntensity');
+    const shadowIntensityDisplay = shadowIntensitySlider.nextElementSibling;
+    
+    shadowIntensitySlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        modelViewer.setAttribute('shadow-intensity', value);
+        shadowIntensityDisplay.textContent = value;
+    });
+    
+    // Contrôle de l'exposition
+    const exposureSlider = document.getElementById('exposure');
+    const exposureDisplay = exposureSlider.nextElementSibling;
+    
+    exposureSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        modelViewer.setAttribute('exposure', value);
+        exposureDisplay.textContent = value;
+    });
+    
+    // Contrôle de la douceur des ombres
+    const shadowSoftnessSlider = document.getElementById('shadowSoftness');
+    const shadowSoftnessDisplay = shadowSoftnessSlider.nextElementSibling;
+    
+    shadowSoftnessSlider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        modelViewer.setAttribute('shadow-softness', value);
+        shadowSoftnessDisplay.textContent = value;
+    });
+    
+    // Contrôle de l'environnement
+    const environmentSelect = document.getElementById('environmentImage');
+    environmentSelect.addEventListener('change', (e) => {
+        modelViewer.setAttribute('environment-image', e.target.value);
+    });
+    
+    // Contrôle du tone mapping
+    const toneMappingSelect = document.getElementById('toneMapping');
+    toneMappingSelect.addEventListener('change', (e) => {
+        modelViewer.setAttribute('tone-mapping', e.target.value);
+    });
 }
 
 function closeARModal() {

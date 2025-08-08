@@ -862,3 +862,109 @@ model-viewer {
 .custom-ar-button i {
     font-size: 16px;
 }
+
+/* === CONTRÔLES D'ÉCLAIRAGE === */
+.lighting-controls {
+    background: var(--btn-secondary-bg);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-top: var(--space-lg);
+}
+
+.lighting-controls h3 {
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.control-group label {
+    color: var(--text-dark);
+    font-weight: var(--font-weight-medium);
+    font-size: 14px;
+    min-width: 140px;
+}
+
+.control-group input[type="range"] {
+    flex: 1;
+    min-width: 120px;
+    height: 6px;
+    background: var(--border-light);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.control-group input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.control-group select {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    color: var(--text-dark);
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.control-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.value-display {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Responsive pour les contrôles */
+@media (max-width: 768px) {
+    .control-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-sm);
+    }
+    
+    .control-group label {
+        min-width: auto;
+        text-align: center;
+    }
+    
+    .lighting-controls {
+        padding: var(--space-md);
+    }
+}

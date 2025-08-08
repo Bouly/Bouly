@@ -110,12 +110,13 @@
                 ar-scale="auto"
                 ar-placement="floor"
                 shadow-intensity="1"
-                tone-mapping="neutral"
-                exposure="1"
+                shadow-softness="0.8"
+                tone-mapping="commerce"
+                exposure="1.2"
+                environment-image="studio"
                 touch-action="pan-y"
                 loading="eager"
                 reveal="auto"
-                environment-image="neutral"
                 poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='100%25' height='100%25' fill='%23f8f8f8'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999'%3EChargement...%3C/text%3E%3C/svg%3E">
                 <button slot="ar-button" class="custom-ar-button">
                     <i class="fas fa-cube"></i> Afficher AR
@@ -124,6 +125,46 @@
             </model-viewer>
             
             <div class="ar-controls">
+                <div class="lighting-controls">
+                    <h3>Réglages d'éclairage</h3>
+                    
+                    <div class="control-group">
+                        <label for="shadowIntensity">Intensité des ombres:</label>
+                        <input type="range" id="shadowIntensity" min="0" max="2" step="0.1" value="1">
+                        <span class="value-display">1</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="exposure">Exposition:</label>
+                        <input type="range" id="exposure" min="0.5" max="2" step="0.1" value="1.2">
+                        <span class="value-display">1.2</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="shadowSoftness">Douceur des ombres:</label>
+                        <input type="range" id="shadowSoftness" min="0" max="1" step="0.1" value="0.8">
+                        <span class="value-display">0.8</span>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="environmentImage">Environnement:</label>
+                        <select id="environmentImage">
+                            <option value="neutral">Neutre</option>
+                            <option value="studio" selected>Studio</option>
+                            <option value="legacy">Classique</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="toneMapping">Rendu:</label>
+                        <select id="toneMapping">
+                            <option value="neutral">Neutre</option>
+                            <option value="commerce" selected>Commerce</option>
+                            <option value="aces">Cinématique</option>
+                        </select>
+                    </div>
+                </div>
+                
                 <!-- <button class="control-btn primary" onclick="startARGame()">
                     <i class="fas fa-gamepad"></i>
                     Mini-jeu AR
