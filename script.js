@@ -98,6 +98,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Gestion du clic sur l'overlay du modal pour le fermer
+    const modal = document.getElementById('arModal');
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeARModal();
+        }
+    });
+    
+    // Gestion de la touche Escape pour fermer le modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeARModal();
+        }
+    });
+    
     // Loading screen
     setTimeout(() => {
         const loading = document.querySelector('.loading');
@@ -173,10 +188,14 @@ function openARModal(dishId) {
     modelViewer.src = currentDish.model3d || './models/burgertest2.glb';
     modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
 
+    // Bloquer le scroll de la page en arrière-plan
+    document.body.classList.add('modal-open');
     document.getElementById('arModal').classList.add('active');
 }
 
 function closeARModal() {
+    // Débloquer le scroll de la page
+    document.body.classList.remove('modal-open');
     document.getElementById('arModal').classList.remove('active');
     document.getElementById('foodModel').src = '';
 }

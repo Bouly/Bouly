@@ -514,12 +514,23 @@ body {
     height: 100%;
     background-color: var(--overlay-dark);
     backdrop-filter: blur(10px);
+    /* Empêche le scroll de la page sur mobile */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal.active {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Classe pour bloquer le scroll du body quand le modal est ouvert */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 .modal-content {
@@ -533,6 +544,10 @@ body {
     overflow-y: auto;
     position: relative;
     box-shadow: var(--shadow-xl);
+    /* Améliorations pour mobile */
+    touch-action: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .close-btn {
@@ -584,6 +599,14 @@ model-viewer {
     background-color: var(--btn-secondary-bg);
     border-radius: var(--radius-lg);
     margin-bottom: var(--space-lg);
+    /* Amélioration pour les interactions tactiles sur mobile */
+    touch-action: none;
+    overscroll-behavior: contain;
+    /* Empêche les interactions accidentelles avec la page */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .ar-controls {
