@@ -314,12 +314,44 @@
         .restaurants-section {
             width: 100%;
             min-height: 100vh;
-            background: #FFDDAC;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(253, 189, 17, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 221, 172, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #FFDDAC 0%, #F8E5A8 50%, #FFDDAC 100%);
             position: relative;
             z-index: 100;
             padding: var(--space-3xl) 0;
             opacity: 0;
             visibility: hidden;
+            overflow: hidden;
+        }
+
+        .restaurants-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(253, 189, 17, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 40%);
+            animation: floatingGradient 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatingGradient {
+            0%, 100% { 
+                background: 
+                    radial-gradient(circle at 10% 20%, rgba(253, 189, 17, 0.05) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 40%);
+            }
+            50% { 
+                background: 
+                    radial-gradient(circle at 80% 10%, rgba(253, 189, 17, 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 20% 90%, rgba(255, 107, 53, 0.08) 0%, transparent 40%);
+            }
         }
 
         .restaurants-content {
@@ -335,6 +367,20 @@
             color: var(--dark-text);
             margin-bottom: var(--space-xl);
             letter-spacing: -2px;
+            position: relative;
+            background: linear-gradient(45deg, #292929, #5E070F, #292929, #FDBD11);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientText 8s ease-in-out infinite;
+            text-shadow: none;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .restaurants-subtitle {
@@ -345,6 +391,26 @@
             margin-bottom: var(--space-3xl);
             letter-spacing: 2px;
             font-weight: normal;
+            position: relative;
+            opacity: 0.9;
+        }
+
+        .restaurants-subtitle::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
+            border-radius: 2px;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; width: 100px; }
+            50% { opacity: 1; width: 150px; }
         }
 
         .restaurants-grid {
@@ -355,20 +421,76 @@
         }
 
         .restaurant-card {
-            background: var(--white);
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%),
+                radial-gradient(circle at top right, rgba(253,189,17,0.1) 0%, transparent 50%);
             border-radius: var(--radius-xl);
             padding: var(--space-xl);
-            border: 1px solid var(--border-gray);
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(225, 225, 225, 0.8);
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.08),
+                0 4px 20px rgba(253,189,17,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             text-align: left;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .restaurant-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.4) 50%, 
+                transparent);
+            transition: left 0.8s ease;
+            z-index: 1;
+        }
+
+        .restaurant-card:hover::before {
+            left: 100%;
+        }
+
+        .restaurant-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(253,189,17,0.05) 0%, 
+                rgba(255,107,53,0.05) 50%,
+                rgba(253,189,17,0.05) 100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 0;
         }
 
         .restaurant-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary-yellow);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 80px rgba(0,0,0,0.15),
+                0 10px 40px rgba(253,189,17,0.3),
+                0 0 60px rgba(253,189,17,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            border-color: rgba(253,189,17,0.6);
+        }
+
+        .restaurant-card:hover::after {
+            opacity: 1;
+        }
+
+        .restaurant-card > * {
+            position: relative;
+            z-index: 2;
         }
 
         .restaurant-card h3 {
@@ -378,6 +500,24 @@
             margin-bottom: var(--space-lg);
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            background: linear-gradient(45deg, #292929, #5E070F, #FDBD11);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 4s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes shimmerText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .restaurant-card:hover h3 {
+            transform: translateX(5px);
+            animation-duration: 2s;
         }
 
         .restaurant-card p {
@@ -395,7 +535,8 @@
         }
 
         .feature {
-            background: var(--light-gray);
+            background: 
+                linear-gradient(135deg, rgba(248,248,248,0.9) 0%, rgba(255,255,255,0.8) 100%);
             color: var(--dark-text);
             padding: var(--space-sm) var(--space-md);
             border-radius: var(--radius-lg);
@@ -403,11 +544,46 @@
             font-weight: var(--font-weight-medium);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: 1px solid var(--border-gray);
+            border: 1px solid rgba(225,225,225,0.6);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(253,189,17,0.3), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .restaurant-card:hover .feature::before {
+            left: 100%;
+        }
+
+        .restaurant-card:hover .feature {
+            background: 
+                linear-gradient(135deg, rgba(253,189,17,0.1) 0%, rgba(255,255,255,0.9) 100%);
+            border-color: rgba(253,189,17,0.4);
+            transform: translateY(-2px);
         }
 
         .restaurant-cta {
-            background: var(--primary-yellow);
+            background: linear-gradient(135deg, 
+                #FDBD11 0%, 
+                #FFD23F 25%, 
+                #FDBD11 50%, 
+                #E6AA0F 75%, 
+                #FDBD11 100%);
+            background-size: 300% 300%;
             color: var(--dark-text);
             padding: var(--space-md) var(--space-xl);
             border-radius: var(--radius-lg);
@@ -415,17 +591,54 @@
             font-weight: var(--font-weight-bold);
             font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             width: 100%;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 
+                0 8px 30px rgba(253,189,17,0.3),
+                0 4px 15px rgba(0,0,0,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 6s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .restaurant-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255,255,255,0.4), 
+                transparent);
+            transition: left 0.6s ease;
+        }
+
+        .restaurant-cta:hover::before {
+            left: 100%;
         }
 
         .restaurant-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-            background: #E6AA0F;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 15px 50px rgba(253,189,17,0.5),
+                0 8px 25px rgba(0,0,0,0.15),
+                0 0 30px rgba(253,189,17,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.7);
+            animation-duration: 3s;
+        }
+
+        .restaurant-cta:active {
+            transform: translateY(-1px) scale(0.98);
         }
 
         /* === STATS SECTION === */
@@ -439,19 +652,56 @@
 
         .stat {
             text-align: center;
-            background: var(--white);
+            background: 
+                linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%),
+                radial-gradient(circle at center, rgba(253,189,17,0.1) 0%, transparent 70%);
             padding: var(--space-xl) var(--space-lg);
             border-radius: var(--radius-xl);
-            border: 1px solid var(--border-gray);
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(225,225,225,0.6);
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.08),
+                0 4px 20px rgba(253,189,17,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             min-width: 160px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(253,189,17,0.1) 0%, 
+                rgba(255,107,53,0.1) 50%,
+                rgba(253,189,17,0.1) 100%);
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 0;
         }
 
         .stat:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-yellow);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.12),
+                0 8px 30px rgba(253,189,17,0.3),
+                0 0 40px rgba(253,189,17,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+            border-color: rgba(253,189,17,0.6);
+        }
+
+        .stat:hover::before {
+            opacity: 1;
+        }
+
+        .stat > * {
+            position: relative;
+            z-index: 1;
         }
 
         .stat-number {
@@ -462,6 +712,30 @@
             line-height: 1;
             font-family: 'Kenyan Coffee';
             margin-bottom: var(--space-sm);
+            background: linear-gradient(45deg, #FDBD11, #FFD23F, #E6AA0F, #FDBD11);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: numberGlow 4s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(253,189,17,0.3));
+            transition: all 0.3s ease;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                filter: drop-shadow(0 2px 4px rgba(253,189,17,0.3));
+            }
+            50% { 
+                background-position: 100% 50%;
+                filter: drop-shadow(0 4px 8px rgba(253,189,17,0.5));
+            }
+        }
+
+        .stat:hover .stat-number {
+            transform: scale(1.1);
+            animation-duration: 2s;
         }
 
         .stat-label {
@@ -512,6 +786,109 @@
                 min-width: 140px;
                 padding: var(--space-lg);
             }
+        }
+
+        /* === PARTICULES FLOTTANTES === */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(253,189,17,0.8) 0%, rgba(253,189,17,0.2) 50%, transparent 100%);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+
+        .particle:nth-child(2) {
+            left: 20%;
+            animation-delay: 2s;
+            animation-duration: 18s;
+            width: 6px;
+            height: 6px;
+        }
+
+        .particle:nth-child(3) {
+            left: 30%;
+            animation-delay: 4s;
+            animation-duration: 22s;
+        }
+
+        .particle:nth-child(4) {
+            left: 40%;
+            animation-delay: 6s;
+            animation-duration: 16s;
+            width: 3px;
+            height: 3px;
+        }
+
+        .particle:nth-child(5) {
+            left: 60%;
+            animation-delay: 8s;
+            animation-duration: 19s;
+        }
+
+        .particle:nth-child(6) {
+            left: 70%;
+            animation-delay: 10s;
+            animation-duration: 21s;
+            width: 5px;
+            height: 5px;
+        }
+
+        .particle:nth-child(7) {
+            left: 80%;
+            animation-delay: 12s;
+            animation-duration: 17s;
+        }
+
+        .particle:nth-child(8) {
+            left: 90%;
+            animation-delay: 14s;
+            animation-duration: 23s;
+            width: 7px;
+            height: 7px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* === EFFETS DE CURSEUR AVANCÉS === */
+        .restaurant-card, .stat, .restaurant-cta {
+            cursor: pointer;
+        }
+
+        /* === SMOOTH SCROLLING AMÉLIORÉ === */
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -659,6 +1036,18 @@
             </div>
         </div>
     </section>
+
+    <!-- Particules flottantes pour l'ambiance -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
     <script>
         // === ANIMATIONS STYLE GTA VI AUTHENTIQUES ===
@@ -831,12 +1220,30 @@
 
         tl.to(".hero-2-container", { opacity: 1, duration: 3 }, "<+=0.2");
 
-        // Animations des interactions sur les cartes restaurants
-        document.querySelectorAll('.restaurant-card').forEach(card => {
+        // Animations des interactions sur les cartes restaurants avec effets avancés
+        document.querySelectorAll('.restaurant-card').forEach((card, index) => {
+            // Animation d'apparition staggerée
+            gsap.set(card, { y: 100, opacity: 0 });
+            
             card.addEventListener('mouseenter', () => {
                 gsap.to(card, {
                     scale: 1.05,
+                    y: -15,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+                
+                // Animation des éléments internes
+                gsap.to(card.querySelector('h3'), {
+                    x: 5,
                     duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                gsap.to(card.querySelectorAll('.feature'), {
+                    y: -2,
+                    duration: 0.2,
+                    stagger: 0.05,
                     ease: "power2.out"
                 });
             });
@@ -844,15 +1251,96 @@
             card.addEventListener('mouseleave', () => {
                 gsap.to(card, {
                     scale: 1,
+                    y: 0,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+                
+                gsap.to(card.querySelector('h3'), {
+                    x: 0,
                     duration: 0.3,
+                    ease: "power2.out"
+                });
+                
+                gsap.to(card.querySelectorAll('.feature'), {
+                    y: 0,
+                    duration: 0.2,
+                    stagger: 0.05,
                     ease: "power2.out"
                 });
             });
         });
 
-        // Animations des boutons
+        // Animations des stats avec effets de compteur
+        document.querySelectorAll('.stat').forEach((stat, index) => {
+            const number = stat.querySelector('.stat-number');
+            const finalValue = number.textContent;
+            
+            stat.addEventListener('mouseenter', () => {
+                gsap.to(stat, {
+                    scale: 1.08,
+                    y: -8,
+                    duration: 0.4,
+                    ease: "back.out(1.7)"
+                });
+                
+                // Effet de compteur animé
+                if (!isNaN(finalValue)) {
+                    gsap.fromTo(number, 
+                        { textContent: 0 },
+                        {
+                            textContent: finalValue,
+                            duration: 1,
+                            ease: "power2.out",
+                            snap: { textContent: 1 },
+                            stagger: 0.1
+                        }
+                    );
+                }
+            });
+            
+            stat.addEventListener('mouseleave', () => {
+                gsap.to(stat, {
+                    scale: 1,
+                    y: 0,
+                    duration: 0.4,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Animations des boutons avec effets de pulsation
         document.querySelectorAll('.restaurant-cta').forEach(button => {
             button.addEventListener('click', (e) => {
+                // Effet de click avec ondulation
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    border-radius: 50%;
+                    background: rgba(255,255,255,0.6);
+                    transform: scale(0);
+                    pointer-events: none;
+                `;
+                
+                button.appendChild(ripple);
+                
+                gsap.to(ripple, {
+                    scale: 2,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power2.out",
+                    onComplete: () => ripple.remove()
+                });
+                
                 gsap.to(button, {
                     scale: 0.95,
                     duration: 0.1,
@@ -862,6 +1350,60 @@
                 });
             });
         });
+
+        // Animation parallax subtile pour les particules
+        window.addEventListener('mousemove', (e) => {
+            const particles = document.querySelectorAll('.particle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            particles.forEach((particle, index) => {
+                const speed = (index + 1) * 0.5;
+                gsap.to(particle, {
+                    x: (x - 0.5) * speed * 20,
+                    y: (y - 0.5) * speed * 20,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            });
+        });
+
+        // Animation d'apparition progressive des éléments au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('restaurant-card')) {
+                        gsap.to(entry.target, {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.8,
+                            ease: "back.out(1.7)",
+                            delay: Array.from(entry.target.parentNode.children).indexOf(entry.target) * 0.1
+                        });
+                    } else if (entry.target.classList.contains('stat')) {
+                        gsap.to(entry.target, {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            delay: Array.from(entry.target.parentNode.children).indexOf(entry.target) * 0.1
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observer les éléments quand ils sont disponibles
+        setTimeout(() => {
+            document.querySelectorAll('.restaurant-card, .stat').forEach(el => {
+                observer.observe(el);
+            });
+        }, 100);
     </script>
 </body>
 </html>

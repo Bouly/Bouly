@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6AVENUES - L'Expérience Culinaire Ultime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* === RESET ET VARIABLES === */
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-yellow: #FFB627;
+            --dark-bg: #0A0A0B;
+            --lighter-dark: #1A1A1C;
+            --accent-gold: #D4AF37;
+            --text-light: #F8F9FA;
+            --text-gray: #B0B3B8;
+            --success: #00D26A;
+            --error: #FF3B30;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            
+            --font-primary: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(255, 107, 53, 0.3);
+            --shadow-intense: 0 20px 60px rgba(0, 0, 0, 0.4);
+            
+            --border-radius: 24px;
+            --border-radius-sm: 12px;
+            --border-radius-lg: 32px;
+            
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-fast: all 0.2s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* === CURSEUR PERSONNALISÉ === */
+        body {
+            cursor: none;
+        }
+
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-orange);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        /* === LOADER MODERNE === */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .loader-text {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+        }
+
+        .loader-progress {
+            width: 200px;
+            height: 3px;
+            background: var(--lighter-dark);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-orange), var(--primary-yellow));
+            transition: width 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        /* === NAVIGATION GLASSMORPHISME === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            padding: 0;
+            transition: var(--transition);
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 11, 0.95);
+            backdrop-filter: blur(30px);
+            box-shadow: var(--shadow-glass);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 90px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            color: var(--primary-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .nav-link {
+            position: relative;
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-gray);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--primary-yellow));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            padding: 12px 30px;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        /* === HERO SECTION ÉPIQUE === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #1a1a1c 0%, #0a0a0b 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 182, 39, 0.1) 0%, transparent 50%);
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1200px;
+            padding: 0 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            display: inline-block;
+            animation: slideDown 1s ease 0.2s both;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 8vw, 8rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-orange) 50%, var(--primary-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 1s ease 0.4s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-gray);
+            margin-bottom: 50px;
+            font-weight: 300;
+            line-height: 1.4;
+            animation: slideUp 1s ease 0.6s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideUp 1s ease 0.8s both;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-glow);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            padding: 18px 40px;
+            border: 2px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: none;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass);
+            transform: translateY(-5px);
+            border-color: var(--primary-orange);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === SECTION SERVICES MODERNE === */
+        .services {
+            padding: 150px 0;
+            background: var(--lighter-dark);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .section-badge {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-orange);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+            border-color: var(--primary-orange);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 32px;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .service-title {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .service-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* === SECTION À PROPOS GLASSMORPHISME === */
+        .about {
+            padding: 150px 0;
+            background: var(--dark-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text {
+            order: 1;
+        }
+
+        .about-image {
+            order: 2;
+            position: relative;
+        }
+
+        .about-image-main {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-orange);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* === SECTION CONTACT === */
+        .contact {
+            padding: 150px 0;
+            background: var(--lighter-dark);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .contact-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            cursor: none;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-intense);
+            border-color: var(--primary-orange);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .contact-info p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* === FOOTER MODERNE === */
+        .footer {
+            background: var(--lighter-dark);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h3 {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-gray);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: var(--transition-fast);
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
+            text-align: center;
+            color: var(--text-gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .container {
+                padding: 0 20px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            
+            .about-text {
+                order: 2;
+            }
+            
+            .about-image {
+                order: 1;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === ANIMATIONS D'ENTRÉE === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- LOADER MODERNE -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div class="loader-text">6AVENUES</div>
+            <div class="loader-progress">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CURSEUR PERSONNALISÉ -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- NAVIGATION GLASSMORPHISME -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">6AVENUES</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#about" class="nav-link">À Propos</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#menu" class="nav-cta">Menu</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION ÉPIQUE -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge fade-in">
+                <i class="fas fa-crown"></i> L'Excellence Culinaire
+            </div>
+            
+            <h1 class="hero-title">
+                6AVENUES
+            </h1>
+            
+            <p class="hero-subtitle">
+                L'expérience gastronomique qui redéfinit le goût
+            </p>
+            
+            <div class="hero-cta">
+                <a href="#menu" class="btn-primary">
+                    <i class="fas fa-utensils"></i>
+                    Découvrir le Menu
+                </a>
+                <a href="#services" class="btn-secondary">
+                    <i class="fas fa-play"></i>
+                    Voir Nos Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION SERVICES -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">
+                    <i class="fas fa-star"></i> Nos Services
+                </div>
+                <h2 class="section-title">Une Expérience Unique</h2>
+                <p class="section-description">
+                    Découvrez nos différents univers culinaires, chacun avec sa propre identité et ses saveurs authentiques.
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <h3 class="service-title">Burgers Gourmet</h3>
+                    <p class="service-description">
+                        Des burgers artisanaux préparés avec des ingrédients premium et des recettes uniques qui réveilleront vos papilles.
+                    </p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <h3 class="service-title">Cuisine Italienne</h3>
+                    <p class="service-description">
+                        L'authenticité de l'Italie dans chaque bouchée avec nos pizzas artisanales et nos pâtes fraîches traditionnelles.
+                    </p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <h3 class="service-title">Saveurs Mexicaines</h3>
+                    <p class="service-description">
+                        Un voyage au cœur du Mexique avec nos tacos, burritos et specialités épicées préparées selon les traditions.
+                    </p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-drumstick-bite"></i>
+                    </div>
+                    <h3 class="service-title">Grillades Premium</h3>
+                    <p class="service-description">
+                        Des viandes sélectionnées et grillées à la perfection, accompagnées de nos sauces maison signature.
+                    </p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <h3 class="service-title">Desserts Artisanaux</h3>
+                    <p class="service-description">
+                        Terminez en beauté avec nos créations sucrées artisanales, un festival de saveurs pour conclure votre repas.
+                    </p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title">Expérience AR</h3>
+                    <p class="service-description">
+                        Vivez une expérience immersive avec notre technologie de réalité augmentée pour visualiser vos plats.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION À PROPOS -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text slide-in-left">
+                    <div class="section-badge">
+                        <i class="fas fa-heart"></i> Notre Histoire
+                    </div>
+                    <h2 class="section-title">L'Art de la Gastronomie</h2>
+                    <p class="section-description">
+                        Depuis plus de 10 ans, 6AVENUES révolutionne l'expérience culinaire en combinant tradition et innovation. 
+                        Nos chefs passionnés créent des plats d'exception dans un environnement moderne et convivial.
+                    </p>
+                    <p class="section-description">
+                        Chaque restaurant de notre enseigne propose une identité culinaire unique, des burgers gourmet aux 
+                        spécialités italiennes, en passant par les saveurs authentiques du Mexique et de l'Asie.
+                    </p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Années d'Excellence</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Clients Satisfaits</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Univers Culinaires</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Fait Maison</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image slide-in-right">
+                    <img src="./img/6avenues-logo-1.png" alt="6AVENUES Restaurant" class="about-image-main">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION CONTACT -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-badge">
+                    <i class="fas fa-map-marker-alt"></i> Contact
+                </div>
+                <h2 class="section-title">Venez Nous Découvrir</h2>
+                <p class="section-description">
+                    Trouvez-nous facilement et venez vivre une expérience culinaire inoubliable dans l'un de nos restaurants.
+                </p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Adresse</h3>
+                        <p>123 Avenue des Gourmets<br>75001 Paris, France</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Téléphone</h3>
+                        <p>+33 1 23 45 67 89<br>Service 7j/7</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Horaires</h3>
+                        <p>Lun-Dim: 11h30 - 23h00<br>Service continu</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-info">
+                        <h3>Email</h3>
+                        <p>contact@6avenues.fr<br>Réponse sous 24h</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER MODERNE -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>6AVENUES</h3>
+                    <p>L'excellence culinaire redéfinie. Une expérience gastronomique unique qui éveille tous vos sens.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <a href="#home">Accueil</a><br>
+                    <a href="#services">Services</a><br>
+                    <a href="#about">À Propos</a><br>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Nos Restaurants</h3>
+                    <a href="#">Burger Chili</a><br>
+                    <a href="#">Fratelli Italia</a><br>
+                    <a href="#">Los Pollos</a><br>
+                    <a href="#">Asia Cook</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>123 Avenue des Gourmets<br>75001 Paris, France<br>+33 1 23 45 67 89</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 6AVENUES. Tous droits réservés. | Conçu avec ❤️ pour l'excellence culinaire</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // GSAP ANIMATIONS ET INTERACTIONS MODERNES
+        gsap.registerPlugin(ScrollTrigger);
+
+        // LOADER ANIMATION
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const loaderBar = document.getElementById('loader-bar');
+            
+            // Animation de la barre de progression
+            gsap.to(loaderBar, {
+                width: '100%',
+                duration: 2,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    gsap.to(loader, {
+                        opacity: 0,
+                        duration: 0.5,
+                        onComplete: () => {
+                            loader.style.display = 'none';
+                            // Lancer les animations d'entrée
+                            initAnimations();
+                        }
+                    });
+                }
+            });
+        });
+
+        // CURSEUR PERSONNALISÉ
+        const cursor = document.getElementById('cursor');
+        const cursorFollower = document.getElementById('cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+            
+            gsap.to(cursorFollower, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.3
+            });
+        });
+
+        // NAVIGATION SCROLL
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // SMOOTH SCROLL POUR LES LIENS
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ANIMATIONS AVANCÉES
+        function initAnimations() {
+            // Animation du hero
+            gsap.timeline()
+                .from('.hero-badge', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' })
+                .from('.hero-title', { opacity: 0, y: 50, duration: 1.2, ease: 'power3.out' }, '-=0.8')
+                .from('.hero-subtitle', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' }, '-=0.6')
+                .from('.hero-cta', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' }, '-=0.4');
+
+            // Animation des cartes de services
+            gsap.from('.service-card', {
+                scrollTrigger: {
+                    trigger: '.services-grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+
+            // Animation de la section à propos
+            gsap.from('.about-text', {
+                scrollTrigger: {
+                    trigger: '.about',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                x: -50,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            gsap.from('.about-image', {
+                scrollTrigger: {
+                    trigger: '.about',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                x: 50,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            // Animation des stats
+            gsap.from('.stat-card', {
+                scrollTrigger: {
+                    trigger: '.about-stats',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'back.out(1.7)'
+            });
+
+            // Animation des cartes de contact
+            gsap.from('.contact-card', {
+                scrollTrigger: {
+                    trigger: '.contact-grid',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
+        // EFFECTS DE HOVER AVANCÉS
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card.querySelector('.service-icon'), {
+                    scale: 1.1,
+                    rotation: 5,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card.querySelector('.service-icon'), {
+                    scale: 1,
+                    rotation: 0,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // INTERACTION HOVER POUR LES BOUTONS
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                gsap.to(btn, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // PARALLAX EFFECT SUR LE HERO
+        gsap.to('.hero::before', {
+            scrollTrigger: {
+                trigger: '.hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            },
+            y: -100,
+            opacity: 0.5
+        });
+
+        // Animation continue du background du hero
+        gsap.to('.hero::before', {
+            rotation: 360,
+            duration: 20,
+            repeat: -1,
+            ease: 'none'
+        });
+    </script>
+</body>
+</html>

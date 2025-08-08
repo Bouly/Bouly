@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6AVENUES - L'Excellence Culinaire Redéfinie</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Text:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&family=SF+Pro+Text:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Advanced animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/CustomEase.min.js"></script>
+    
+    <style>
+        /* === ADVANCED CSS VARIABLES - APPLE LEVEL === */
+        :root {
+            /* Apple-inspired colors */
+            --primary-blue: #007AFF;
+            --primary-purple: #AF52DE;
+            --primary-pink: #FF2D92;
+            --primary-orange: #FF9500;
+            --primary-yellow: #FFCC02;
+            --primary-green: #34C759;
+            --primary-red: #FF3B30;
+            
+            /* Glassmorphism colors */
+            --glass-white: rgba(255, 255, 255, 0.1);
+            --glass-white-strong: rgba(255, 255, 255, 0.25);
+            --glass-dark: rgba(0, 0, 0, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-border-strong: rgba(255, 255, 255, 0.4);
+            
+            /* Background system */
+            --bg-primary: #000000;
+            --bg-secondary: #1C1C1E;
+            --bg-tertiary: #2C2C2E;
+            --bg-elevated: #3A3A3C;
+            
+            /* Text system */
+            --text-primary: rgba(255, 255, 255, 1);
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-tertiary: rgba(255, 255, 255, 0.6);
+            --text-quaternary: rgba(255, 255, 255, 0.4);
+            
+            /* Typography system */
+            --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-text: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing system (8pt grid) */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+            --space-32: 128px;
+            
+            /* Border radius system */
+            --radius-1: 4px;
+            --radius-2: 8px;
+            --radius-3: 12px;
+            --radius-4: 16px;
+            --radius-5: 20px;
+            --radius-6: 24px;
+            --radius-8: 32px;
+            
+            /* Shadow system */
+            --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            --shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            --shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+            
+            /* Advanced transitions */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-circ: cubic-bezier(0.08, 0.82, 0.17, 1);
+            --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* === ADVANCED RESET === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--space-20);
+        }
+
+        body {
+            font-family: var(--font-text);
+            font-weight: 400;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* === ADVANCED CURSOR SYSTEM === */
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 8px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s var(--ease-out-circ);
+        }
+
+        .cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--text-tertiary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s var(--ease-out-expo);
+            opacity: 0.6;
+        }
+
+        .cursor-hover {
+            transform: scale(1.5);
+        }
+
+        .cursor-follower-hover {
+            transform: scale(1.2);
+            border-color: var(--primary-blue);
+            opacity: 1;
+        }
+
+        /* === ADVANCED GLASSMORPHISM SYSTEM === */
+        .glass {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+        }
+
+        .glass-strong {
+            background: var(--glass-white-strong);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid var(--glass-border-strong);
+        }
+
+        .glass-hover {
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .glass-hover:hover {
+            background: var(--glass-white-strong);
+            border-color: var(--glass-border-strong);
+            transform: translateY(-2px);
+        }
+
+        /* === PREMIUM LOADER === */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.8s var(--ease-out-expo);
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-family: var(--font-display);
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: var(--space-6);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .loader-progress {
+            width: 200px;
+            height: 2px;
+            background: var(--bg-tertiary);
+            border-radius: 1px;
+            overflow: hidden;
+            margin: var(--space-6) auto 0;
+        }
+
+        .loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            border-radius: 1px;
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .loader-text {
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            margin-top: var(--space-4);
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* === ADVANCED NAVIGATION === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-4) 0;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .nav-scrolled {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .nav-logo:hover {
+            color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-8);
+            align-items: center;
+        }
+
+        .nav-link {
+            font-family: var(--font-text);
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+            position: relative;
+            padding: var(--space-2) 0;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-purple));
+            transition: width 0.3s var(--ease-out-expo);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-5);
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+            box-shadow: var(--shadow-2);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-4);
+        }
+
+        /* === HERO SECTION - APPLE LEVEL === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 20% 80%, var(--primary-blue) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--primary-purple) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, var(--primary-pink) 0%, transparent 50%);
+            animation: floating 20s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-20px) rotate(1deg) scale(1.05); }
+            66% { transform: translateY(10px) rotate(-1deg) scale(0.95); }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 var(--space-6);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-5);
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-8);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-6);
+            background: linear-gradient(135deg, 
+                var(--text-primary) 0%, 
+                var(--primary-blue) 30%, 
+                var(--primary-purple) 60%, 
+                var(--primary-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-text);
+            font-size: clamp(18px, 3vw, 24px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-10);
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            color: white;
+            padding: var(--space-4) var(--space-8);
+            border: none;
+            border-radius: var(--radius-5);
+            font-family: var(--font-text);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: all 0.3s var(--ease-out-expo);
+            box-shadow: var(--shadow-2);
+            cursor: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-4);
+        }
+
+        .btn-secondary {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            color: var(--text-primary);
+            padding: var(--space-4) var(--space-8);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-5);
+            font-family: var(--font-text);
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: all 0.3s var(--ease-out-expo);
+            cursor: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-white-strong);
+            border-color: var(--glass-border-strong);
+            transform: translateY(-3px);
+        }
+
+        /* === SECTION SYSTEM === */
+        .section {
+            padding: var(--space-32) 0;
+            position: relative;
+        }
+
+        .section-alt {
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-20);
+        }
+
+        .section-badge {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-5);
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--primary-blue);
+            margin-bottom: var(--space-5);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-description {
+            font-family: var(--font-text);
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* === ADVANCED CARD SYSTEM === */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-8);
+            margin-top: var(--space-16);
+        }
+
+        .card {
+            background: var(--glass-white);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-6);
+            padding: var(--space-8);
+            transition: all 0.4s var(--ease-out-expo);
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s var(--ease-out-expo);
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            background: var(--glass-white-strong);
+            border-color: var(--glass-border-strong);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-4);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            border-radius: var(--radius-4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-5);
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-3);
+        }
+
+        .card-description {
+            font-family: var(--font-text);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* === STATS SECTION === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-16);
+        }
+
+        .stat-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-5);
+            padding: var(--space-6);
+            text-align: center;
+            transition: all 0.3s var(--ease-out-expo);
+            cursor: none;
+        }
+
+        .stat-card:hover {
+            background: var(--glass-white-strong);
+            border-color: var(--glass-border-strong);
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-label {
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            background: var(--bg-secondary);
+            padding: var(--space-20) 0 var(--space-8);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-10);
+            margin-bottom: var(--space-12);
+        }
+
+        .footer-section h3 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-family: var(--font-text);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 1.6;
+            transition: color 0.3s var(--ease-out-expo);
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: var(--space-6);
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+
+        .footer-copyright {
+            font-family: var(--font-text);
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-white);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+            cursor: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-6);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-4);
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* === SCROLL ANIMATIONS === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo" id="loader-logo">6AVENUES</div>
+            <div class="loader-progress">
+                <div class="loader-bar" id="loader-bar"></div>
+            </div>
+            <div class="loader-text" id="loader-text">Chargement de l'expérience...</div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">6AVENUES</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#about" class="nav-link">À Propos</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#menu" class="nav-cta">Menu</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge" id="hero-badge">
+                <i class="fas fa-crown"></i>
+                L'Excellence Culinaire
+            </div>
+            
+            <h1 class="hero-title" id="hero-title">
+                6AVENUES
+            </h1>
+            
+            <p class="hero-subtitle" id="hero-subtitle">
+                L'expérience gastronomique qui redéfinit le goût et éveille tous vos sens
+            </p>
+            
+            <div class="hero-cta" id="hero-cta">
+                <a href="#services" class="btn-primary">
+                    <i class="fas fa-utensils"></i>
+                    Découvrir nos services
+                </a>
+                <a href="#about" class="btn-secondary">
+                    <i class="fas fa-play"></i>
+                    Notre histoire
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge fade-in">
+                    <i class="fas fa-star"></i>
+                    Nos Services
+                </div>
+                <h2 class="section-title fade-in">Une expérience unique</h2>
+                <p class="section-description fade-in">
+                    Découvrez nos différents univers culinaires, chacun avec sa propre identité et ses saveurs authentiques.
+                </p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <h3 class="card-title">Burgers Gourmet</h3>
+                    <p class="card-description">
+                        Des burgers artisanaux préparés avec des ingrédients premium et des recettes uniques qui réveilleront vos papilles.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <h3 class="card-title">Cuisine Italienne</h3>
+                    <p class="card-description">
+                        L'authenticité de l'Italie dans chaque bouchée avec nos pizzas artisanales et nos pâtes fraîches traditionnelles.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-pepper-hot"></i>
+                    </div>
+                    <h3 class="card-title">Saveurs Mexicaines</h3>
+                    <p class="card-description">
+                        Un voyage au cœur du Mexique avec nos tacos, burritos et spécialités épicées préparées selon les traditions.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-drumstick-bite"></i>
+                    </div>
+                    <h3 class="card-title">Grillades Premium</h3>
+                    <p class="card-description">
+                        Des viandes sélectionnées et grillées à la perfection, accompagnées de nos sauces maison signature.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <h3 class="card-title">Desserts Artisanaux</h3>
+                    <p class="card-description">
+                        Terminez en beauté avec nos créations sucrées artisanales, un festival de saveurs pour conclure votre repas.
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="card-title">Expérience AR</h3>
+                    <p class="card-description">
+                        Vivez une expérience immersive avec notre technologie de réalité augmentée pour visualiser vos plats.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge fade-in">
+                    <i class="fas fa-heart"></i>
+                    Notre Histoire
+                </div>
+                <h2 class="section-title fade-in">L'art de la gastronomie</h2>
+                <p class="section-description fade-in">
+                    Depuis plus de 10 ans, 6AVENUES révolutionne l'expérience culinaire en combinant tradition et innovation.
+                </p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card scale-in">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Années d'excellence</div>
+                </div>
+                <div class="stat-card scale-in">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Clients satisfaits</div>
+                </div>
+                <div class="stat-card scale-in">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Univers culinaires</div>
+                </div>
+                <div class="stat-card scale-in">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Fait maison</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section section-alt">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-badge fade-in">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Contact
+                </div>
+                <h2 class="section-title fade-in">Venez nous découvrir</h2>
+                <p class="section-description fade-in">
+                    Trouvez-nous facilement et venez vivre une expérience culinaire inoubliable.
+                </p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="card-title">Adresse</h3>
+                    <p class="card-description">
+                        123 Avenue des Gourmets<br>
+                        75001 Paris, France
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="card-title">Téléphone</h3>
+                    <p class="card-description">
+                        +33 1 23 45 67 89<br>
+                        Service 7j/7
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="card-title">Horaires</h3>
+                    <p class="card-description">
+                        Lun-Dim: 11h30 - 23h00<br>
+                        Service continu
+                    </p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="card-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="card-title">Email</h3>
+                    <p class="card-description">
+                        contact@6avenues.fr<br>
+                        Réponse sous 24h
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>6AVENUES</h3>
+                    <p>L'excellence culinaire redéfinie. Une expérience gastronomique unique qui éveille tous vos sens.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <a href="#home">Accueil</a><br>
+                    <a href="#services">Services</a><br>
+                    <a href="#about">À Propos</a><br>
+                    <a href="#contact">Contact</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Nos Restaurants</h3>
+                    <a href="#">Burger Chili</a><br>
+                    <a href="#">Fratelli Italia</a><br>
+                    <a href="#">Los Pollos</a><br>
+                    <a href="#">Asia Cook</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>123 Avenue des Gourmets<br>75001 Paris, France<br>+33 1 23 45 67 89</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    © 2025 6AVENUES. Tous droits réservés.
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // === ADVANCED ANIMATIONS - APPLE LEVEL ===
+        
+        // Register GSAP plugins
+        gsap.registerPlugin(ScrollTrigger, CustomEase);
+        
+        // Custom easing curves
+        CustomEase.create("appleEase", "0.16, 1, 0.3, 1");
+        CustomEase.create("appleSpring", "0.175, 0.885, 0.32, 1.275");
+        
+        // === LOADER ANIMATION ===
+        function initLoader() {
+            const tl = gsap.timeline();
+            
+            // Animate loader elements
+            tl.to("#loader-logo", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "appleEase"
+            })
+            .to("#loader-text", {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: "appleEase"
+            }, "-=0.4")
+            .to("#loader-bar", {
+                width: "100%",
+                duration: 2,
+                ease: "appleEase"
+            }, "-=0.2")
+            .to("#loader", {
+                opacity: 0,
+                duration: 0.8,
+                ease: "appleEase",
+                onComplete: () => {
+                    document.getElementById("loader").style.display = "none";
+                    initHeroAnimations();
+                }
+            }, "+=0.5");
+        }
+        
+        // === CURSOR SYSTEM ===
+        function initCursor() {
+            const cursor = document.getElementById("cursor");
+            const follower = document.getElementById("cursor-follower");
+            
+            document.addEventListener("mousemove", (e) => {
+                gsap.to(cursor, {
+                    x: e.clientX - 4,
+                    y: e.clientY - 4,
+                    duration: 0.1,
+                    ease: "none"
+                });
+                
+                gsap.to(follower, {
+                    x: e.clientX - 16,
+                    y: e.clientY - 16,
+                    duration: 0.3,
+                    ease: "appleEase"
+                });
+            });
+            
+            // Hover effects
+            document.querySelectorAll("a, button, .card").forEach(el => {
+                el.addEventListener("mouseenter", () => {
+                    cursor.classList.add("cursor-hover");
+                    follower.classList.add("cursor-follower-hover");
+                });
+                
+                el.addEventListener("mouseleave", () => {
+                    cursor.classList.remove("cursor-hover");
+                    follower.classList.remove("cursor-follower-hover");
+                });
+            });
+        }
+        
+        // === NAVIGATION ===
+        function initNavigation() {
+            const nav = document.getElementById("nav");
+            
+            ScrollTrigger.create({
+                start: "top -100",
+                end: 99999,
+                onUpdate: (self) => {
+                    if (self.direction === 1) {
+                        nav.classList.add("nav-scrolled");
+                    } else if (self.direction === -1 && self.scroll() < 100) {
+                        nav.classList.remove("nav-scrolled");
+                    }
+                }
+            });
+            
+            // Smooth scroll for nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        gsap.to(window, {
+                            duration: 1,
+                            scrollTo: target,
+                            ease: "appleEase"
+                        });
+                    }
+                });
+            });
+        }
+        
+        // === HERO ANIMATIONS ===
+        function initHeroAnimations() {
+            const tl = gsap.timeline();
+            
+            tl.to("#hero-badge", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "appleEase"
+            })
+            .to("#hero-title", {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: "appleEase"
+            }, "-=0.8")
+            .to("#hero-subtitle", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "appleEase"
+            }, "-=0.6")
+            .to("#hero-cta", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "appleEase"
+            }, "-=0.4");
+        }
+        
+        // === SCROLL ANIMATIONS ===
+        function initScrollAnimations() {
+            // Fade in animations
+            gsap.utils.toArray(".fade-in").forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.8,
+                    ease: "appleEase"
+                });
+            });
+            
+            // Scale in animations
+            gsap.utils.toArray(".scale-in").forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    },
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.6,
+                    ease: "appleSpring"
+                });
+            });
+            
+            // Cards animation with stagger
+            gsap.from(".cards-grid .card", {
+                scrollTrigger: {
+                    trigger: ".cards-grid",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "appleEase"
+            });
+            
+            // Stats animation with stagger
+            gsap.from(".stats-grid .stat-card", {
+                scrollTrigger: {
+                    trigger: ".stats-grid",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "appleSpring"
+            });
+        }
+        
+        // === ADVANCED HOVER EFFECTS ===
+        function initHoverEffects() {
+            // Card hover effects
+            document.querySelectorAll(".card").forEach(card => {
+                const icon = card.querySelector(".card-icon");
+                
+                card.addEventListener("mouseenter", () => {
+                    gsap.to(icon, {
+                        scale: 1.1,
+                        rotation: 5,
+                        duration: 0.3,
+                        ease: "appleEase"
+                    });
+                });
+                
+                card.addEventListener("mouseleave", () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotation: 0,
+                        duration: 0.3,
+                        ease: "appleEase"
+                    });
+                });
+            });
+            
+            // Button hover effects
+            document.querySelectorAll(".btn-primary, .btn-secondary").forEach(btn => {
+                btn.addEventListener("mouseenter", () => {
+                    gsap.to(btn, {
+                        scale: 1.05,
+                        duration: 0.3,
+                        ease: "appleEase"
+                    });
+                });
+                
+                btn.addEventListener("mouseleave", () => {
+                    gsap.to(btn, {
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "appleEase"
+                    });
+                });
+            });
+        }
+        
+        // === PARALLAX EFFECTS ===
+        function initParallax() {
+            // Hero background parallax
+            gsap.to(".hero-bg", {
+                scrollTrigger: {
+                    trigger: ".hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                },
+                y: -100,
+                opacity: 0.05
+            });
+        }
+        
+        // === INITIALIZE EVERYTHING ===
+        document.addEventListener("DOMContentLoaded", () => {
+            initCursor();
+            initNavigation();
+            initScrollAnimations();
+            initHoverEffects();
+            initParallax();
+        });
+        
+        window.addEventListener("load", () => {
+            initLoader();
+        });
+        
+        // === PERFORMANCE OPTIMIZATION ===
+        // Reduce motion for users who prefer it
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            gsap.globalTimeline.timeScale(0.5);
+        }
+        
+        // Pause animations when tab is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                gsap.globalTimeline.pause();
+            } else {
+                gsap.globalTimeline.play();
+            }
+        });
+    </script>
+</body>
+</html>

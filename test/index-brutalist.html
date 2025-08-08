@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6AVENUES - Underground Fast Food</title>
+  <!-- Fonts clash -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik+Mono+One&family=Orbitron:wght@900&family=VT323&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      background: #000;
+      color: #FF00FF;
+      font-family: 'VT323', monospace;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    body {
+      /* Glitch background */
+      background: repeating-linear-gradient(90deg, #000 0 10px, #111 10px 20px);
+      animation: bgmove 2s steps(2) infinite alternate;
+    }
+    @keyframes bgmove {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+    .glitch {
+      font-family: 'Orbitron', 'Rubik Mono One', 'Press Start 2P', monospace;
+      font-size: 3rem;
+      color: #FFFF00;
+      position: relative;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 2vw 0 0 5vw;
+      filter: contrast(2) brightness(1.2);
+      animation: glitch 1.2s infinite linear alternate-reverse;
+    }
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 #00FFFF, -2px 0 #FF00FF; }
+      20% { text-shadow: -2px 2px #FF00FF, 2px -2px #00FFFF; }
+      40% { text-shadow: 2px 2px #FFFF00, -2px -2px #00FFFF; }
+      60% { text-shadow: 4px 0 #FF00FF, -4px 0 #00FFFF; }
+      80% { text-shadow: 0 4px #FFFF00, 0 -4px #FF00FF; }
+      100% { text-shadow: 2px 0 #00FFFF, -2px 0 #FF00FF; }
+    }
+    .ascii {
+      font-family: 'Press Start 2P', monospace;
+      color: #00FFFF;
+      font-size: 0.9rem;
+      margin: 0 0 2vw 2vw;
+      white-space: pre;
+      line-height: 1.1;
+      user-select: text;
+    }
+    nav {
+      display: flex;
+      gap: 2vw;
+      margin: 0 0 2vw 5vw;
+      font-family: 'Rubik Mono One', monospace;
+      font-size: 1.1rem;
+    }
+    nav a {
+      color: #FF00FF;
+      text-decoration: none;
+      background: #FFFF00;
+      padding: 0.3em 0.7em 0.1em 0.7em;
+      border: 2px solid #00FFFF;
+      border-radius: 0 1em 0 1em;
+      margin-right: 1vw;
+      box-shadow: 2px 2px 0 #00FFFF;
+      transition: filter 0.1s, background 0.1s;
+      filter: blur(0.5px);
+      position: relative;
+      z-index: 2;
+    }
+    nav a:hover {
+      background: #FF00FF;
+      color: #FFFF00;
+      filter: blur(1.5px) brightness(1.5);
+      border-color: #FFFF00;
+      box-shadow: 0 0 10px #FF00FF, 0 0 2px #FFFF00;
+      animation: navglitch 0.2s steps(2) infinite alternate;
+    }
+    @keyframes navglitch {
+      0% { filter: blur(1.5px) brightness(1.5); }
+      100% { filter: blur(0.5px) brightness(2); }
+    }
+    .restaurants {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2vw;
+      margin: 4vw 0 0 2vw;
+    }
+    .restaurant {
+      background: #FF00FF;
+      color: #000;
+      font-family: 'Rubik Mono One', 'VT323', monospace;
+      border: 3px dashed #00FFFF;
+      border-radius: 0 2em 0 2em;
+      padding: 1.2em 1.5em 0.7em 1.5em;
+      margin-bottom: 2vw;
+      min-width: 220px;
+      max-width: 260px;
+      transform: rotate(-2deg) skewY(2deg);
+      box-shadow: 0 0 0 #00FFFF, 0 0 20px #FFFF00 inset;
+      position: relative;
+      z-index: 1;
+      animation: cardglitch 1.5s infinite steps(2) alternate;
+    }
+    .restaurant:nth-child(even) {
+      background: #00FFFF;
+      color: #FF00FF;
+      border-color: #FFFF00;
+      transform: rotate(2deg) skewY(-2deg);
+      box-shadow: 0 0 0 #FF00FF, 0 0 20px #00FFFF inset;
+    }
+    @keyframes cardglitch {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(20deg) contrast(1.2); }
+    }
+    .restaurant h2 {
+      font-size: 1.3rem;
+      margin: 0 0 0.5em 0;
+      font-family: 'Orbitron', 'VT323', monospace;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px #FFFF00;
+    }
+    .restaurant p {
+      font-size: 1rem;
+      margin: 0 0 0.5em 0;
+      font-family: 'VT323', monospace;
+      line-height: 1.2;
+    }
+    .about, .contact {
+      margin: 4vw 2vw 0 2vw;
+      background: #111;
+      color: #FFFF00;
+      border: 2px solid #FF00FF;
+      border-radius: 0 0 2em 0;
+      padding: 1.5em 1em 1em 2em;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.1rem;
+      box-shadow: 0 0 10px #00FFFF inset;
+      max-width: 600px;
+      position: relative;
+      z-index: 0;
+      transform: skewX(-2deg);
+    }
+    .about strong, .contact strong {
+      color: #FF00FF;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2em;
+    }
+    .contact {
+      margin-top: 2vw;
+      background: #222;
+      color: #00FFFF;
+      border-color: #FFFF00;
+      box-shadow: 0 0 10px #FF00FF inset;
+    }
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      background: #FFFF00;
+      border: 2px solid #FF00FF;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      filter: blur(1.5px) brightness(1.5);
+      transition: background 0.1s, border 0.1s;
+      animation: cursorjitter 0.2s steps(2) infinite alternate;
+    }
+    @keyframes cursorjitter {
+      0% { transform: scale(1) translateY(0); }
+      100% { transform: scale(1.1) translateY(-2px); }
+    }
+    /* Responsive */
+    @media (max-width: 700px) {
+      .restaurants { flex-direction: column; }
+      .restaurant { max-width: 90vw; min-width: 0; }
+      .about, .contact { max-width: 98vw; padding: 1em 0.5em 1em 1em; }
+      nav { flex-wrap: wrap; gap: 1vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="ascii">
+{ 6AVENUES }
+ _   _   _   _   _   _   _   _   _   _   _   _   _   _   _
+| | | | | | | | | | | | | | | | | | | | | | | | | | | | |
+|_| |_| |_| |_| |_| |_| |_| |_| |_| |_| |_| |_| |_| |_| |_|
+  </div>
+  <div class="glitch">6AVENUES</div>
+  <nav>
+    <a href="#restaurants">RESTAURANTS</a>
+    <a href="#about">À PROPOS</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <section class="restaurants" id="restaurants">
+    <div class="restaurant">
+      <h2>Burger Riot</h2>
+      <p>Steak, cheddar, sauce néon, pickles, pain noir. <br><b>🔥 Spicy & Acidulé</b></p>
+    </div>
+    <div class="restaurant">
+      <h2>Tokyo Fries</h2>
+      <p>Frites wasabi, mayo rose, algues, sésame. <br><b>🍟 Fusion Japon</b></p>
+    </div>
+    <div class="restaurant">
+      <h2>Fratelli Punk</h2>
+      <p>Pizza glitch, pepperoni, olives, mozzarella. <br><b>🍕 Italo-Noise</b></p>
+    </div>
+    <div class="restaurant">
+      <h2>Los Pollos Acid</h2>
+      <p>Poulet frit, sauce verte, nachos, jalapeños. <br><b>🐔 Mex Acid</b></p>
+    </div>
+    <div class="restaurant">
+      <h2>Asia Rave</h2>
+      <p>Noodles, tofu, sauce soja fluo, cacahuètes. <br><b>🍜 Electro-Asia</b></p>
+    </div>
+    <div class="restaurant">
+      <h2>Candy Bar</h2>
+      <p>Milkshake bubblegum, donuts, pop-corn. <br><b>🍭 Sweet & Weird</b></p>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <p><strong>À PROPOS :</strong> 6AVENUES, c'est l'anti-fastfood corporate. Ici, on mixe les genres, on casse les codes, on fait du bruit. <br>Des recettes <span style="color:#FF00FF">imparfaites</span>, des vibes <span style="color:#00FFFF">underground</span>, et une ambiance <span style="color:#FFFF00">rave</span>.<br>Pas de chef étoilé, juste des passionnés qui aiment le chaos et la bouffe qui claque.</p>
+  </section>
+  <section class="contact" id="contact">
+    <p><strong>CONTACT :</strong> Viens IRL, ou laisse un message sur <span style="color:#FF00FF">contact@6avenues.undrgrnd</span>.<br>On répond si on n'est pas en after.</p>
+  </section>
+  <script>
+    // Glitchy cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = (e.clientX - 16) + 'px';
+      cursor.style.top = (e.clientY - 16) + 'px';
+    });
+    // Glitch nav click
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.getAttribute('href').replace('#','');
+        const el = document.getElementById(id);
+        if(el) {
+          window.scrollTo({
+            top: el.offsetTop - 30 - Math.random()*30,
+            behavior: 'auto'
+          });
+          // Glitch effect
+          el.style.filter = 'contrast(2) hue-rotate(30deg)';
+          setTimeout(()=>{el.style.filter='';}, 300);
+        }
+      });
+    });
+    // Micro-interaction: ASCII title color flicker
+    setInterval(()=>{
+      document.querySelector('.ascii').style.color = ['#FF00FF','#00FFFF','#FFFF00'][Math.floor(Math.random()*3)];
+    }, 400);
+    // Sound design (optional, fun)
+    /*
+    const ctx = new(window.AudioContext||window.webkitAudioContext)();
+    document.body.addEventListener('click',()=>{
+      const o=ctx.createOscillator();
+      o.type='square';
+      o.frequency.value=440+Math.random()*220;
+      o.connect(ctx.destination);
+      o.start();
+      setTimeout(()=>o.stop(),100+Math.random()*100);
+    });
+    */
+  </script>
+</body>
+</html>
