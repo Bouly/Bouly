@@ -1,182 +1,186 @@
-// Configuration 8th Wall
-const APP_KEY = 'YOUR_8TH_WALL_APP_KEY'; // À remplacer par votre clé
+// Configuration des plats
+const dishes = [
+    {
+        id: 1,
+        name: "Burger Classic",
+        description: "Pain artisanal, steak de bœuf grillé, salade fraîche, tomate, oignons",
+        price: "12.90€",
+        category: "burgers",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest2.glb",
+        scale: "0.1 0.1 0.1"
+    },
+    {
+        id: 2,
+        name: "Pizza Margherita",
+        description: "Sauce tomate artisanale, mozzarella di bufala, basilic frais",
+        price: "14.50€",
+        category: "pizzas",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.08 0.08 0.08"
+    },
+    {
+        id: 3,
+        name: "Bo Bun",
+        description: "Vermicelles de riz, bœuf grillé, légumes frais, nems, sauce nuoc-mam",
+        price: "16.90€",
+        category: "asiatique",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.12 0.12 0.12"
+    },
+    {
+        id: 4,
+        name: "Pizza Rimini",
+        description: "Sauce tomate, mozzarella, jambon de Parme, roquette, parmesan",
+        price: "18.50€",
+        category: "pizzas",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.08 0.08 0.08"
+    },
+    {
+        id: 5,
+        name: "Pizza Chèvre",
+        description: "Crème fraîche, mozzarella, fromage de chèvre, miel, noix",
+        price: "17.90€",
+        category: "pizzas",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.08 0.08 0.08"
+    },
+    {
+        id: 6,
+        name: "Sandwich Lee",
+        description: "Pain de mie grillé, poulet mariné, crudités, sauce spéciale",
+        price: "11.90€",
+        category: "sandwichs",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.1 0.1 0.1"
+    },
+    {
+        id: 7,
+        name: "Pad Thaï",
+        description: "Nouilles de riz sautées, crevettes fraîches, légumes croquants, cacahuètes",
+        price: "16.90€",
+        category: "asiatique",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.12 0.12 0.12"
+    },
+    {
+        id: 8,
+        name: "Tiramisu Maison",
+        description: "Mascarpone, café espresso, cacao pur, biscuits cuillère",
+        price: "7.50€",
+        category: "desserts",
+        image: "./img/burger-300x233.png",
+        model3d: "./models/burgertest.glb",
+        scale: "0.08 0.08 0.08"
+    }
+];
 
-// Variables globales
-let currentBurger = null;
-let isARActive = false;
+let currentDish = null;
 
-// Initialisation 8th Wall
-const onxrloaded = () => {
-  XR8.addCameraPipelineModules([
-    XR8.GlTextureRenderer.pipelineModule(),
-    XR8.Threejs.pipelineModule(),
-    XR8.XrController.pipelineModule(),
-    window.LandingPage.pipelineModule(),
-    window.RuntimeError.pipelineModule(),
-  ]);
-
-  // Configuration de la scène
-  const sceneEl = document.querySelector('a-scene');
-  if (sceneEl) {
-    sceneEl.addEventListener('loaded', () => {
-      console.log('8th Wall scene loaded');
+document.addEventListener('DOMContentLoaded', function() {
+    renderRestaurants('all');
+    setupCategoryFilters();
+    
+    // Header scroll effect (retardé pour accès au bouton)
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 400) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
     });
-  }
-};
-
-// Gestion de l'affichage AR améliorée
-function showAR(burgerType) {
-    if (isARActive) return;
     
-    const menuContainer = document.getElementById('menu-container');
-    const arContainer = document.getElementById('ar-container');
-    
-    // Animation de transition fluide
-    menuContainer.style.transform = 'scale(0.9)';
-    menuContainer.style.opacity = '0';
-    
+    // Loading screen
     setTimeout(() => {
-        menuContainer.style.display = 'none';
-        arContainer.style.display = 'block';
-        isARActive = true;
-        
-        // Mise à jour des instructions
-        updateARInstructions('Recherche de surface...');
-        
-        // Cacher tous les burgers
-        hideAllBurgers();
-        
-        // Attendre que 8th Wall détecte une surface
-        setTimeout(() => {
-            showBurgerWithEffect(burgerType);
-            updateARInstructions('Burger placé ! Bougez autour pour l\'explorer');
-        }, 2000);
-    }, 300);
-}
-
-function showBurgerWithEffect(burgerType) {
-    const burgerElement = document.getElementById(`burger-${burgerType}`);
-    if (burgerElement) {
-        // Positionnement intelligent sur surface détectée
-        burgerElement.setAttribute('visible', 'true');
-        burgerElement.emit('showBurger');
-        currentBurger = burgerType;
-        
-        // Effet sonore (optionnel)
-        playPlacementSound();
-    }
-}
-
-function closeAR() {
-    if (!isARActive) return;
-    
-    isARActive = false;
-    hideAllBurgers();
-    
-    const menuContainer = document.getElementById('menu-container');
-    const arContainer = document.getElementById('ar-container');
-    
-    arContainer.style.display = 'none';
-    menuContainer.style.display = 'block';
-    menuContainer.style.transform = 'scale(1)';
-    menuContainer.style.opacity = '1';
-    
-    currentBurger = null;
-}
-
-function hideAllBurgers() {
-    const burgers = ['classic', 'cheese', 'bacon', 'spicy', 'veggie'];
-    burgers.forEach(burger => {
-        const element = document.getElementById(`burger-${burger}`);
-        if (element) {
-            element.setAttribute('visible', 'false');
+        const loading = document.querySelector('.loading');
+        if (loading) {
+            loading.classList.add('hidden');
         }
+    }, 1000);
+});
+
+function renderRestaurants(category) {
+    const grid = document.getElementById('restaurantsGrid');
+    const filteredDishes = category === 'all' ? dishes : dishes.filter(dish => dish.category === category);
+    
+    grid.innerHTML = filteredDishes.map((dish, index) => {
+        // Séparer le nom du plat en deux parties pour l'affichage
+        const nameParts = dish.name.split(' ');
+        const firstWord = nameParts[0];
+        const restOfName = nameParts.slice(1).join(' ');
+        
+        return `
+        <div class="simple-burger-card scroll-reveal" style="animation-delay: ${index * 0.1}s">
+            <div class="PG-product-content">
+                <div class="simple-burger-title">
+                    <div class="burger-text">${firstWord}</div>
+                    <div class="chili-text">${restOfName}</div>
+                </div>
+                <img src="${dish.image}" alt="${dish.name}" class="simple-burger-img">
+            </div>
+            <div class="PG-product-info">
+                <div class="simple-burger-title">
+                    <div class="burger-text">${firstWord}</div>
+                    <div class="chili-text">${restOfName}</div>
+                </div>
+                <div class="PG-product-ingredients">Prix: ${dish.price}</div>
+                <div class="PG-product-description">${dish.description}</div>
+                <button class="ar-btn" onclick="openARModal(${dish.id})">Voir en AR</button>
+            </div>
+        </div>
+    `;
+    }).join('');
+    
+    // Trigger scroll reveal animation
+    setTimeout(() => {
+        const reveals = document.querySelectorAll('.scroll-reveal');
+        reveals.forEach(reveal => reveal.classList.add('revealed'));
+    }, 100);
+}
+
+function setupCategoryFilters() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            // Filter restaurants
+            const category = btn.dataset.category;
+            renderRestaurants(category);
+        });
     });
 }
 
-function updateARInstructions(message) {
-    const instructions = document.getElementById('ar-instructions');
-    if (instructions) {
-        instructions.innerHTML = `<p>📱 ${message}</p>`;
-    }
+function openARModal(dishId) {
+    currentDish = dishes.find(dish => dish.id === dishId);
+    if (!currentDish) return;
+
+    document.getElementById('modalTitle').textContent = currentDish.name;
+    document.getElementById('modalDescription').textContent = currentDish.description;
+    document.getElementById('modalPrice').textContent = currentDish.price;
+
+    const modelViewer = document.getElementById('foodModel');
+    modelViewer.src = currentDish.model3d || './models/burgertest2.glb';
+    modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
+
+    document.getElementById('arModal').classList.add('active');
 }
 
-function playPlacementSound() {
-    // Son de placement (optionnel)
-    if ('vibrate' in navigator) {
-        navigator.vibrate(100);
-    }
+function closeARModal() {
+    document.getElementById('arModal').classList.remove('active');
+    document.getElementById('foodModel').src = '';
 }
 
-// Détection de surface 8th Wall
-const initSurfaceTracking = () => {
-    const scene = document.getElementById('ar-scene');
-    if (scene) {
-        scene.addEventListener('xrweb-surface-found', (event) => {
-            updateARInstructions('Surface détectée ! Touchez pour placer votre burger');
-        });
-        
-        scene.addEventListener('xrweb-surface-lost', (event) => {
-            updateARInstructions('Surface perdue... Recherche en cours');
-        });
-    }
-};
-
-// Gestion des erreurs et compatibilité
-window.addEventListener('load', function() {
-    // Vérifier la compatibilité 8th Wall
-    if (typeof XR8 === 'undefined') {
-        console.warn('8th Wall non disponible - fallback vers mode démo');
-        // Fallback vers AR.js ou mode démo
-    }
-    
-    // Initialiser le tracking
-    initSurfaceTracking();
-    
-    // Optimisations performances
-    const scene = document.getElementById('ar-scene');
-    if (scene) {
-        scene.setAttribute('stats', false);
-        scene.setAttribute('antialias', true);
-        scene.setAttribute('logarithmicDepthBuffer', true);
-    }
-});
-
-// Gestion des gestes tactiles
-let touchStartTime = 0;
-let touchStartPos = { x: 0, y: 0 };
-
-document.addEventListener('touchstart', (e) => {
-    touchStartTime = Date.now();
-    touchStartPos.x = e.touches[0].clientX;
-    touchStartPos.y = e.touches[0].clientY;
-});
-
-document.addEventListener('touchend', (e) => {
-    const touchDuration = Date.now() - touchStartTime;
-    const touchEndPos = {
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientY
-    };
-    
-    const distance = Math.sqrt(
-        Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
-        Math.pow(touchEndPos.y - touchStartPos.y, 2)
-    );
-    
-    // Tap détecté
-    if (touchDuration < 300 && distance < 30 && isARActive && currentBurger) {
-        // Animation d'interaction
-        const burger = document.getElementById(`burger-${currentBurger}`);
-        if (burger) {
-            burger.emit('tap-animation');
-        }
-    }
-});
-
-// Chargement différé de 8th Wall
-if (window.XR8) {
-    onxrloaded();
-} else {
-    window.addEventListener('xrloaded', onxrloaded);
+function startARGame() {
+    alert('Mini-jeu AR bientôt disponible !');
 }
