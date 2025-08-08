@@ -7,7 +7,7 @@ const dishes = [
         price: "12.90€",
         category: "burgers",
         image: "./img/burger-300x233.png",
-        model3d: "./models/burgertest2.glb",
+        model3d: "./models/burger3.obj",
         scale: "0.1 0.1 0.1"
     },
     {
@@ -17,7 +17,7 @@ const dishes = [
         price: "14.50€",
         category: "pizzas",
         image: "./img/burger-300x233.png",
-        model3d: "./models/burgertest.glb",
+        model3d: "./models/burgertest2.glb",
         scale: "0.08 0.08 0.08"
     },
     {
@@ -185,7 +185,7 @@ function openARModal(dishId) {
     document.getElementById('modalPrice').textContent = currentDish.price;
 
     const modelViewer = document.getElementById('foodModel');
-    modelViewer.src = currentDish.model3d || './models/burgertest2.glb';
+    modelViewer.src = currentDish.model3d || './models/burger3.obj';
     modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
 
     // Bloquer le scroll de la page en arrière-plan
