@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+  <title>Prototype : remplacement du ciel (web)</title>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:#111; color:#eee; display:flex; flex-direction:column; align-items:center; gap:12px; padding:12px; }
+    #output { background:#000; width:100%; max-width:720px; height:auto; border-radius:10px; overflow:hidden; }
+    canvas { width:100%; height:auto; display:block; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; max-width:720px; }
+    .control { background:#1b1b1b; padding:8px; border-radius:8px; display:flex; flex-direction:column; gap:6px; min-width:160px; }
+    label { font-size:12px; color:#bbb; }
+    input[type=range] { width:100%; }
+    button { padding:8px 12px; border-radius:8px; border:none; background:#0ea5a4; color:#031012; font-weight:600; cursor:pointer; }
+    .small { font-size:12px; color:#9aa; }
+  </style>
+</head>
+<body>
+  <h2>Remplacement du ciel (prototype)</h2>
+
+  <div id="output">
+    <!-- rendu final visible -->
+    <canvas id="finalCanvas"></canvas>
+  </div>
+
+  <div class="controls">
+    <div class="control">
+      <label>Mode traitement</label>
+      <select id="mode">
+        <option value="color">Détection couleur (rapide)</option>
+        <option value="ml" disabled>Segmentation ML (option future)</option>
+      </select>
+      <div class="small">Le mode couleur est activé par défaut. Le mode ML est expliqué plus bas.</div>
+    </div>
+
+    <div class="control">
+      <label>Teinte (H) centre (°)</label>
+      <input id="hCenter" type="range" min="0" max="360" value="200">
+      <div class="small">Valeur actuelle : <span id="hC">200</span>°</div>
+
+      <label>Largeur teinte (±°)</label>
+      <input id="hRange" type="range" min="10" max="120" value="40">
+      <div class="small">Valeur : <span id="hR">40</span>°</div>
+
+      <label>Clarté (value min)</label>
+      <input id="vMin" type="range" min="0" max="100" value="40">
+      <div class="small">Valeur : <span id="vM">40</span>%</div>
+    </div>
+
+    <div class="control">
+      <label>Choisir image de remplacement</label>
+      <input id="imgInput" type="file" accept="image/*">
+      <button id="useSample">Utiliser image Wplace (sample)</button>
+      <div class="small">Ou change l'image par défaut.</div>
+    </div>
+
+    <div class="control">
+      <label>Performance / qual.</label>
+      <input id="procScale" type="range" min="0.2" max="1" step="0.1" value="0.4">
+      <div class="small">Échelle traitement : <span id="ps">0.4</span> (plus bas = +rapide)</div>
+
+      <label>Activer lissage</label>
+      <input id="blurMask" type="checkbox" checked>
+    </div>
+  </div>
+
+  <p class="small">Rappel : getUserMedia nécessite HTTPS ou <strong>localhost</strong>. Si la détection rate sur ciel gris/nuageux, augmente la largeur teinte ou utilise la future segmentation ML.</p>
+
+<script>
+(async function(){
+  const finalCanvas = document.getElementById('finalCanvas');
+  const finalCtx = finalCanvas.getContext('2d');
+
+  // offscreen video + small canvas pour traitement (performant)
+  const video = document.createElement('video');
+  video.autoplay = true;
+  video.playsInline = true;
+  video.muted = true;
+
+  const processCanvas = document.createElement('canvas');
+  const pctx = processCanvas.getContext('2d');
+
+  // Default replacement image (sample wplace-like)
+  const replacement = new Image();
+  replacement.crossOrigin = "anonymous";
+  replacement.src = "https://i.imgur.com/6Yp6Z5b.jpg"; // sample image (remplace par ta texture Wplace)
+  await replacement.decode().catch(()=>{});
+
+  // UI refs
+  const hCenter = document.getElementById('hCenter');
+  const hRange = document.getElementById('hRange');
+  const vMin = document.getElementById('vMin');
+  const procScale = document.getElementById('procScale');
+  const blurMask = document.getElementById('blurMask');
+  const imgInput = document.getElementById('imgInput');
+  const useSample = document.getElementById('useSample');
+
+  const hCEl = document.getElementById('hC');
+  const hREl = document.getElementById('hR');
+  const vMEl = document.getElementById('vM');
+  const psEl = document.getElementById('ps');
+
+  function updateLabels(){
+    hCEl.innerText = hCenter.value;
+    hREl.innerText = hRange.value;
+    vMEl.innerText = vMin.value;
+    psEl.innerText = procScale.value;
+  }
+  [hCenter,hRange,vMin,procScale].forEach(i=>i.addEventListener('input', updateLabels));
+  updateLabels();
+
+  imgInput.addEventListener('change', (ev)=>{
+    const f = ev.target.files?.[0];
+    if(!f) return;
+    const url = URL.createObjectURL(f);
+    replacement.src = url;
+  });
+  useSample.addEventListener('click', ()=> {
+    replacement.src = "https://i.imgur.com/6Yp6Z5b.jpg";
+  });
+
+  // start camera
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+    video.srcObject = stream;
+    await video.play();
+  }catch(e){
+    alert("Impossible d'accéder à la caméra : " + e);
+    return;
+  }
+
+  function resizeCanvases(){
+    const vw = video.videoWidth || 640;
+    const vh = video.videoHeight || 480;
+    finalCanvas.width = vw;
+    finalCanvas.height = vh;
+
+    const scale = parseFloat(procScale.value);
+    processCanvas.width = Math.max(160, Math.round(vw * scale));
+    processCanvas.height = Math.max(120, Math.round(vh * scale));
+  }
+
+  video.addEventListener('loadedmetadata', resizeCanvases);
+  window.addEventListener('resize', resizeCanvases);
+  procScale.addEventListener('input', ()=>{ resizeCanvases(); });
+
+  // helper: RGB -> HSV
+  function rgbToHsv(r,g,b){
+    r/=255; g/=255; b/=255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h=0, s=0, v=max;
+    const d = max - min;
+    s = max === 0 ? 0 : d / max;
+    if(max === min){ h = 0; }
+    else {
+      switch(max){
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+    return [h*360, s*100, v*100];
+  }
+
+  // simple gaussian blur on mask (separable) - small kernel
+  function blurMaskFunc(mask, w, h){
+    const tmp = new Uint8ClampedArray(mask.length);
+    const kernel = [0.25, 0.5, 0.25]; // 3-tap
+    // horizontal
+    for(let y=0;y<h;y++){
+      for(let x=0;x<w;x++){
+        let acc=0;
+        for(let k=-1;k<=1;k++){
+          const xx = Math.min(w-1, Math.max(0, x+k));
+          acc += mask[y*w + xx] * kernel[k+1];
+        }
+        tmp[y*w + x] = acc;
+      }
+    }
+    // vertical into mask
+    for(let y=0;y<h;y++){
+      for(let x=0;x<w;x++){
+        let acc=0;
+        for(let k=-1;k<=1;k++){
+          const yy = Math.min(h-1, Math.max(0, y+k));
+          acc += tmp[yy*w + x] * kernel[k+1];
+        }
+        mask[y*w + x] = acc;
+      }
+    }
+  }
+
+  // main loop
+  async function frame(){
+    if(video.readyState >= 2){
+      // ensure canvas sizes
+      if(finalCanvas.width === 0) resizeCanvases();
+
+      // draw scaled video to processing canvas
+      pctx.drawImage(video, 0, 0, processCanvas.width, processCanvas.height);
+      const imgData = pctx.getImageData(0,0,processCanvas.width,processCanvas.height);
+      const { data } = imgData;
+      const w = processCanvas.width, h = processCanvas.height;
+      const mask = new Uint8ClampedArray(w*h); // 0..255
+
+      // thresholds from UI
+      const hCenterVal = parseFloat(hCenter.value); // 0..360
+      const hRangeVal = parseFloat(hRange.value);
+      const vMinVal = parseFloat(vMin.value); // 0..100
+
+      // iterate pixels (step by 1)
+      for(let i=0, p=0; i<data.length; i+=4, p++){
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const [hsvH, hsvS, hsvV] = rgbToHsv(r,g,b);
+        // compute hue distance circular
+        const d = Math.abs(((hsvH - hCenterVal + 540) % 360) - 180) - 180;
+        const hueDist = Math.abs(d);
+        // check conditions
+        const isSky = (hueDist <= hRangeVal) && (hsvV*1 >= vMinVal);
+        mask[p] = isSky ? 255 : 0;
+      }
+
+      // optional blur
+      if(blurMask.checked) blurMaskFunc(mask, w, h);
+
+      // upscale and composite to final canvas
+      // draw video full-res to final canvas as base
+      finalCtx.drawImage(video, 0, 0, finalCanvas.width, finalCanvas.height);
+      // draw replacement behind: create a pattern scaled to fill
+      // we will composite replacement only on sky areas: easiest is to create replacement image scaled to final size
+      // create temp canvas for replacement
+      const repCanvas = document.createElement('canvas');
+      repCanvas.width = finalCanvas.width;
+      repCanvas.height = finalCanvas.height;
+      const repCtx = repCanvas.getContext('2d');
+      // draw replacement as cover (center-crop)
+      const arRep = replacement.width / replacement.height;
+      const arDest = repCanvas.width / repCanvas.height;
+      let sx=0, sy=0, sw=replacement.width, sh=replacement.height;
+      if(arRep > arDest){
+        // image wider -> crop sides
+        const newW = replacement.height * arDest;
+        sx = (replacement.width - newW)/2;
+        sw = newW;
+      } else {
+        // crop top/bottom
+        const newH = replacement.width / arDest;
+        sy = (replacement.height - newH)/2;
+        sh = newH;
+      }
+      repCtx.drawImage(replacement, sx, sy, sw, sh, 0, 0, repCanvas.width, repCanvas.height);
+
+      // get replacement pixels and final pixels to composite
+      const repData = repCtx.getImageData(0,0,repCanvas.width, repCanvas.height);
+      const finalImg = finalCtx.getImageData(0,0,finalCanvas.width, finalCanvas.height);
+      const fd = finalImg.data, rd = repData.data;
+
+      // map mask (small) to full size
+      for(let y=0;y<finalCanvas.height;y++){
+        const srcY = Math.floor(y * (h / finalCanvas.height));
+        for(let x=0;x<finalCanvas.width;x++){
+          const srcX = Math.floor(x * (w / finalCanvas.width));
+          const m = mask[srcY*w + srcX] / 255; // 0..1
+          if(m > 0.05){ // composite: final = mix(orig, replacement, m)
+            const idx = (y*finalCanvas.width + x)*4;
+            fd[idx+0] = fd[idx+0] * (1 - m) + rd[idx+0] * m;
+            fd[idx+1] = fd[idx+1] * (1 - m) + rd[idx+1] * m;
+            fd[idx+2] = fd[idx+2] * (1 - m) + rd[idx+2] * m;
+          }
+        }
+      }
+
+      finalCtx.putImageData(finalImg, 0, 0);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>
