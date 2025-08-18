@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
 </head>
 <body>
     <!-- Loading Screen -->
@@ -22,6 +21,29 @@
             <a href="index.html" class="logo">
                 <img src="./img/6avenues-logo-1.png" alt="6AVENUES" />
             </a>
+            
+            <!-- Theme Selector -->
+            <div class="theme-selector">
+                <label for="themeSelect">Thème :</label>
+                <div class="custom-dropdown">
+                    <div class="dropdown-selected" onclick="toggleDropdown()">
+                        <span id="selectedTheme">🌿 Vert Nature</span>
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="dropdown-option" data-theme="custom-green">🌿 Vert Nature</div>
+                        <div class="dropdown-option" data-theme="mcdonalds">🍟 McDonald's</div>
+                        <div class="dropdown-option" data-theme="burger-king">👑 Burger King</div>
+                        <div class="dropdown-option" data-theme="taco-bell">🌮 Taco Bell</div>
+                        <div class="dropdown-option" data-theme="subway">🥪 Subway</div>
+                        <div class="dropdown-option" data-theme="eleven-madison">⭐ Eleven Madison Park</div>
+                        <div class="dropdown-option" data-theme="daniel-nyc">🍷 Daniel NYC</div>
+                    </div>
+                </div>
+            </div>
+            
             <nav>
                 <ul class="nav-links">
                     <li><a href="index.html">Accueil</a></li>

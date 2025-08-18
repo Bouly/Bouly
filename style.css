@@ -9,62 +9,34 @@
     src: url('./fonts/Kenyan Coffee Rg.otf') format('opentype');
 }
 
-/* ================================================================================
-   🎨 SYSTÈME DE COULEURS CENTRALISÉ
-   ================================================================================
-   
-   Pour changer facilement les couleurs de tout le site :
-   1. Modifiez les variables ci-dessous dans la section :root
-   2. Les changements s'appliqueront automatiquement partout
-   
-   📝 Variables principales à personnaliser :
-   - --primary-color     : Couleur principale (actuellement jaune/orange)
-   - --secondary-color   : Couleur secondaire pour les hovers
-   - --bg-primary        : Fond principal du site
-   - --text-primary      : Couleur du texte principal
-   - --text-card-title   : Couleur des titres des cartes
-   
-   💡 Exemples de palettes prêtes à utiliser :
-   
-   🔥 ROUGE/NOIR :
-   --primary-color: #FF0000; --secondary-color: #CC0000; --bg-primary: #1A1A1A;
-   
-   💚 VERT/BLANC :
-   --primary-color: #00FF7F; --secondary-color: #00CC66; --bg-primary: #F0F8FF;
-   
-   💙 BLEU/GRIS :
-   --primary-color: #007BFF; --secondary-color: #0056B3; --bg-primary: #F8F9FA;
-   
-   ================================================================================ */
-
 /* === VARIABLES GLOBALES PROFESSIONNELLES === */
 :root {
     /* ===== PALETTE PRINCIPALE ===== */
-    --primary-color: #FDBD11;        /* Couleur principale (jaune/orange) */
-    --secondary-color: #FFA726;      /* Couleur secondaire (orange) */
-    --accent-color: #FF7043;         /* Couleur d'accent */
+    --primary-color: #A9C5A0;        /* Couleur principale (vert doux) */
+    --secondary-color: #758173;      /* Couleur secondaire (vert kaki) */
+    --accent-color: #C6DEC6;         /* Couleur d'accent (vert très clair) */
     
     /* ===== COULEURS DE FOND ===== */
-    --bg-primary: #FFDDAC;           /* Fond principal (beige) */
-    --bg-secondary: #232526;         /* Fond header/footer (noir) */
-    --bg-card: #ffd79c;              /* Fond des cartes */
-    --bg-card-gradient-start: #ffd79c; /* Début gradient carte */
-    --bg-card-gradient-end: #f79321;   /* Fin gradient carte */
-    --bg-modal: #FFFFFF;             /* Fond modal */
-    --bg-loading: #FFFFFF;           /* Fond écran de chargement */
+    --bg-primary: #C5EFCB;           /* Fond principal (vert pastel) */
+    --bg-secondary: #020402;         /* Fond header/footer (noir/vert foncé) */
+    --bg-card: #C6DEC6;              /* Fond des cartes (vert clair) */
+    --bg-card-gradient-start: #C6DEC6; /* Début gradient carte */
+    --bg-card-gradient-end: #A9C5A0;   /* Fin gradient carte */
+    --bg-modal: #C5EFCB;             /* Fond modal */
+    --bg-loading: #C5EFCB;           /* Fond écran de chargement */
     
     /* ===== COULEURS DE TEXTE ===== */
-    --text-primary: #f3f3f3;         /* Texte principal (blanc cassé) */
-    --text-secondary: #666666;       /* Texte secondaire (gris) */
-    --text-dark: #292929;            /* Texte foncé */
-    --text-card-title: #ffddac;      /* Titre des cartes */
-    --text-card-subtitle: #5e070f;   /* Sous-titre des cartes */
-    --text-footer: #CCCCCC;          /* Texte footer */
+    --text-primary: #2D3748;         /* Texte principal (gris foncé) */
+    --text-secondary: #4A5568;       /* Texte secondaire (gris moyen) */
+    --text-dark: #1A202C;            /* Texte foncé (gris très foncé) */
+    --text-card-title: #FFFFFF;      /* Titre des cartes (BLANC) */
+    --text-card-subtitle: #2D3748;   /* Sous-titre des cartes (gris foncé) */
+    --text-footer: #A0AEC0;          /* Texte footer (gris clair) */
     
     /* ===== COULEURS D'ÉTAT ===== */
-    --success-green: #00B74A;        /* Vert succès */
-    --error-red: #B01F00;            /* Rouge erreur */
-    --warning-orange: #FF9800;       /* Orange avertissement */
+    --success-green: #10B981;        /* Vert succès */
+    --error-red: #EF4444;            /* Rouge erreur */
+    --warning-orange: #F59E0B;       /* Orange avertissement */
     
     /* ===== COULEURS UTILITAIRES ===== */
     --white: #FFFFFF;
@@ -72,27 +44,27 @@
     --transparent: transparent;
     
     /* ===== COULEURS D'INTERFACE ===== */
-    --border-light: #E1E1E1;         /* Bordures claires */
-    --border-dark: #222;             /* Bordures foncées */
-    --shadow-light: rgba(0, 0, 0, 0.1); /* Ombre claire */
-    --shadow-dark: rgba(0, 0, 0, 0.8);  /* Ombre foncée */
-    --overlay-dark: rgba(0, 0, 0, 0.8);  /* Overlay modal */
+    --border-light: #C6DEC6;         /* Bordures claires */
+    --border-dark: #758173;          /* Bordures foncées */
+    --shadow-light: rgba(169, 197, 160, 0.2); /* Ombre claire */
+    --shadow-dark: rgba(2, 4, 2, 0.8);        /* Ombre foncée */
+    --overlay-dark: rgba(2, 4, 2, 0.8);       /* Overlay modal */
     
     /* ===== COULEURS DE BOUTONS ===== */
-    --btn-primary-bg: #FDBD11;       /* Fond bouton principal */
-    --btn-primary-text: #FFFFFF;     /* Texte bouton principal */
-    --btn-primary-hover: #B01F00;    /* Hover bouton principal */
-    --btn-secondary-bg: #F8F8F8;     /* Fond bouton secondaire */
-    --btn-secondary-text: #292929;   /* Texte bouton secondaire */
-    --btn-secondary-hover: #E1E1E1;  /* Hover bouton secondaire */
+    --btn-primary-bg: #A9C5A0;       /* Fond bouton principal */
+    --btn-primary-text: #FFFFFF;     /* Texte bouton principal (blanc) */
+    --btn-primary-hover: #758173;    /* Hover bouton principal */
+    --btn-secondary-bg: #C6DEC6;     /* Fond bouton secondaire */
+    --btn-secondary-text: #2D3748;   /* Texte bouton secondaire (gris foncé) */
+    --btn-secondary-hover: #A9C5A0;  /* Hover bouton secondaire */
     
     /* ===== COULEURS AR BUTTON ===== */
-    --ar-btn-bg: rgba(94, 7, 15, 0.9);     /* Fond bouton AR */
-    --ar-btn-text: #FFDDAC;                /* Texte bouton AR */
-    --ar-btn-border: #FFDDAC;              /* Bordure bouton AR */
-    --ar-btn-hover-bg: rgba(94, 7, 15, 1); /* Hover fond bouton AR */
-    --ar-btn-hover-text: #FDBD11;          /* Hover texte bouton AR */
-    --ar-btn-hover-border: #FDBD11;        /* Hover bordure bouton AR */
+    --ar-btn-bg: rgba(169, 197, 160, 0.9);    /* Fond bouton AR */
+    --ar-btn-text: #FFFFFF;                   /* Texte bouton AR (blanc) */
+    --ar-btn-border: #758173;                 /* Bordure bouton AR */
+    --ar-btn-hover-bg: rgba(117, 129, 115, 1); /* Hover fond bouton AR */
+    --ar-btn-hover-text: #FFFFFF;             /* Hover texte bouton AR (blanc) */
+    --ar-btn-hover-border: #C6DEC6;           /* Hover bordure bouton AR */
     
     /* Typographie professionnelle */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -210,6 +182,162 @@ body {
 
 .nav-links a:hover::after {
     width: 100%;
+}
+
+/* === THEME SELECTOR === */
+.theme-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    position: relative;
+}
+
+.theme-selector label {
+    color: var(--white);
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.custom-dropdown {
+    position: relative;
+    min-width: 240px;
+}
+
+.dropdown-selected {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: var(--font-weight-medium);
+    color: #1a202c;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 4px 6px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.dropdown-selected:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),
+        0 4px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dropdown-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+    opacity: 0.6;
+}
+
+.dropdown-selected.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    box-shadow: 
+        0 20px 25px rgba(0, 0, 0, 0.1),
+        0 10px 10px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.dropdown-option {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: #1a202c;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.dropdown-option:last-child {
+    border-bottom: none;
+}
+
+.dropdown-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(169, 197, 160, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.dropdown-option:hover {
+    background: linear-gradient(135deg, rgba(169, 197, 160, 0.1) 0%, rgba(169, 197, 160, 0.05) 100%);
+    color: #0a0e0a;
+    transform: translateX(4px);
+}
+
+.dropdown-option:hover::before {
+    left: 100%;
+}
+
+.dropdown-option.selected {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: var(--white);
+    font-weight: var(--font-weight-bold);
+}
+
+.dropdown-option.selected::after {
+    content: '✓';
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+}
+
+/* Animation de feedback */
+.custom-dropdown.changing .dropdown-selected {
+    animation: themeChange 0.4s ease-out;
+}
+
+@keyframes themeChange {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.05) rotate(1deg); }
+    50% { transform: scale(1.02) rotate(-0.5deg); }
+    75% { transform: scale(1.03) rotate(0.5deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
 
 /* === LAYOUT PRINCIPAL === */
@@ -702,6 +830,33 @@ model-viewer {
         display: none;
     }
     
+    .theme-selector {
+        gap: var(--space-sm);
+    }
+    
+    .theme-selector label {
+        font-size: 12px;
+    }
+    
+    .custom-dropdown {
+        min-width: 200px;
+    }
+    
+    .dropdown-selected {
+        font-size: 13px;
+        padding: var(--space-xs) var(--space-sm);
+    }
+    
+    .dropdown-arrow {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .dropdown-option {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 13px;
+    }
+    
     .categories-nav {
         padding: 0 var(--space-md);
     }
@@ -714,6 +869,24 @@ model-viewer {
     .footer-content {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-selector label {
+        display: none;
+    }
+    
+    .custom-dropdown {
+        min-width: 180px;
+    }
+    
+    .dropdown-selected {
+        font-size: 12px;
+    }
+    
+    .dropdown-option {
+        font-size: 12px;
     }
 }
 
