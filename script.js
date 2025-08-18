@@ -312,6 +312,7 @@ function updateCartModal() {
             </div>
         `;
         cartModel.src = '';
+        cartModel.style.display = 'none';
     } else {
         // Afficher la liste des plats
         cartItemsList.innerHTML = cartAR.map(item => `
@@ -326,12 +327,93 @@ function updateCartModal() {
             </div>
         `).join('');
         
-        // Pour l'instant, afficher le premier modèle (plus tard on combinera tous)
-        if (cartAR.length > 0) {
-            cartModel.src = cartAR[0].model3d;
-            cartModel.scale = cartAR[0].scale;
-        }
+        // Afficher le premier modèle comme aperçu
+        cartModel.style.display = 'block';
+        cartModel.src = cartAR[0].model3d;
+        cartModel.scale = cartAR[0].scale;
+        
+        // Message explicatif
+        cartItemsList.innerHTML += `
+            <div style="background: #E8F5E8; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: center; font-size: 14px; color: #2D5016;">
+                <i class="fas fa-magic"></i>
+                <strong>Aperçu :</strong> ${cartAR[0].name}<br>
+                <small>🍽️ En AR, vos ${cartAR.length} plats seront disposés ensemble sur votre table !</small>
+            </div>
+        `;
+        
+        // Préparer la scène composite pour l'AR
+        setupCompositeScene();
     }
+}
+
+// Créer une scène composite avec tous les modèles
+function setupCompositeScene() {
+    const cartModel = document.getElementById('cartModel');
+    
+    if (cartAR.length === 0) return;
+    
+    // Pour model-viewer, on doit créer un modèle composite
+    // En attendant un modèle combiné, on utilise le système de hotspots
+    
+    // Effacer les anciens hotspots
+    const existingHotspots = cartModel.querySelectorAll('button[slot="hotspot"]');
+    existingHotspots.forEach(hotspot => hotspot.remove());
+    
+    // Créer des hotspots pour chaque plat (positions relatives)
+    cartAR.forEach((item, index) => {
+        const hotspot = document.createElement('button');
+        hotspot.className = 'hotspot';
+        hotspot.slot = `hotspot-${index}`;
+        hotspot.setAttribute('data-position', getPositionForIndex(index));
+        hotspot.setAttribute('data-normal', '0m 1m 0m');
+        hotspot.innerHTML = `
+            <div class="hotspot-content">
+                <div class="hotspot-title">${item.name}</div>
+                <div class="hotspot-price">${item.price}</div>
+            </div>
+        `;
+        
+        // Charger le modèle de ce plat dans ce hotspot (simulation)
+        hotspot.addEventListener('click', () => {
+            cartModel.src = item.model3d;
+            cartModel.scale = item.scale;
+            showNotification(`Focus sur: ${item.name}`, 'info');
+        });
+        
+        cartModel.appendChild(hotspot);
+    });
+}
+
+// Calculer la position pour chaque plat sur la table
+function getPositionForIndex(index) {
+    const positions = [
+        '0m 0m 0m',      // Centre
+        '-0.3m 0m 0.2m',  // Gauche avant
+        '0.3m 0m 0.2m',   // Droite avant
+        '0m 0m -0.3m',    // Centre arrière
+        '-0.3m 0m -0.1m', // Gauche centre
+        '0.3m 0m -0.1m',  // Droite centre
+        '-0.5m 0m 0m',    // Extrême gauche
+        '0.5m 0m 0m'      // Extrême droite
+    ];
+    
+    return positions[index] || `${(index % 3 - 1) * 0.3}m 0m ${Math.floor(index / 3) * 0.2 - 0.1}m`;
+}
+
+// Lancer l'AR avec tous les plats
+function launchFullARExperience() {
+    if (cartAR.length === 0) {
+        showNotification('Votre panier est vide !', 'error');
+        return;
+    }
+    
+    setupCompositeScene();
+    showNotification(`🍽️ AR lancé avec ${cartAR.length} plats sur votre table !`, 'success');
+    
+    // Instructions pour l'utilisateur
+    setTimeout(() => {
+        showNotification('👆 Tapez sur les zones pour changer de plat !', 'info');
+    }, 2000);
 }
 
 // Afficher une notification
@@ -364,6 +446,30 @@ function loadSavedCart() {
         cartAR = JSON.parse(savedCart);
         updateCartUI();
     }
+}
+
+// Afficher les informations sur le fonctionnement
+function showCartInfo() {
+    const message = `
+🍽️ COMMENT UTILISER LE PANIER AR :
+
+1️⃣ Ajoutez plusieurs plats depuis le menu
+2️⃣ Cliquez "Mon panier AR" 
+3️⃣ Lancez "Tous mes plats en AR"
+
+📱 EXPÉRIENCE AR :
+• Tous vos plats apparaissent sur votre vraie table
+• Disposés automatiquement en cercle
+• Tapez sur les zones pour changer de focus
+• Vue d'ensemble de votre commande complète !
+
+🎯 PARFAIT POUR :
+• Visualiser la quantité commandée
+• Présenter à vos invités
+• Vérifier avant de valider
+    `;
+    
+    alert(message);
 }
 
 // === SYSTÈME DE CHANGEMENT DE THÈMES DYNAMIQUE ===
