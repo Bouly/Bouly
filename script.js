@@ -204,6 +204,168 @@ function startARGame() {
     alert('Mini-jeu AR bientôt disponible !');
 }
 
+// === SYSTÈME DE PANIER AR ===
+
+// Panier AR global
+let cartAR = [];
+
+// Ajouter un plat au panier AR
+function addToCartAR() {
+    if (!currentDish) return;
+    
+    // Vérifier si le plat est déjà dans le panier
+    const existingItem = cartAR.find(item => item.id === currentDish.id);
+    if (existingItem) {
+        alert('Ce plat est déjà dans votre panier AR !');
+        return;
+    }
+    
+    // Ajouter le plat au panier
+    cartAR.push({
+        id: currentDish.id,
+        name: currentDish.name,
+        description: currentDish.description,
+        price: currentDish.price,
+        model3d: currentDish.model3d,
+        scale: currentDish.scale
+    });
+    
+    // Mettre à jour l'interface
+    updateCartUI();
+    
+    // Animation de feedback
+    const button = event.target.closest('.control-btn');
+    button.style.transform = 'scale(0.95)';
+    button.style.background = '#10B981';
+    setTimeout(() => {
+        button.style.transform = '';
+        button.style.background = '';
+    }, 200);
+    
+    // Notification
+    showNotification(`${currentDish.name} ajouté au panier AR !`, 'success');
+}
+
+// Supprimer un plat du panier
+function removeFromCartAR(dishId) {
+    cartAR = cartAR.filter(item => item.id !== dishId);
+    updateCartUI();
+    updateCartModal();
+    showNotification('Plat supprimé du panier AR', 'info');
+}
+
+// Vider tout le panier
+function clearCart() {
+    if (cartAR.length === 0) return;
+    
+    if (confirm('Voulez-vous vraiment vider votre panier AR ?')) {
+        cartAR = [];
+        updateCartUI();
+        updateCartModal();
+        showNotification('Panier AR vidé', 'info');
+    }
+}
+
+// Mettre à jour l'interface du panier
+function updateCartUI() {
+    const cartCount = document.getElementById('cartItemCount');
+    cartCount.textContent = cartAR.length;
+    
+    // Sauvegarder le panier dans localStorage
+    localStorage.setItem('cartAR', JSON.stringify(cartAR));
+}
+
+// Ouvrir le modal du panier AR
+function viewCartAR() {
+    updateCartModal();
+    document.body.classList.add('modal-open');
+    document.getElementById('cartARModal').classList.add('active');
+}
+
+// Fermer le modal du panier AR
+function closeCartARModal() {
+    document.body.classList.remove('modal-open');
+    document.getElementById('cartARModal').classList.remove('active');
+    document.getElementById('cartModel').src = '';
+}
+
+// Mettre à jour le contenu du modal panier
+function updateCartModal() {
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartModel = document.getElementById('cartModel');
+    
+    // Calculer le total
+    const total = cartAR.reduce((sum, item) => {
+        const price = parseFloat(item.price.replace('€', '').replace(',', '.'));
+        return sum + price;
+    }, 0);
+    
+    cartTotal.textContent = total.toFixed(2) + '€';
+    
+    if (cartAR.length === 0) {
+        cartItemsList.innerHTML = `
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Votre panier AR est vide</p>
+                <p>Ajoutez des plats depuis le menu !</p>
+            </div>
+        `;
+        cartModel.src = '';
+    } else {
+        // Afficher la liste des plats
+        cartItemsList.innerHTML = cartAR.map(item => `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">${item.price}</div>
+                </div>
+                <button class="cart-item-remove" onclick="removeFromCartAR(${item.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `).join('');
+        
+        // Pour l'instant, afficher le premier modèle (plus tard on combinera tous)
+        if (cartAR.length > 0) {
+            cartModel.src = cartAR[0].model3d;
+            cartModel.scale = cartAR[0].scale;
+        }
+    }
+}
+
+// Afficher une notification
+function showNotification(message, type = 'info') {
+    // Créer la notification
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}"></i>
+        <span>${message}</span>
+    `;
+    
+    // Ajouter au body
+    document.body.appendChild(notification);
+    
+    // Animation d'apparition
+    setTimeout(() => notification.classList.add('show'), 100);
+    
+    // Supprimer après 3 secondes
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Charger le panier sauvegardé au démarrage
+function loadSavedCart() {
+    const savedCart = localStorage.getItem('cartAR');
+    if (savedCart) {
+        cartAR = JSON.parse(savedCart);
+        updateCartUI();
+    }
+}
+
 // === SYSTÈME DE CHANGEMENT DE THÈMES DYNAMIQUE ===
 
 const themes = {
@@ -490,6 +652,7 @@ function loadSavedTheme() {
 // Charger le thème au démarrage de la page
 document.addEventListener('DOMContentLoaded', function() {
     loadSavedTheme();
+    loadSavedCart(); // Charger le panier sauvegardé
     
     // Ajouter les event listeners pour les options
     document.querySelectorAll('.dropdown-option').forEach(option => {

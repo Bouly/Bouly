@@ -1035,3 +1035,140 @@ model-viewer {
 .custom-ar-button i {
     font-size: 16px;
 }
+
+/* === STYLES PANIER AR === */
+.cart-modal {
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.cart-description {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.cart-items-list {
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 10px;
+    background: var(--bg-card);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.cart-item-price {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.cart-item-remove {
+    background: var(--error-red);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.cart-item-remove:hover {
+    background: #DC2626;
+    transform: scale(1.05);
+}
+
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 2px solid var(--border-light);
+    margin-bottom: 20px;
+}
+
+.cart-total {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.cart-empty i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+#cartItemCount {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* === NOTIFICATIONS === */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    background: var(--success-green);
+}
+
+.notification-error {
+    background: var(--error-red);
+}
+
+.notification-info {
+    background: var(--primary-color);
+}
