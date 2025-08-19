@@ -32,7 +32,7 @@ const DISHES_DATA = [
         category: "asiatique",
         image: "./img/burger-300x233.png",
         model3d: "./models/Bread.glb",
-        scale: "0.12 0.12 0.12"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 4,
@@ -42,7 +42,7 @@ const DISHES_DATA = [
         category: "pizzas",
         image: "./img/burger-300x233.png",
         model3d: "./models/Yakinikudonn.glb",
-        scale: "0.08 0.08 0.08"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 5,
@@ -52,7 +52,7 @@ const DISHES_DATA = [
         category: "pizzas",
         image: "./img/burger-300x233.png",
         model3d: "./models/burgertest.glb",
-        scale: "0.08 0.08 0.08"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 6,
@@ -62,7 +62,7 @@ const DISHES_DATA = [
         category: "sandwichs",
         image: "./img/burger-300x233.png",
         model3d: "./models/caca.glb",
-        scale: "0.1 0.1 0.1"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 7,
@@ -72,7 +72,7 @@ const DISHES_DATA = [
         category: "asiatique",
         image: "./img/burger-300x233.png",
         model3d: "./models/caca.glb",
-        scale: "0.12 0.12 0.12"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 8,

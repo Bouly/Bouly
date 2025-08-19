@@ -744,6 +744,112 @@ model-viewer {
     user-select: none;
 }
 
+/* === CONTRÔLES DE TEST D'ÉCLAIRAGE COMPACTS === */
+.lighting-controls-compact {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toggle-controls {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-controls:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+.controls-panel {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 120px;
+    animation: slideDown 0.3s ease;
+}
+
+.controls-panel.show {
+    display: flex;
+}
+
+.controls-panel select {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.controls-panel select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.mini-checkbox {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.mini-checkbox input {
+    margin: 0;
+    transform: scale(0.8);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive pour mobile */
+@media (max-width: 480px) {
+    .lighting-controls-compact {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .toggle-controls {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .controls-panel {
+        min-width: 100px;
+        font-size: 11px;
+    }
+}
+
 .ar-controls {
     display: flex;
     gap: var(--space-md);

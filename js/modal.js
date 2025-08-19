@@ -32,6 +32,11 @@ function openARModal(dishId) {
     
     // Afficher le modal
     showModal();
+    
+    // 🎛️ Configurer les contrôles d'éclairage après l'ouverture du modal
+    setTimeout(() => {
+        setupLightingControls();
+    }, 100); // Petit délai pour s'assurer que le DOM est bien mis à jour
 }
 
 /**
@@ -152,7 +157,64 @@ function startARGame() {
 }
 
 // ==========================================
-// 🎮 INITIALISATION DES EVENT LISTENERS
+// �️ CONTRÔLES DE TEST D'ÉCLAIRAGE
+// ==========================================
+
+/**
+ * Configure les contrôles de test d'éclairage compacts
+ */
+function setupLightingControls() {
+    const modelViewer = document.getElementById('foodModel');
+    if (!modelViewer) return;
+
+    // �️ Bouton toggle pour afficher/masquer les contrôles
+    const toggleBtn = document.getElementById('toggleControls');
+    const controlsPanel = document.getElementById('controlsPanel');
+    
+    if (toggleBtn && controlsPanel) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            controlsPanel.classList.toggle('show');
+        });
+
+        // Fermer les contrôles si on clique ailleurs
+        document.addEventListener('click', (e) => {
+            if (!toggleBtn.contains(e.target) && !controlsPanel.contains(e.target)) {
+                controlsPanel.classList.remove('show');
+            }
+        });
+    }
+
+    // 🎨 Contrôle du Tone Mapping
+    const toneMapping = document.getElementById('toneMapping');
+    if (toneMapping) {
+        toneMapping.addEventListener('change', () => {
+            modelViewer.toneMapping = toneMapping.value;
+            console.log('🎨 Tone mapping changé:', toneMapping.value);
+        });
+    }
+
+    // � Sélecteur de modèle
+    const modelSelector = document.getElementById('modelSelector');
+    if (modelSelector) {
+        modelSelector.addEventListener('change', () => {
+            modelViewer.src = modelSelector.value;
+            console.log('� Modèle changé:', modelSelector.value);
+        });
+    }
+
+    // 💡 Éclairage neutre
+    const neutralLighting = document.getElementById('neutralLighting');
+    if (neutralLighting) {
+        neutralLighting.addEventListener('change', () => {
+            modelViewer.environmentImage = neutralLighting.checked ? '' : 'legacy';
+            console.log('💡 Éclairage neutre:', neutralLighting.checked);
+        });
+    }
+}
+
+// ==========================================
+// �🎮 INITIALISATION DES EVENT LISTENERS
 // ==========================================
 
 /**
@@ -175,6 +237,9 @@ function setupModalEventListeners() {
             closeARModal();
         }
     });
+
+    // 🎛️ Initialiser les contrôles d'éclairage
+    setupLightingControls();
 }
 
 // ==========================================
@@ -187,4 +252,5 @@ if (typeof window !== 'undefined') {
     window.closeARModal = closeARModal;
     window.startARGame = startARGame;
     window.setupModalEventListeners = setupModalEventListeners;
+    window.setupLightingControls = setupLightingControls;
 }
