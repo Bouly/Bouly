@@ -75,8 +75,17 @@ function setupModelViewer(dish) {
     const modelViewer = document.getElementById('foodModel');
     if (!modelViewer) return;
 
+    // Configuration du modèle 3D
     modelViewer.src = dish.model3d || './models/KFC.glb';
-    modelViewer.scale = dish.scale || '0.1 0.1 0.1';
+    modelViewer.scale = dish.scale || '1.0 1.0 1.0';
+    
+    // 🌟 Les attributs d'éclairage optimaux sont déjà définis dans le HTML
+    // avec les valeurs par défaut recommandées par la documentation :
+    // - shadow-intensity="1" (valeur par défaut)
+    // - shadow-softness="1" (valeur par défaut) 
+    // - tone-mapping="neutral" (défaut depuis v4.0, idéal e-commerce)
+    // - exposure="1" (valeur par défaut)
+    // - xr-environment (éclairage estimé pour AR)
 }
 
 /**
