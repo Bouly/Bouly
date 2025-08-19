@@ -108,6 +108,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Compensation pour header fixe */
+}
+
 body {
     font-family: var(--font-family);
     font-weight: var(--font-weight-regular);
@@ -383,6 +388,8 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .category-btn::before {
@@ -619,6 +626,7 @@ body {
 .restaurants-section {
     background: var(--bg-primary);
     padding: var(--space-3xl) 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .restaurants-grid {
@@ -655,10 +663,9 @@ body {
 
 /* Classe pour bloquer le scroll du body quand le modal est ouvert */
 body.modal-open {
-    overflow: hidden;
     position: fixed;
     width: 100%;
-    height: 100%;
+    overflow: hidden;
 }
 
 .modal-content {
@@ -1034,4 +1041,105 @@ model-viewer {
 
 .custom-ar-button i {
     font-size: 16px;
+}
+
+/* === NOTIFICATION DE CATÉGORIE === */
+.category-notification {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    z-index: 2000;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.category-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notification-emoji {
+    font-size: 18px;
+    animation: bounce 0.6s ease-in-out;
+}
+
+.notification-text {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+/* === BOUTON RETOUR EN HAUT === */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* === AMÉLIORATIONS UX RESPONSIVES === */
+@media (max-width: 768px) {
+    .category-notification {
+        top: 80px;
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+    
+    .notification-emoji {
+        font-size: 16px;
+    }
+    
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 16px;
+    }
 }

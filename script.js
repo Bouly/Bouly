@@ -83,10 +83,12 @@ const dishes = [
 ];
 
 let currentDish = null;
+let scrollPosition = 0; // Variable pour sauvegarder la position de scroll
 
 document.addEventListener('DOMContentLoaded', function() {
     renderRestaurants('all');
     setupCategoryFilters();
+    setupBackToTop(); // Ajout du bouton retour en haut
     
     // Header scroll effect (retardé pour accès au bouton)
     window.addEventListener('scroll', () => {
@@ -169,14 +171,86 @@ function setupCategoryFilters() {
             categoryBtns.forEach(b => b.classList.remove('active'));
             // Add active class to clicked button
             btn.classList.add('active');
+            
+            // Animation du bouton avec effet tactile
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 150);
+            
             // Filter restaurants
             const category = btn.dataset.category;
+            
             renderRestaurants(category);
+            
+            // Scroll fluide vers la section menu
+            scrollToMenu();
         });
     });
 }
 
+// Fonction pour le scroll fluide vers le menu
+function scrollToMenu() {
+    const menuSection = document.getElementById('menu');
+    if (menuSection) {
+        // Calcul de la position avec un petit offset pour l'header
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const targetPosition = menuSection.offsetTop - headerHeight - 20;
+        
+        // Scroll fluide
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+        
+        // Animation visuelle de la section
+        menuSection.style.transform = 'scale(0.98)';
+        menuSection.style.opacity = '0.7';
+        
+        setTimeout(() => {
+            menuSection.style.transform = 'scale(1)';
+            menuSection.style.opacity = '1';
+        }, 300);
+    }
+}
+
+// === GESTION DU BOUTON RETOUR EN HAUT ===
+function setupBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    if (backToTopBtn) {
+        // Afficher/masquer le bouton selon le scroll
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    }
+}
+
+function scrollToTop() {
+    // Animation de retour en haut
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Feedback visuel
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        backToTopBtn.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            backToTopBtn.style.transform = 'scale(1)';
+        }, 150);
+    }
+}
+
 function openARModal(dishId) {
+    // Sauvegarder la position de scroll actuelle
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
     currentDish = dishes.find(dish => dish.id === dishId);
     if (!currentDish) return;
 
@@ -188,7 +262,8 @@ function openARModal(dishId) {
     modelViewer.src = currentDish.model3d || './models/KFC.glb';
     modelViewer.scale = currentDish.scale || '0.1 0.1 0.1';
 
-    // Bloquer le scroll de la page en arrière-plan
+    // Bloquer le scroll de la page en arrière-plan sans affecter la position
+    document.body.style.top = `-${scrollPosition}px`;
     document.body.classList.add('modal-open');
     document.getElementById('arModal').classList.add('active');
 }
@@ -196,8 +271,15 @@ function openARModal(dishId) {
 function closeARModal() {
     // Débloquer le scroll de la page
     document.body.classList.remove('modal-open');
+    document.body.style.top = '';
     document.getElementById('arModal').classList.remove('active');
     document.getElementById('foodModel').src = '';
+    
+    // Restaurer la position de scroll précédente
+    window.scrollTo({
+        top: scrollPosition,
+        behavior: 'instant' // Instantané pour éviter l'animation
+    });
 }
 
 function startARGame() {
