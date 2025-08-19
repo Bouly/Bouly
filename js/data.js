@@ -51,7 +51,7 @@ const DISHES_DATA = [
         price: "17.90€",
         category: "pizzas",
         image: "./img/burger-300x233.png",
-        model3d: "./models/burgertest.glb",
+        model3d: "./models/yakinikudonn-opt.glb",
         scale: "1.0 1.0 1.0"
     },
     {
