@@ -83,34 +83,64 @@ function setupModelViewer(dish) {
     const existingHotspots = modelViewer.querySelectorAll('button[slot^="hotspot-"]');
     existingHotspots.forEach(hotspot => hotspot.remove());
     
-    // Si c'est une pizza, ajouter les hotspots avec annotations
-    if (dish.name && dish.name.toLowerCase().includes('pizza')) {
-        // Hotspot 1 : Calories
-        const hotspot1 = document.createElement('button');
-        hotspot1.setAttribute('slot', 'hotspot-1');
-        hotspot1.setAttribute('data-position', '0.2 0.1 0.1');
-        hotspot1.setAttribute('data-normal', '0 1 0');
-        hotspot1.className = 'hotspot';
-        hotspot1.innerHTML = '<div class="annotation">🍕 1000 kcal</div>';
-        modelViewer.appendChild(hotspot1);
+    // Si c'est une pizza, ajouter les hotspots avec annotations APRÈS le chargement du modèle
+    if ((dish.name && dish.name.toLowerCase().includes('pizza')) || dish.category === 'pizzas') {
+        console.log('🍕 Ajout des annotations pour:', dish.name);
+        
+        // Attendre que le modèle soit chargé avant d'ajouter les hotspots
+        modelViewer.addEventListener('load', function addHotspotsOnLoad() {
+            console.log('📦 Modèle chargé, ajout des hotspots...');
+            
+            // Hotspot 1 : Calories
+            const hotspot1 = document.createElement('button');
+            hotspot1.setAttribute('slot', 'hotspot-1');
+            hotspot1.setAttribute('data-position', '0.2 0.1 0.1');
+            hotspot1.setAttribute('data-normal', '0 1 0');
+            hotspot1.className = 'hotspot';
+            hotspot1.innerHTML = '<div class="annotation">🍕 1000 kcal</div>';
+            modelViewer.appendChild(hotspot1);
 
-        // Hotspot 2 : Gluten
-        const hotspot2 = document.createElement('button');
-        hotspot2.setAttribute('slot', 'hotspot-2');
-        hotspot2.setAttribute('data-position', '-0.1 0.15 0.2');
-        hotspot2.setAttribute('data-normal', '0 1 0');
-        hotspot2.className = 'hotspot';
-        hotspot2.innerHTML = '<div class="annotation">🌾 Gluten</div>';
-        modelViewer.appendChild(hotspot2);
+            // Hotspot 2 : Gluten
+            const hotspot2 = document.createElement('button');
+            hotspot2.setAttribute('slot', 'hotspot-2');
+            hotspot2.setAttribute('data-position', '-0.1 0.15 0.2');
+            hotspot2.setAttribute('data-normal', '0 1 0');
+            hotspot2.className = 'hotspot';
+            hotspot2.innerHTML = '<div class="annotation">🌾 Gluten</div>';
+            modelViewer.appendChild(hotspot2);
 
-        // Hotspot 3 : Mozzarella
-        const hotspot3 = document.createElement('button');
-        hotspot3.setAttribute('slot', 'hotspot-3');
-        hotspot3.setAttribute('data-position', '0.0 0.18 -0.15');
-        hotspot3.setAttribute('data-normal', '0 1 0');
-        hotspot3.className = 'hotspot';
-        hotspot3.innerHTML = '<div class="annotation">🧀 Mozzarella</div>';
-        modelViewer.appendChild(hotspot3);
+            // Hotspot 3 : Mozzarella
+            const hotspot3 = document.createElement('button');
+            hotspot3.setAttribute('slot', 'hotspot-3');
+            hotspot3.setAttribute('data-position', '0.0 0.18 -0.15');
+            hotspot3.setAttribute('data-normal', '0 1 0');
+            hotspot3.className = 'hotspot';
+            hotspot3.innerHTML = '<div class="annotation">🧀 Mozzarella</div>';
+            modelViewer.appendChild(hotspot3);
+            
+            console.log('✅ Annotations ajoutées après chargement, nombre de hotspots:', modelViewer.querySelectorAll('.hotspot').length);
+            
+            // Ajuster la caméra pour mieux centrer le modèle
+            setTimeout(() => {
+                modelViewer.cameraTarget = '0m 0.1m 0m';
+                modelViewer.cameraOrbit = '0deg 45deg 10.5m';
+                console.log('📷 Caméra ajustée pour centrer le modèle');
+            }, 500);
+            
+            // Retirer l'event listener pour éviter les doublons
+            modelViewer.removeEventListener('load', addHotspotsOnLoad);
+        }, { once: true });
+    } else {
+        console.log('❌ Pas une pizza:', dish.name, 'catégorie:', dish.category);
+        
+        // Pour les autres plats, centrer quand même la caméra
+        modelViewer.addEventListener('load', function() {
+            setTimeout(() => {
+                modelViewer.cameraTarget = '0m 0.05m 0m';
+                modelViewer.cameraOrbit = '0deg 30deg 3.0m';
+                console.log('📷 Caméra ajustée pour modèle non-pizza');
+            }, 500);
+        }, { once: true });
     }
     
     // 🌟 Les attributs d'éclairage optimaux sont déjà définis dans le HTML
