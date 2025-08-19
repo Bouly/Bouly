@@ -416,6 +416,155 @@ function launchFullARExperience() {
     }, 2000);
 }
 
+// === SYSTÈME AR MULTI-MODÈLES AVEC A-FRAME ===
+
+let isARMode = false;
+
+// Basculer entre aperçu normal et mode AR
+function toggleARMode() {
+    const modelViewer = document.getElementById('cartModel');
+    const aframeContainer = document.getElementById('aframe-container');
+    const modeText = document.getElementById('ar-mode-text');
+    
+    isARMode = !isARMode;
+    
+    if (isARMode) {
+        // Passer en mode AR A-Frame
+        modelViewer.style.display = 'none';
+        aframeContainer.style.display = 'block';
+        modeText.textContent = 'Mode Aperçu';
+        setupAFrameScene();
+        showNotification('📱 Mode AR Multi-Plats activé !', 'success');
+    } else {
+        // Retour au mode aperçu
+        aframeContainer.style.display = 'none';
+        modelViewer.style.display = 'block';
+        modeText.textContent = 'Mode AR Multi-Plats';
+        showNotification('👁️ Mode aperçu activé', 'info');
+    }
+}
+
+// Lancer directement l'AR multi-modèles
+function launchMultiModelAR() {
+    if (cartAR.length === 0) {
+        showNotification('Votre panier est vide !', 'error');
+        return;
+    }
+    
+    if (!isARMode) {
+        toggleARMode();
+    }
+    
+    setupAFrameScene();
+    showNotification(`🍽️ AR Multi-Plats lancé avec ${cartAR.length} plats !`, 'success');
+    
+    setTimeout(() => {
+        showNotification('📱 Pointez votre caméra vers une surface plane !', 'info');
+    }, 2000);
+}
+
+// Configurer la scène A-Frame avec tous les modèles
+function setupAFrameScene() {
+    if (cartAR.length === 0) return;
+    
+    const assets = document.getElementById('cart-assets');
+    const container = document.getElementById('dishes-container');
+    
+    // Nettoyer la scène précédente
+    assets.innerHTML = '';
+    container.innerHTML = '';
+    
+    // Ajouter chaque modèle à la scène
+    cartAR.forEach((item, index) => {
+        // Ajouter l'asset
+        const asset = document.createElement('a-asset-item');
+        asset.id = `model-${item.id}`;
+        asset.src = item.model3d;
+        assets.appendChild(asset);
+        
+        // Calculer la position pour ce plat
+        const position = getAFramePositionForIndex(index);
+        const scale = convertScaleToAFrame(item.scale);
+        
+        // Créer l'entité 3D
+        const entity = document.createElement('a-entity');
+        entity.setAttribute('gltf-model', `#model-${item.id}`);
+        entity.setAttribute('position', position);
+        entity.setAttribute('scale', scale);
+        entity.setAttribute('rotation', '0 0 0');
+        entity.setAttribute('animation-mixer', '');
+        
+        // Ajouter une interaction
+        entity.setAttribute('cursor-listener', '');
+        entity.addEventListener('click', () => {
+            showNotification(`👆 ${item.name} - ${item.price}`, 'info');
+            // Animation de focus
+            entity.setAttribute('animation', {
+                property: 'scale',
+                to: scale.split(' ').map(s => parseFloat(s) * 1.2).join(' '),
+                dur: 300,
+                dir: 'alternate',
+                loop: 1
+            });
+        });
+        
+        // Ajouter le label au-dessus du plat
+        const label = document.createElement('a-text');
+        label.setAttribute('value', `${item.name}\n${item.price}`);
+        label.setAttribute('position', `0 ${0.15} 0`);
+        label.setAttribute('align', 'center');
+        label.setAttribute('color', '#333');
+        label.setAttribute('scale', '0.3 0.3 0.3');
+        label.setAttribute('billboard', '');
+        entity.appendChild(label);
+        
+        container.appendChild(entity);
+    });
+    
+    // Message de confirmation
+    showNotification(`✅ ${cartAR.length} plats chargés dans la scène AR !`, 'success');
+}
+
+// Calculer les positions pour A-Frame (disposition en cercle)
+function getAFramePositionForIndex(index) {
+    const radius = 0.3; // Rayon du cercle
+    const angle = (index * 2 * Math.PI) / Math.max(cartAR.length, 3);
+    
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+    const y = 0; // Sur la table
+    
+    return `${x.toFixed(2)} ${y} ${z.toFixed(2)}`;
+}
+
+// Convertir l'échelle model-viewer vers A-Frame
+function convertScaleToAFrame(scale) {
+    // scale est comme "0.1 0.1 0.1"
+    const parts = scale.split(' ');
+    const scaleValue = parseFloat(parts[0]) * 2; // A-Frame utilise des échelles différentes
+    return `${scaleValue} ${scaleValue} ${scaleValue}`;
+}
+
+// Afficher les informations sur l'AR cart
+function showCartInfo() {
+    const info = `
+🍽️ **AR Multi-Plats - Comment ça marche ?**
+
+1. **Ajoutez des plats** à votre panier en cliquant sur "Ajouter au panier AR"
+2. **Choisissez votre mode** :
+   - Mode Aperçu : Voir un plat à la fois
+   - Mode AR : Voir tous vos plats ensemble en réalité augmentée
+3. **Lancez l'expérience** : "Voir tous mes plats ensemble"
+4. **Pointez votre caméra** vers une surface plane (table, sol)
+5. **Interagissez** : Tapez sur les plats pour voir leurs détails
+
+🔧 **Prérequis** : HTTPS requis pour la caméra AR
+📱 **Compatible** : Smartphones et tablettes modernes
+    `;
+    
+    showNotification(info, 'info', 8000);
+}
+
 // Afficher une notification
 function showNotification(message, type = 'info') {
     // Créer la notification
