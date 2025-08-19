@@ -36,7 +36,7 @@ const DISHES_DATA = [
     },
     {
         id: 4,
-        name: "Pizza Rimini",
+        name: "Non opti test",
         description: "Sauce tomate, mozzarella, jambon de Parme, roquette, parmesan",
         price: "18.50€",
         category: "pizzas",
@@ -46,7 +46,7 @@ const DISHES_DATA = [
     },
     {
         id: 5,
-        name: "Pizza Chèvre",
+        name: "Opti Test",
         description: "Crème fraîche, mozzarella, fromage de chèvre, miel, noix",
         price: "17.90€",
         category: "pizzas",
