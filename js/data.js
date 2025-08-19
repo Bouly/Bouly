@@ -42,7 +42,7 @@ const DISHES_DATA = [
         category: "pizzas",
         image: "./img/burger-300x233.png",
         model3d: "./models/Yakinikudonn.glb",
-        scale: "0.1 0.1 0.1"
+        scale: "0.35 0.35 0.35"
     },
     {
         id: 5,
@@ -52,7 +52,7 @@ const DISHES_DATA = [
         category: "pizzas",
         image: "./img/burger-300x233.png",
         model3d: "./models/yakinikudonn-opt.glb",
-        scale: "1.0 1.0 1.0"
+        scale: "0.35 0.35 0.35"
     },
     {
         id: 6,
