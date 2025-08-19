@@ -79,6 +79,40 @@ function setupModelViewer(dish) {
     modelViewer.src = dish.model3d || './models/KFC.glb';
     modelViewer.scale = dish.scale || '1.0 1.0 1.0';
     
+    // Supprimer les hotspots précédents
+    const existingHotspots = modelViewer.querySelectorAll('button[slot^="hotspot-"]');
+    existingHotspots.forEach(hotspot => hotspot.remove());
+    
+    // Si c'est une pizza, ajouter les hotspots avec annotations
+    if (dish.name && dish.name.toLowerCase().includes('pizza')) {
+        // Hotspot 1 : Calories
+        const hotspot1 = document.createElement('button');
+        hotspot1.setAttribute('slot', 'hotspot-1');
+        hotspot1.setAttribute('data-position', '0.2 0.1 0.1');
+        hotspot1.setAttribute('data-normal', '0 1 0');
+        hotspot1.className = 'hotspot';
+        hotspot1.innerHTML = '<div class="annotation">🍕 1000 kcal</div>';
+        modelViewer.appendChild(hotspot1);
+
+        // Hotspot 2 : Gluten
+        const hotspot2 = document.createElement('button');
+        hotspot2.setAttribute('slot', 'hotspot-2');
+        hotspot2.setAttribute('data-position', '-0.1 0.15 0.2');
+        hotspot2.setAttribute('data-normal', '0 1 0');
+        hotspot2.className = 'hotspot';
+        hotspot2.innerHTML = '<div class="annotation">🌾 Gluten</div>';
+        modelViewer.appendChild(hotspot2);
+
+        // Hotspot 3 : Mozzarella
+        const hotspot3 = document.createElement('button');
+        hotspot3.setAttribute('slot', 'hotspot-3');
+        hotspot3.setAttribute('data-position', '0.0 0.18 -0.15');
+        hotspot3.setAttribute('data-normal', '0 1 0');
+        hotspot3.className = 'hotspot';
+        hotspot3.innerHTML = '<div class="annotation">🧀 Mozzarella</div>';
+        modelViewer.appendChild(hotspot3);
+    }
+    
     // 🌟 Les attributs d'éclairage optimaux sont déjà définis dans le HTML
     // avec les valeurs par défaut recommandées par la documentation :
     // - shadow-intensity="1" (valeur par défaut)

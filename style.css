@@ -150,7 +150,7 @@ body {
 }
 
 .logo img {
-    height: 40px;
+    height: 70px;
     width: auto;
 }
 
@@ -1142,4 +1142,36 @@ model-viewer {
         right: 20px;
         font-size: 16px;
     }
+}
+
+/* === HOTSPOTS MODEL-VIEWER === */
+.hotspot {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.annotation {
+  position: absolute;
+  left: 50%;
+  top: -40px;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.95);
+  color: #222;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.hotspot:focus .annotation,
+.hotspot:hover .annotation {
+  opacity: 1;
+  pointer-events: auto;
 }
