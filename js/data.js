@@ -32,7 +32,7 @@ const DISHES_DATA = [
         category: "asiatique",
         image: "./img/burger-300x233.png",
         model3d: "./models/Bread.glb",
-        scale: "1.0 1.0 1.0"
+        scale: "0.3 0.3 0.3"
     },
     {
         id: 4,
