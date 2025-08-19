@@ -53,37 +53,37 @@ const DISHES_DATA = [
         image: "./img/burger-300x233.png",
         model3d: "./models/yakinikudonn-opt.glb",
         scale: "0.25 0.25 0.25"
-    },
-    {
-        id: 6,
-        name: "Sandwich Lee",
-        description: "Pain de mie grillé, poulet mariné, crudités, sauce spéciale",
-        price: "11.90€",
-        category: "sandwichs",
-        image: "./img/burger-300x233.png",
-        model3d: "./models/caca.glb",
-        scale: "1.0 1.0 1.0"
-    },
-    {
-        id: 7,
-        name: "Pad Thaï",
-        description: "Nouilles de riz sautées, crevettes fraîches, légumes croquants, cacahuètes",
-        price: "16.90€",
-        category: "asiatique",
-        image: "./img/burger-300x233.png",
-        model3d: "./models/caca.glb",
-        scale: "1.0 1.0 1.0"
-    },
-    {
-        id: 8,
-        name: "Tiramisu Maison",
-        description: "Mascarpone, café espresso, cacao pur, biscuits cuillère",
-        price: "7.50€",
-        category: "desserts",
-        image: "./img/burger-300x233.png",
-        model3d: "./models/caca.glb",
-        scale: "0.08 0.08 0.08"
     }
+    // {
+    //     id: 6,
+    //     name: "Sandwich Lee",
+    //     description: "Pain de mie grillé, poulet mariné, crudités, sauce spéciale",
+    //     price: "11.90€",
+    //     category: "sandwichs",
+    //     image: "./img/burger-300x233.png",
+    //     model3d: "./models/caca.glb",
+    //     scale: "1.0 1.0 1.0"
+    // },
+    // {
+    //     id: 7,
+    //     name: "Pad Thaï",
+    //     description: "Nouilles de riz sautées, crevettes fraîches, légumes croquants, cacahuètes",
+    //     price: "16.90€",
+    //     category: "asiatique",
+    //     image: "./img/burger-300x233.png",
+    //     model3d: "./models/caca.glb",
+    //     scale: "1.0 1.0 1.0"
+    // },
+    // {
+    //     id: 8,
+    //     name: "Tiramisu Maison",
+    //     description: "Mascarpone, café espresso, cacao pur, biscuits cuillère",
+    //     price: "7.50€",
+    //     category: "desserts",
+    //     image: "./img/burger-300x233.png",
+    //     model3d: "./models/caca.glb",
+    //     scale: "0.08 0.08 0.08"
+    // }
 ];
 
 // Configuration des thèmes de restaurant
