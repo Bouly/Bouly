@@ -12,7 +12,7 @@ const DISHES_DATA = [
         category: "burgers",
         image: "./img/burger-300x233.png",
         model3d: "./models/KFC.glb",
-        scale: "0.1 0.1 0.1"
+        scale: "1.0 1.0 1.0"
     },
     {
         id: 2,
@@ -41,7 +41,7 @@ const DISHES_DATA = [
         price: "18.50€",
         category: "pizzas",
         image: "./img/burger-300x233.png",
-        model3d: "./models/Sister.glb",
+        model3d: "./models/Yakinikudonn.glb",
         scale: "0.08 0.08 0.08"
     },
     {
