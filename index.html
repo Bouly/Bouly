@@ -146,33 +146,12 @@
                 shadow-intensity="1"
                 shadow-softness="1" 
                 tone-mapping="neutral"
-                exposure="1"
                 xr-environment
                 touch-action="pan-y">
                 <button slot="ar-button" class="custom-ar-button">
                     <i class="fas fa-cube"></i> Afficher AR
                 </button>
                 
-                <!-- 🎛️ Contrôles de test compacts -->
-                <div class="lighting-controls-compact">
-                    <button class="toggle-controls" id="toggleControls">⚙️</button>
-                    <div class="controls-panel" id="controlsPanel">
-                        <select id="toneMapping" title="Tone Mapping">
-                            <option value="neutral">Neutral</option>
-                            <option value="aces">ACES</option>
-                            <option value="agx">AgX</option>
-                        </select>
-                        <select id="modelSelector" title="Modèle">
-                            <option value="./models/burger3.glb">B3</option>
-                            <option value="./models/burgertest.glb">BT</option>
-                            <option value="./models/burgertest2.glb">BT2</option>
-                        </select>
-                        <label class="mini-checkbox" title="Éclairage neutre">
-                            <input id="neutralLighting" type="checkbox" checked="true">
-                            💡
-                        </label>
-                    </div>
-                </div>
             </model-viewer>
 
             <div class="ar-controls">
@@ -184,11 +163,6 @@
         </div>
     </div>
 
-    <!-- 📦 Scripts modulaires -->
-    <script src="js/data.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/themes.js"></script>
-    <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
