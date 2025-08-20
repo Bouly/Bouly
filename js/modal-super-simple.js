@@ -502,3 +502,94 @@ function testAR() {
         console.error('❌ Aucun plat sélectionné pour l\'AR');
     }
 }
+
+// ==========================================
+// 🚀 AR BETA AVEC WEBXR NATIF
+// ==========================================
+
+/**
+ * Lance l'AR Beta avec WebXR natif (plus moderne)
+ */
+async function launchARBeta() {
+    if (!currentDish) {
+        console.error('❌ Aucun plat sélectionné pour l\'AR Beta');
+        return;
+    }
+    
+    console.log('🚀 Lancement AR Beta WebXR pour:', currentDish.name);
+    
+    // Vérifier le support WebXR
+    if (!navigator.xr) {
+        alert('WebXR n\'est pas supporté sur cet appareil/navigateur.');
+        return;
+    }
+    
+    try {
+        // Vérifier le support de l'AR
+        const isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
+        
+        if (!isARSupported) {
+            alert('La réalité augmentée n\'est pas supportée sur cet appareil.');
+            return;
+        }
+        
+        // Créer une session AR WebXR
+        const session = await navigator.xr.requestSession('immersive-ar', {
+            requiredFeatures: ['local', 'hit-test'],
+            optionalFeatures: ['dom-overlay'],
+            domOverlay: { root: document.body }
+        });
+        
+        console.log('✅ Session AR WebXR créée');
+        
+        // Configurer Three.js pour WebXR
+        setupWebXRScene(session);
+        
+    } catch (error) {
+        console.error('❌ Erreur AR Beta:', error);
+        alert('Impossible de lancer l\'AR Beta : ' + error.message);
+    }
+}
+
+/**
+ * Configure Three.js pour WebXR
+ */
+function setupWebXRScene(session) {
+    // Créer une nouvelle scène pour l'AR
+    const arScene = new THREE.Scene();
+    
+    // Caméra AR
+    const arCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
+    
+    // Renderer WebXR
+    const arRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    arRenderer.setPixelRatio(window.devicePixelRatio);
+    arRenderer.setSize(window.innerWidth, window.innerHeight);
+    arRenderer.xr.enabled = true;
+    arRenderer.xr.setSession(session);
+    
+    // Ajouter le modèle à la scène AR
+    if (window.currentThreeModel) {
+        const modelClone = window.currentThreeModel.clone();
+        modelClone.scale.setScalar(0.5); // Plus petit pour l'AR
+        modelClone.position.set(0, 0, -1); // Devant l'utilisateur
+        arScene.add(modelClone);
+    }
+    
+    // Lumières pour l'AR
+    const arLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+    arScene.add(arLight);
+    
+    // Boucle de rendu AR
+    arRenderer.setAnimationLoop(() => {
+        arRenderer.render(arScene, arCamera);
+    });
+    
+    // Gestion de la fin de session
+    session.addEventListener('end', () => {
+        console.log('🔚 Session AR Beta terminée');
+        arRenderer.setAnimationLoop(null);
+    });
+    
+    console.log('✅ Scène WebXR configurée');
+}
