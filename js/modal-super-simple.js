@@ -210,7 +210,7 @@ function initThreeJS() {
     
     // Configuration Three.js
     window.threeScene = new THREE.Scene();
-    window.threeScene.background = new THREE.Color(0xf0f0f0);
+    window.threeScene.background = null; // Fond très clair comme model-viewer
     
     // Dimensions du conteneur
     const width = container.clientWidth || 600;
@@ -218,10 +218,10 @@ function initThreeJS() {
     
     // Caméra
     window.threeCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    window.threeCamera.position.set(0, 2, 5);
+    window.threeCamera.position.set(0, 2.5, 3); // Plus haute qu'avant (était 0, 1, 3)
     
     // Renderer
-    window.threeRenderer = new THREE.WebGLRenderer({ antialias: true });
+    window.threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     window.threeRenderer.setSize(width, height);
     window.threeRenderer.setPixelRatio(window.devicePixelRatio);
     window.threeRenderer.shadowMap.enabled = true;
@@ -270,6 +270,10 @@ function initThreeJS() {
     window.threeControls.dampingFactor = 0.1;
     window.threeControls.autoRotate = true;
     window.threeControls.autoRotateSpeed = 2.0;
+    
+    // Limiter l'angle de vue pour ne pas voir en dessous du modèle
+    window.threeControls.maxPolarAngle = Math.PI * 0.48; // Limite à ~86° (ne pas aller en dessous)
+    window.threeControls.minPolarAngle = 0; // Vue du dessus autorisée
     
     // Démarrer la boucle de rendu
     startRenderLoop();
@@ -341,8 +345,8 @@ function loadThreeJSModel(modelPath) {
             window.currentThreeModel.scale.setScalar(scale);
             
             // Repositionner la caméra pour bien voir le modèle
-            const distance = maxDim * scale * 1.5; // Distance adaptée à la taille
-            window.threeCamera.position.set(distance * 0.8, distance * 0.6, distance);
+            const distance = maxDim * scale * 1.0; // Plus proche qu'avant (était 1.5)
+            window.threeCamera.position.set(distance * 0.6, distance * 0.8, distance * 0.8); // Y plus haut
             window.threeCamera.lookAt(0, 0, 0);
             
             // Configurer les contrôles pour le nouveau modèle
