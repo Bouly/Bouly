@@ -264,8 +264,15 @@ function initThreeJS() {
     directionalLight.castShadow = true;
     window.threeScene.add(directionalLight);
     
-    // Contrôles
-    window.threeControls = new THREE.OrbitControls(window.threeCamera, window.threeRenderer.domElement);
+    // Contrôles - Vérifier que OrbitControls existe
+    if (typeof THREE.OrbitControls !== 'undefined') {
+        window.threeControls = new THREE.OrbitControls(window.threeCamera, window.threeRenderer.domElement);
+    } else {
+        console.warn('⚠️ OrbitControls non disponible, chargement dynamique...');
+        // Fallback : créer les contrôles manuellement
+        window.threeControls = createBasicControls(window.threeCamera, window.threeRenderer.domElement);
+    }
+    
     window.threeControls.enableDamping = true;
     window.threeControls.dampingFactor = 0.1;
     window.threeControls.autoRotate = true;
@@ -282,6 +289,35 @@ function initThreeJS() {
     startRenderLoop();
     
     console.log('✅ Three.js initialisé avec succès');
+}
+
+/**
+ * Crée des contrôles basiques si OrbitControls n'est pas disponible
+ */
+function createBasicControls(camera, domElement) {
+    const controls = {
+        enableDamping: true,
+        dampingFactor: 0.1,
+        autoRotate: true,
+        autoRotateSpeed: 2.0,
+        enablePan: false,
+        maxPolarAngle: Math.PI * 0.48,
+        minPolarAngle: 0,
+        
+        update: function() {
+            if (this.autoRotate) {
+                camera.rotation.y += 0.01;
+            }
+        },
+        
+        reset: function() {
+            camera.position.set(0, 2.5, 3);
+            camera.rotation.set(0, 0, 0);
+        }
+    };
+    
+    console.log('✅ Contrôles basiques créés');
+    return controls;
 }
 
 /**
@@ -671,19 +707,31 @@ function launchAFrame() {
     
     console.log('🎮 Lancement A-Frame AR pour:', currentDish.name);
     
-    // Vérifier si A-Frame est chargé
-    if (typeof AFRAME === 'undefined') {
-        alert('A-Frame n\'est pas chargé. Vérifiez votre connexion internet.');
+    // Charger A-Frame dynamiquement pour éviter les conflits
+    loadAFrameScript(() => {
+        createAFrameExperience();
+        console.log('✅ A-Frame AR démarré');
+    });
+}
+
+/**
+ * Charge A-Frame dynamiquement
+ */
+function loadAFrameScript(callback) {
+    if (typeof AFRAME !== 'undefined') {
+        callback();
         return;
     }
     
-    try {
-        createAFrameExperience();
-        console.log('✅ A-Frame AR démarré');
-    } catch (error) {
-        console.error('❌ Erreur A-Frame:', error);
-        alert('Impossible de lancer A-Frame : ' + error.message);
-    }
+    const script = document.createElement('script');
+    script.src = 'https://aframe.io/releases/1.4.0/aframe.min.js';
+    script.onload = () => {
+        const arScript = document.createElement('script');
+        arScript.src = 'https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js';
+        arScript.onload = callback;
+        document.head.appendChild(arScript);
+    };
+    document.head.appendChild(script);
 }
 
 /**
