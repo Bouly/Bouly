@@ -13,8 +13,16 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     
-    <!-- 8th Wall AR (alternative à model-viewer) -->
-    <script src="https://apps.8thwall.com/xrweb"></script>
+    <!-- AR.js - Alternative gratuite à model-viewer -->
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@4.3.0/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js@4.3.0/three.js/build/ar-threejs.js"></script>
+    
+    <!-- A-Frame pour AR -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+    
+    <!-- MindAR -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"></script>
     
     <!-- Model-viewer JUSTE pour l'AR -->
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
@@ -172,7 +180,15 @@
                 </button>
                 <button id="arProButton" class="control-btn secondary" onclick="launchARPro()">
                     <i class="fas fa-magic"></i>
-                    AR Pro (8th Wall)
+                    AR Pro (AR.js)
+                </button>
+                <button id="aframeButton" class="control-btn secondary" onclick="launchAFrame()">
+                    <i class="fas fa-vr-cardboard"></i>
+                    A-Frame AR
+                </button>
+                <button id="mindARButton" class="control-btn secondary" onclick="launchMindAR()">
+                    <i class="fas fa-brain"></i>
+                    MindAR
                 </button>
                 <button id="arBetaButton" class="control-btn secondary" onclick="launchARBeta()">
                     <i class="fas fa-rocket"></i>

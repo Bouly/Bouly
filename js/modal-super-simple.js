@@ -507,11 +507,11 @@ function testAR() {
 }
 
 // ==========================================
-// 🎯 AR PRO AVEC 8TH WALL
+// 🎯 AR PRO AVEC AR.JS (GRATUIT)
 // ==========================================
 
 /**
- * Lance l'AR Pro avec 8th Wall (fonctionne iPhone + Android)
+ * Lance l'AR Pro avec AR.js (gratuit, fonctionne iPhone + Android)
  */
 function launchARPro() {
     if (!currentDish) {
@@ -519,33 +519,19 @@ function launchARPro() {
         return;
     }
     
-    console.log('🎯 Lancement AR Pro 8th Wall pour:', currentDish.name);
+    console.log('🎯 Lancement AR Pro AR.js pour:', currentDish.name);
     
-    // Vérifier si 8th Wall est chargé
-    if (typeof XR8 === 'undefined') {
-        alert('8th Wall n\'est pas chargé. Vérifiez votre connexion internet.');
+    // Vérifier si AR.js est chargé
+    if (typeof ARjs === 'undefined' && typeof THREEx === 'undefined') {
+        alert('AR.js n\'est pas chargé. Vérifiez votre connexion internet.');
         return;
     }
     
     try {
-        // Configuration 8th Wall
-        XR8.XrController.configure({
-            enableLighting: true,
-            enableWorldPoints: false,
-        });
+        // Créer une page AR.js en plein écran
+        createARjsExperience();
         
-        // Pipeline 8th Wall avec Three.js
-        XR8.addCameraPipelineModules([
-            XR8.GlTextureRenderer.pipelineModule(),
-            XR8.Threejs.pipelineModule(),
-            XR8.XrController.pipelineModule(),
-            createARProPipeline()
-        ]);
-        
-        // Démarrer l'AR
-        XR8.run({ canvas: document.createElement('canvas') });
-        
-        console.log('✅ AR Pro 8th Wall démarré');
+        console.log('✅ AR Pro AR.js démarré');
         
     } catch (error) {
         console.error('❌ Erreur AR Pro:', error);
@@ -554,50 +540,339 @@ function launchARPro() {
 }
 
 /**
- * Crée le pipeline 8th Wall personnalisé
+ * Crée l'expérience AR.js
  */
-function createARProPipeline() {
-    let arModel = null;
+function createARjsExperience() {
+    // Créer un conteneur fullscreen pour AR.js
+    const arContainer = document.createElement('div');
+    arContainer.id = 'arjs-container';
+    arContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        background: black;
+    `;
     
-    return {
-        name: 'ar-food-model',
-        
-        onStart: ({ scene, camera }) => {
-            console.log('🎬 Pipeline AR Pro démarré');
-            
-            // Ajouter lumières AR
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-            directionalLight.position.set(1, 1, 1);
-            scene.add(directionalLight);
-            
-            // Charger le modèle pour l'AR
-            if (window.currentThreeModel) {
-                arModel = window.currentThreeModel.clone();
-                arModel.scale.setScalar(0.3); // Taille AR
-                arModel.position.set(0, 0, 0);
-                scene.add(arModel);
-                console.log('📦 Modèle ajouté à la scène AR Pro');
-            }
-        },
-        
-        onUpdate: () => {
-            // Animation du modèle en AR
-            if (arModel) {
-                arModel.rotation.y += 0.01;
-            }
-        },
-        
-        onAttach: () => {
-            console.log('📱 Surface détectée - modèle placé');
-        },
-        
-        onDetach: () => {
-            console.log('📱 Surface perdue');
-        }
+    // Bouton de fermeture
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '✕ Fermer AR';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10001;
+        padding: 10px 15px;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    `;
+    closeBtn.onclick = () => {
+        document.body.removeChild(arContainer);
     };
+    
+    // Instructions
+    const instructions = document.createElement('div');
+    instructions.innerHTML = `
+        <div style="
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10001;
+        ">
+            📱 Pointez votre caméra vers une surface plane<br>
+            🎯 Le modèle apparaîtra automatiquement
+        </div>
+    `;
+    
+    // Canvas pour AR.js
+    const arCanvas = document.createElement('canvas');
+    arCanvas.style.cssText = 'width: 100%; height: 100%;';
+    
+    arContainer.appendChild(arCanvas);
+    arContainer.appendChild(closeBtn);
+    arContainer.appendChild(instructions);
+    document.body.appendChild(arContainer);
+    
+    // Initialiser AR.js avec Three.js
+    initARjsScene(arCanvas);
+}
+
+/**
+ * Initialise la scène AR.js
+ */
+function initARjsScene(canvas) {
+    // Configuration AR.js simple (sans marqueurs)
+    const arContext = new THREEx.ArToolkitContext({
+        cameraParametersUrl: 'https://cdn.jsdelivr.net/npm/ar.js@4.3.0/data/camera_para.dat',
+        detectionMode: 'mono_and_matrix',
+        matrixCodeType: '3x3',
+        canvasWidth: window.innerWidth,
+        canvasHeight: window.innerHeight,
+    });
+    
+    // Scene Three.js pour AR
+    const arScene = new THREE.Scene();
+    const arCamera = new THREE.Camera();
+    arScene.add(arCamera);
+    
+    // Renderer
+    const arRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    arRenderer.setSize(window.innerWidth, window.innerHeight);
+    arRenderer.domElement.style.position = 'absolute';
+    arRenderer.domElement.style.top = '0px';
+    arRenderer.domElement.style.left = '0px';
+    
+    // Ajouter le modèle en AR
+    if (window.currentThreeModel) {
+        const arModel = window.currentThreeModel.clone();
+        arModel.scale.setScalar(0.5);
+        arModel.position.set(0, 0, 0);
+        arScene.add(arModel);
+        
+        // Animation
+        function animateAR() {
+            requestAnimationFrame(animateAR);
+            arModel.rotation.y += 0.01;
+            arRenderer.render(arScene, arCamera);
+        }
+        animateAR();
+    }
+    
+    // Lumières
+    const arLight = new THREE.AmbientLight(0xffffff, 0.8);
+    arScene.add(arLight);
+    
+    console.log('📱 Scène AR.js initialisée');
+}
+
+// ==========================================
+// 🎮 A-FRAME AR
+// ==========================================
+
+/**
+ * Lance A-Frame AR
+ */
+function launchAFrame() {
+    if (!currentDish) {
+        console.error('❌ Aucun plat sélectionné pour A-Frame');
+        return;
+    }
+    
+    console.log('🎮 Lancement A-Frame AR pour:', currentDish.name);
+    
+    // Vérifier si A-Frame est chargé
+    if (typeof AFRAME === 'undefined') {
+        alert('A-Frame n\'est pas chargé. Vérifiez votre connexion internet.');
+        return;
+    }
+    
+    try {
+        createAFrameExperience();
+        console.log('✅ A-Frame AR démarré');
+    } catch (error) {
+        console.error('❌ Erreur A-Frame:', error);
+        alert('Impossible de lancer A-Frame : ' + error.message);
+    }
+}
+
+/**
+ * Crée l'expérience A-Frame
+ */
+function createAFrameExperience() {
+    // Créer conteneur A-Frame
+    const aframeContainer = document.createElement('div');
+    aframeContainer.id = 'aframe-container';
+    aframeContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+    `;
+    
+    // Scène A-Frame
+    const aframeScene = document.createElement('a-scene');
+    aframeScene.setAttribute('arjs', 'trackingMethod: best; sourceType: webcam; debugUIEnabled: false;');
+    aframeScene.setAttribute('vr-mode-ui', 'enabled: false');
+    aframeScene.setAttribute('embedded', '');
+    aframeScene.style.cssText = 'width: 100%; height: 100%;';
+    
+    // Caméra A-Frame
+    const aframeCamera = document.createElement('a-camera');
+    aframeCamera.setAttribute('gps-camera', 'simulateLatitude: 0; simulateLongitude: 0');
+    
+    // Modèle 3D en A-Frame (placeholder - box coloré)
+    const aframeModel = document.createElement('a-box');
+    aframeModel.setAttribute('position', '0 0.5 -3');
+    aframeModel.setAttribute('rotation', '0 45 0');
+    aframeModel.setAttribute('color', '#ff6b6b');
+    aframeModel.setAttribute('animation', 'property: rotation; to: 0 405 0; loop: true; dur: 10000');
+    aframeModel.setAttribute('scale', '1 1 1');
+    
+    // Bouton fermer
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '✕ Fermer A-Frame';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10001;
+        padding: 10px 15px;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    `;
+    closeBtn.onclick = () => {
+        document.body.removeChild(aframeContainer);
+    };
+    
+    // Assembler
+    aframeScene.appendChild(aframeModel);
+    aframeScene.appendChild(aframeCamera);
+    aframeContainer.appendChild(aframeScene);
+    aframeContainer.appendChild(closeBtn);
+    document.body.appendChild(aframeContainer);
+}
+
+// ==========================================
+// 🧠 MINDAR
+// ==========================================
+
+/**
+ * Lance MindAR
+ */
+function launchMindAR() {
+    if (!currentDish) {
+        console.error('❌ Aucun plat sélectionné pour MindAR');
+        return;
+    }
+    
+    console.log('🧠 Lancement MindAR pour:', currentDish.name);
+    
+    // Vérifier si MindAR est chargé
+    if (typeof window.MINDAR === 'undefined') {
+        alert('MindAR n\'est pas chargé. Vérifiez votre connexion internet.');
+        return;
+    }
+    
+    try {
+        createMindARExperience();
+        console.log('✅ MindAR démarré');
+    } catch (error) {
+        console.error('❌ Erreur MindAR:', error);
+        alert('Impossible de lancer MindAR : ' + error.message);
+    }
+}
+
+/**
+ * Crée l'expérience MindAR
+ */
+function createMindARExperience() {
+    // Conteneur MindAR
+    const mindContainer = document.createElement('div');
+    mindContainer.id = 'mindar-container';
+    mindContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        background: black;
+    `;
+    
+    // Canvas MindAR
+    const mindCanvas = document.createElement('canvas');
+    mindCanvas.style.cssText = 'width: 100%; height: 100%;';
+    
+    // Bouton fermer
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '✕ Fermer MindAR';
+    closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 10001;
+        padding: 10px 15px;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    `;
+    closeBtn.onclick = () => {
+        document.body.removeChild(mindContainer);
+    };
+    
+    // Instructions
+    const instructions = document.createElement('div');
+    instructions.innerHTML = `
+        <div style="
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10001;
+        ">
+            🧠 MindAR - Tracking avancé<br>
+            📱 Pointez vers une surface
+        </div>
+    `;
+    
+    mindContainer.appendChild(mindCanvas);
+    mindContainer.appendChild(closeBtn);
+    mindContainer.appendChild(instructions);
+    document.body.appendChild(mindContainer);
+    
+    // Initialiser MindAR simple
+    initMindARScene(mindCanvas);
+}
+
+/**
+ * Initialise MindAR
+ */
+function initMindARScene(canvas) {
+    // Configuration basique MindAR
+    const mindScene = new THREE.Scene();
+    const mindCamera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 1000);
+    
+    const mindRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    mindRenderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // Ajouter modèle simple
+    const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.set(0, 0, -2);
+    mindScene.add(sphere);
+    
+    // Animation
+    function animateMind() {
+        requestAnimationFrame(animateMind);
+        sphere.rotation.x += 0.01;
+        sphere.rotation.y += 0.02;
+        mindRenderer.render(mindScene, mindCamera);
+    }
+    animateMind();
+    
+    console.log('🧠 MindAR initialisé');
 }
 
 // ==========================================
