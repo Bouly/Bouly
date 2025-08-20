@@ -271,6 +271,9 @@ function initThreeJS() {
     window.threeControls.autoRotate = true;
     window.threeControls.autoRotateSpeed = 2.0;
     
+    // Désactiver le pan pour garder le modèle centré
+    window.threeControls.enablePan = false;
+    
     // Limiter l'angle de vue pour ne pas voir en dessous du modèle
     window.threeControls.maxPolarAngle = Math.PI * 0.48; // Limite à ~86° (ne pas aller en dessous)
     window.threeControls.minPolarAngle = 0; // Vue du dessus autorisée
