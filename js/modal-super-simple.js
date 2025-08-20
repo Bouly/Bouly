@@ -507,6 +507,100 @@ function testAR() {
 }
 
 // ==========================================
+// 🎯 AR PRO AVEC 8TH WALL
+// ==========================================
+
+/**
+ * Lance l'AR Pro avec 8th Wall (fonctionne iPhone + Android)
+ */
+function launchARPro() {
+    if (!currentDish) {
+        console.error('❌ Aucun plat sélectionné pour l\'AR Pro');
+        return;
+    }
+    
+    console.log('🎯 Lancement AR Pro 8th Wall pour:', currentDish.name);
+    
+    // Vérifier si 8th Wall est chargé
+    if (typeof XR8 === 'undefined') {
+        alert('8th Wall n\'est pas chargé. Vérifiez votre connexion internet.');
+        return;
+    }
+    
+    try {
+        // Configuration 8th Wall
+        XR8.XrController.configure({
+            enableLighting: true,
+            enableWorldPoints: false,
+        });
+        
+        // Pipeline 8th Wall avec Three.js
+        XR8.addCameraPipelineModules([
+            XR8.GlTextureRenderer.pipelineModule(),
+            XR8.Threejs.pipelineModule(),
+            XR8.XrController.pipelineModule(),
+            createARProPipeline()
+        ]);
+        
+        // Démarrer l'AR
+        XR8.run({ canvas: document.createElement('canvas') });
+        
+        console.log('✅ AR Pro 8th Wall démarré');
+        
+    } catch (error) {
+        console.error('❌ Erreur AR Pro:', error);
+        alert('Impossible de lancer AR Pro : ' + error.message);
+    }
+}
+
+/**
+ * Crée le pipeline 8th Wall personnalisé
+ */
+function createARProPipeline() {
+    let arModel = null;
+    
+    return {
+        name: 'ar-food-model',
+        
+        onStart: ({ scene, camera }) => {
+            console.log('🎬 Pipeline AR Pro démarré');
+            
+            // Ajouter lumières AR
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Charger le modèle pour l'AR
+            if (window.currentThreeModel) {
+                arModel = window.currentThreeModel.clone();
+                arModel.scale.setScalar(0.3); // Taille AR
+                arModel.position.set(0, 0, 0);
+                scene.add(arModel);
+                console.log('📦 Modèle ajouté à la scène AR Pro');
+            }
+        },
+        
+        onUpdate: () => {
+            // Animation du modèle en AR
+            if (arModel) {
+                arModel.rotation.y += 0.01;
+            }
+        },
+        
+        onAttach: () => {
+            console.log('📱 Surface détectée - modèle placé');
+        },
+        
+        onDetach: () => {
+            console.log('📱 Surface perdue');
+        }
+    };
+}
+
+// ==========================================
 // 🚀 AR BETA AVEC WEBXR NATIF
 // ==========================================
 
@@ -521,9 +615,17 @@ async function launchARBeta() {
     
     console.log('🚀 Lancement AR Beta WebXR pour:', currentDish.name);
     
+    // Détecter iPhone/iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    
+    if (isIOS) {
+        alert('AR Beta (WebXR) n\'est pas encore supporté sur iPhone.\n\nUtilisez le bouton "Voir en AR" qui fonctionne avec ARKit ! 📱');
+        return;
+    }
+    
     // Vérifier le support WebXR
     if (!navigator.xr) {
-        alert('WebXR n\'est pas supporté sur cet appareil/navigateur.');
+        alert('WebXR n\'est pas supporté sur cet appareil/navigateur.\n\nEssayez sur Android avec Chrome ou un casque VR/AR.');
         return;
     }
     
