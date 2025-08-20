@@ -220,12 +220,19 @@ function initThreeJS() {
     window.threeCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     window.threeCamera.position.set(0, 2.5, 3); // Plus haute qu'avant (était 0, 1, 3)
     
-    // Renderer
-    window.threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // Renderer avec paramètres améliorés
+    window.threeRenderer = new THREE.WebGLRenderer({ 
+        antialias: true, 
+        alpha: true,
+        powerPreference: "high-performance"
+    });
     window.threeRenderer.setSize(width, height);
-    window.threeRenderer.setPixelRatio(window.devicePixelRatio);
+    window.threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // Amélioration du rendu
     window.threeRenderer.shadowMap.enabled = true;
     window.threeRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    window.threeRenderer.outputColorSpace = THREE.SRGBColorSpace;
     
     // Style du canvas pour qu'il s'adapte parfaitement
     window.threeRenderer.domElement.style.width = '100%';
@@ -255,14 +262,25 @@ function initThreeJS() {
         resizeObserver.observe(container);
     }
     
-    // Lumières
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Éclairage simplifié et plus lumineux
+    
+    // 1. Lumière ambiante plus forte
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     window.threeScene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 10, 5);
-    directionalLight.castShadow = true;
-    window.threeScene.add(directionalLight);
+    // 2. Lumière principale claire
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(5, 8, 5);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.bias = -0.0001;
+    window.threeScene.add(keyLight);
+    
+    // 3. Lumière d'appoint simple
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    fillLight.position.set(-3, 2, 4);
+    window.threeScene.add(fillLight);
     
     // Contrôles
     window.threeControls = new THREE.OrbitControls(window.threeCamera, window.threeRenderer.domElement);
@@ -285,7 +303,7 @@ function initThreeJS() {
 }
 
 /**
- * Boucle de rendu Three.js
+ * Boucle de rendu Three.js avec améliorations
  */
 function startRenderLoop() {
     function animate() {
@@ -296,6 +314,7 @@ function startRenderLoop() {
                 window.threeControls.update();
             }
             
+            // Animation simple sans variation d'intensité qui pourrait assombrir
             window.threeRenderer.render(window.threeScene, window.threeCamera);
         }
     }
@@ -356,16 +375,25 @@ function loadThreeJSModel(modelPath) {
             window.threeControls.target.set(0, 0, 0);
             window.threeControls.update();
             
-            // Activer les ombres si disponible
+            // Activer les ombres et améliorer les matériaux
             window.currentThreeModel.traverse((child) => {
                 if (child.isMesh) {
                     child.castShadow = true;
                     child.receiveShadow = true;
+                    
+                    // Simplifier les matériaux pour un meilleur éclairage
+                    if (child.material) {
+                        // Juste améliorer la qualité texture sans complexifier
+                        if (child.material.map) {
+                            child.material.map.anisotropy = window.threeRenderer.capabilities.getMaxAnisotropy();
+                        }
+                        child.material.needsUpdate = true;
+                    }
                 }
             });
             
             window.threeScene.add(window.currentThreeModel);
-            console.log('✅ Modèle centré et ajouté à la scène');
+            console.log('✅ Modèle centré et ajouté à la scène avec rendu amélioré');
         },
         (progress) => {
             console.log('📈 Progression du chargement:', (progress.loaded / progress.total * 100) + '%');
