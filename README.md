@@ -18,7 +18,7 @@
 
 ```yaml
 name: Ahmed B.
-location: France (Paris) / Switzerland (Bern)
+location: Between France (Paris) & Switzerland (Bern)
 current_role: Fullstack Developer (1+ year in production)
 education: 42 School
 interests: [Systems Programming, Web Development, Game Modding]
