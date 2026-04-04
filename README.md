@@ -81,22 +81,36 @@ motto: "I don't just use the tools — I understand what's under the hood."
 
 ## `> ls projects/`
 
-<div align="center">
+<details open>
+<summary><b>📂 42 Projects</b></summary>
+<br/>
 
-<a href="https://github.com/Bouly/Minishell">
-  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=Minishell&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
-</a>
-<a href="https://github.com/Bouly/Philosophers">
-  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=Philosophers&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
-</a>
-<a href="https://github.com/Bouly/42-Fract-ol">
-  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=42-Fract-ol&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
-</a>
-<a href="https://github.com/Bouly/CRMFront">
-  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=CRMFront&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
-</a>
+| Project | Description | Language |
+|:--------|:------------|:--------:|
+| [**Minishell**](https://github.com/Bouly/Minishell) | Custom Unix shell — parsing, pipes, redirections, built-ins | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Philosophers**](https://github.com/Bouly/Philosophers) | Dining philosophers — multithreading & mutex sync | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Fract-ol**](https://github.com/Bouly/42-Fract-ol) | Real-time fractal renderer with zoom & color mapping | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Push Swap**](https://github.com/Bouly/42-Push_Swap) | Sorting algorithm — minimum operations challenge | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Pipex**](https://github.com/Bouly/42-Pipex) | Unix pipe mechanism reproduction | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**get_next_line**](https://github.com/Bouly/42-get_next_line) | Reading a line from a file descriptor | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**ft_printf**](https://github.com/Bouly/42-ft_printf) | Custom printf implementation | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Libft**](https://github.com/Bouly/42-libft) | Custom C standard library | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
 
-</div>
+</details>
+
+<details open>
+<summary><b>🚀 Side Projects</b></summary>
+<br/>
+
+| Project | Description | Stack |
+|:--------|:------------|:-----:|
+| [**CRM**](https://github.com/Bouly/CRMFront) | Full CRM proof of concept for a real client | ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black) ![Java](https://img.shields.io/badge/-Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) |
+| [**Immersive Target**](https://github.com/Bouly/immersive_target) | FiveM/GTA V immersive targeting system | ![Lua](https://img.shields.io/badge/-Lua-2C2D72?style=flat-square&logo=lua&logoColor=white) |
+| [**Portfolio**](https://github.com/Bouly/rayan_portfolio) | Portfolio website | ![JS](https://img.shields.io/badge/-JS-F7DF1E?style=flat-square&logo=javascript&logoColor=black) |
+| [**Table Format Converter**](https://github.com/Bouly/Table-Format-Converter) | Convert between table formats | ![PS](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white) |
+| [**Exam Email Sender**](https://github.com/Bouly/Exam-Email-Sender) | GUI script to send exams to students | ![PS](https://img.shields.io/badge/-PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white) |
+
+</details>
 
 <br/>
 
