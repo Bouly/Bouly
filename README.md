@@ -84,16 +84,16 @@ motto: "I don't just use the tools — I understand what's under the hood."
 <div align="center">
 
 <a href="https://github.com/Bouly/Minishell">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Bouly&repo=Minishell&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=Minishell&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
 </a>
 <a href="https://github.com/Bouly/Philosophers">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Bouly&repo=Philosophers&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=Philosophers&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
 </a>
 <a href="https://github.com/Bouly/42-Fract-ol">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Bouly&repo=42-Fract-ol&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=42-Fract-ol&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
 </a>
 <a href="https://github.com/Bouly/CRMFront">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=Bouly&repo=CRMFront&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username=Bouly&repo=CRMFront&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=8b949e&text_color=c9d1d9" />
 </a>
 
 </div>
@@ -102,15 +102,41 @@ motto: "I don't just use the tools — I understand what's under the hood."
 
 ## `> ./42_progress`
 
-```
- ╔══════════════════════════════════════════════════════════════════════╗
- ║  libft ── ft_printf ── get_next_line ── pipex ── push_swap         ║
- ║    ✅        ✅            ✅            ✅        ✅              ║
- ║                                                                    ║
- ║  fract-ol ── philosophers ── minishell ── [...]                    ║
- ║    ✅            ✅             ✅          🔄                     ║
- ╚══════════════════════════════════════════════════════════════════════╝
-```
+<div align="center">
+
+![42](https://img.shields.io/badge/42-Bouly-00babc?style=for-the-badge&logo=42&logoColor=white)
+
+</div>
+
+<table align="center">
+<tr>
+<td align="center"><a href="https://github.com/Bouly/42-libft"><img src="https://img.shields.io/badge/Libft-✅-success?style=flat-square&logo=42&logoColor=white" alt="Libft"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/42-ft_printf"><img src="https://img.shields.io/badge/ft__printf-✅-success?style=flat-square&logo=42&logoColor=white" alt="ft_printf"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/42-get_next_line"><img src="https://img.shields.io/badge/get__next__line-✅-success?style=flat-square&logo=42&logoColor=white" alt="get_next_line"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/42-Pipex"><img src="https://img.shields.io/badge/Pipex-✅-success?style=flat-square&logo=42&logoColor=white" alt="Pipex"/></a></td>
+</tr>
+<tr>
+<td align="center"><a href="https://github.com/Bouly/42-Push_Swap"><img src="https://img.shields.io/badge/Push__Swap-✅-success?style=flat-square&logo=42&logoColor=white" alt="Push_Swap"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/42-Fract-ol"><img src="https://img.shields.io/badge/Fract--ol-✅-success?style=flat-square&logo=42&logoColor=white" alt="Fract-ol"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/Philosophers"><img src="https://img.shields.io/badge/Philosophers-✅-success?style=flat-square&logo=42&logoColor=white" alt="Philosophers"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/Minishell"><img src="https://img.shields.io/badge/Minishell-✅-success?style=flat-square&logo=42&logoColor=white" alt="Minishell"/></a></td>
+</tr>
+<tr>
+<td align="center"><img src="https://img.shields.io/badge/Next...-🔄-blue?style=flat-square&logo=42&logoColor=white" alt="Next"/></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
 
 <br/>
 
@@ -118,12 +144,12 @@ motto: "I don't just use the tools — I understand what's under the hood."
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=Bouly&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=58a6ff&text_color=c9d1d9&count_private=true" height="170" />
+<img src="https://github-readme-stats-sigma-five.vercel.app/api?username=Bouly&show_icons=true&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=58a6ff&text_color=c9d1d9&count_private=true" height="170" />
 <img src="https://github-readme-streak-stats.herokuapp.com/?user=Bouly&theme=github-dark-blue&hide_border=true&background=0d1117&stroke=30363d&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff" height="170" />
 
 <br/>
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Bouly&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=8" height="170" />
+<img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=Bouly&layout=compact&theme=github_dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&langs_count=8" height="170" />
 
 <br/>
 
