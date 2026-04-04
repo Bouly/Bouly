@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:0d1117&height=200&section=header&text=Ahmed%20B.&fontSize=42&fontColor=e6edf3&fontAlignY=35&desc=Systems%20%26%20Software%20Engineer&descSize=16&descColor=8b949e&descAlignY=55&animation=fadeIn" width="100%" />
+# `{ Ahmed B. }`
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=80&lines=From+kernel-level+C+to+polished+React+interfaces.;42+Student+%7C+Fullstack+Developer+%7C+Low-Level+Enthusiast" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&repeat=true&width=600&height=45&lines=Systems+%26+Software+Engineer;From+kernel-level+C+to+polished+React+UIs;42+Student+%C2%B7+Fullstack+Dev+%C2%B7+Low-Level+Enthusiast" alt="Typing SVG" /></a>
 
 <br/>
 
@@ -199,6 +199,6 @@ const currentlyWorkingOn = {
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:0d1117&height=100&section=footer" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=soft&color=0d1117&height=30&section=footer" width="100%" />
 
 </div>
