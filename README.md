@@ -32,7 +32,7 @@ motto: "I don't just use the tools — I understand what's under the hood."
 
 <br/>
 
-## `> cat /proc/current_work`
+## `> node current_work.js`
 
 ```js
 const currentlyWorkingOn = {
