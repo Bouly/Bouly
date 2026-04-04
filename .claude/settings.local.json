@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/a.boulahjar/**)",
+      "Bash(ls -d */)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

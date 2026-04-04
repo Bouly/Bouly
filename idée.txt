@@ -1,7 +1,0 @@
-Proposition de plat par rapport a plusieur facteur exemple: il fait froid proposition d'un plat chaud
-
-Jeu AR pour gagner un cadeau (plat, frite, réduction etc...)
-
-Information sur le plat (calories, gluten, alérgie ect...)
-
-Menu AR avec ingrédient animé et annotation sur les ingérdient retirable etc...
