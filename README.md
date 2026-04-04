@@ -195,10 +195,12 @@ const currentlyWorkingOn = {
 🧠 Always Learning        — Currently at 42, always building something new
 ```
 
-<br/>
-
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=soft&color=0d1117&height=30&section=footer" width="100%" />
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
+
+<br/>
+
+*`> exit 0`*
 
 </div>
