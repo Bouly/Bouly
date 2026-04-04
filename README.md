@@ -17,7 +17,7 @@
 
 </div>
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> whoami`
 
@@ -30,7 +30,7 @@ interests: [Systems Programming, Web Development, Game Modding]
 motto: "I don't just use the tools — I understand what's under the hood."
 ```
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> node current_work.js`
 
@@ -43,7 +43,7 @@ const currentlyWorkingOn = {
 };
 ```
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> cat tech_stack.md`
 
@@ -95,7 +95,7 @@ const currentlyWorkingOn = {
 </td></tr>
 </table>
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> ls projects/`
 
@@ -130,7 +130,7 @@ const currentlyWorkingOn = {
 
 </details>
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> ./42_progress`
 
@@ -170,7 +170,7 @@ const currentlyWorkingOn = {
 </tr>
 </table>
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> neofetch`
 
@@ -206,7 +206,7 @@ const currentlyWorkingOn = {
 
 </div>
 
-<br/>
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 
 ## `> cat interests.md`
 
