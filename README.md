@@ -98,23 +98,32 @@ const currentlyWorkingOn = {
 <summary><b>📂 42 Projects</b></summary>
 <br/>
 
-| Project | Description | Language |
-|:--------|:------------|:--------:|
-| [**Minishell**](https://github.com/Bouly/Minishell) | Custom Unix shell — parsing, pipes, redirections, built-ins | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**Philosophers**](https://github.com/Bouly/Philosophers) | Dining philosophers — multithreading & mutex sync | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**Fract-ol**](https://github.com/Bouly/42-Fract-ol) | Real-time fractal renderer with zoom & color mapping | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**Push Swap**](https://github.com/Bouly/42-Push_Swap) | Sorting algorithm — minimum operations challenge | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**Pipex**](https://github.com/Bouly/42-Pipex) | Unix pipe mechanism reproduction | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**get_next_line**](https://github.com/Bouly/42-get_next_line) | Reading a line from a file descriptor | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**ft_printf**](https://github.com/Bouly/42-ft_printf) | Custom printf implementation | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
-| [**Libft**](https://github.com/Bouly/42-libft) | Custom C standard library | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+<!-- 42_PROJECTS_START -->
+| Project | Description | Mark | Language |
+|:--------|:------------|:----:|:--------:|
+| [**Libft**](https://github.com/Bouly/42-libft) | Custom C standard library | **125** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**ft_printf**](https://github.com/Bouly/42-ft_printf) | Custom printf implementation | **100** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**get_next_line**](https://github.com/Bouly/42-get_next_line) | Reading a line from a file descriptor | **101** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**push_swap**](https://github.com/Bouly/42-Push_Swap) | Sorting algorithm — minimum operations | **86** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**fract-ol**](https://github.com/Bouly/42-Fract-ol) | Real-time fractal renderer with zoom | **100** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**pipex**](https://github.com/Bouly/42-Pipex) | Unix pipe mechanism reproduction | **100** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**minishell**](https://github.com/Bouly/Minishell) | Custom Unix shell — parsing, pipes, redirections | **100** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**Philosophers**](https://github.com/Bouly/Philosophers) | Dining philosophers — multithreading & mutex sync | **100** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**cub3d**](https://github.com/Bouly/cub3d) | RayCaster with miniLibX | **103** | ![C](https://img.shields.io/badge/-C-A8B9CC?style=flat-square&logo=c&logoColor=black) |
+| [**NetPractice**](https://github.com/Bouly/NetPractice) | Networking concepts and configuration | **100** | ![Network](https://img.shields.io/badge/-Network-000000?style=flat-square&logo=cisco&logoColor=black) |
+| [**CPP Module 00**](https://github.com/Bouly/CPP00) | C++ - Namespaces, classes, member functions | **80** | ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=black) |
+| [**CPP Module 01**](https://github.com/Bouly/CPP01) | C++ - Memory allocation, pointers, references | **87** | ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=black) |
+| [**CPP Module 02**](https://github.com/Bouly/CPP02) | C++ - Ad-hoc polymorphism, operator overloading | **80** | ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=black) |
+| [**CPP Module 03**](https://github.com/Bouly/CPP03) | C++ - Inheritance | **80** | ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=black) |
+| [**CPP Module 04**](https://github.com/Bouly/CPP04) | C++ - Subtype polymorphism, abstract classes, interfaces | **80** | ![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=cplusplus&logoColor=black) |
+
+<!-- 42_PROJECTS_END -->
 
 </details>
 
 <details open>
 <summary><b>🚀 Side Projects</b></summary>
 <br/>
-
 | Project | Description | Stack |
 |:--------|:------------|:-----:|
 | [**CRM**](https://github.com/Bouly/CRMFront) | Full CRM proof of concept for a real client | ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black) ![Java](https://img.shields.io/badge/-Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) |
