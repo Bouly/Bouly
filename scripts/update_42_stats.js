@@ -49,19 +49,9 @@ async function getUserData(token) {
 }
 
 function generateStatsMarkdown(userData) {
-    const cursus = userData.cursus_users.find(c => c.cursus_id === 21) || userData.cursus_users[0];
-    let levelStr = cursus ? `Level ${cursus.level.toFixed(2)}` : 'Unknown Level';
-    let poolMonth = userData.pool_month || '';
-    let poolYear = userData.pool_year || '';
-    let grade = cursus && cursus.grade ? cursus.grade : 'Student';
-    
     return `
 <div align="center">
-
-![42 Level](https://img.shields.io/badge/42--Cursus-${encodeURIComponent(levelStr)}-00babc?style=for-the-badge&logo=42&logoColor=white)
-![42 Grade](https://img.shields.io/badge/Grade-${encodeURIComponent(grade)}-00babc?style=for-the-badge&logo=42&logoColor=white)
-![Pool](https://img.shields.io/badge/Pool-${poolMonth}_${poolYear}-00babc?style=for-the-badge&logo=42&logoColor=white)
-
+  <img src="assets/42_widget.svg" alt="42 Stats Widget" />
 </div>
 `;
 }
@@ -199,6 +189,52 @@ async function updateReadme() {
         }
         fs.writeFileSync(path.join(docsPath, 'data.json'), JSON.stringify(dataJson, null, 2), 'utf8');
         console.log('docs/data.json successfully generated!');
+
+        // Generate SVG widget mimicking github-widgetbox style
+        const assetsPath = path.join(__dirname, '..', 'assets');
+        if (!fs.existsSync(assetsPath)) {
+            fs.mkdirSync(assetsPath, { recursive: true });
+        }
+        
+        const svgContent = `
+<svg width="450" height="160" viewBox="0 0 450 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .bg { fill: #0d1117; }
+        .border { stroke: #30363d; stroke-width: 1.5; }
+        .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: 600; fill: #c9d1d9; }
+        .text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #8b949e; }
+        .value { fill: #00babc; font-weight: bold; }
+        .progress-bg { fill: #21262d; rx: 4; }
+        .progress-bar { fill: #00babc; rx: 4; }
+    </style>
+    
+    <rect x="0.75" y="0.75" width="448.5" height="158.5" rx="5.25" class="bg border"/>
+    
+    <text x="25" y="40" class="title">42 Cursus Overview</text>
+    
+    <text x="25" y="75" class="text">Level:</text>
+    <text x="75" y="75" class="text value">${dataJson.level}</text>
+    
+    <text x="25" y="105" class="text">Grade:</text>
+    <text x="75" y="105" class="text value">${dataJson.grade}</text>
+    
+    <text x="25" y="135" class="text">Pool:</text>
+    <text x="75" y="135" class="text value">${userData.pool_month || ''} ${userData.pool_year || ''}</text>
+
+    <!-- Progress bar calculation -->
+    ${(function() {
+        const lvl = parseFloat(dataJson.level) || 0;
+        const percentage = (lvl - Math.floor(lvl)) * 100;
+        const barWidth = (percentage / 100) * 150;
+        return "<text x='250' y='75' class='text'>Exp progress:</text>" +
+               "<rect x='250' y='90' width='150' height='12' class='progress-bg'/>" +
+               "<rect x='250' y='90' width='" + Math.max(barWidth, 2) + "' height='12' class='progress-bar'/>" +
+               "<text x='410' y='100' class='text' font-size='12'>" + percentage.toFixed(0) + "%</text>";
+    })()}
+</svg>`;
+        
+        fs.writeFileSync(path.join(assetsPath, '42_widget.svg'), svgContent.trim(), 'utf8');
+        console.log('assets/42_widget.svg successfully generated!');
 
     } catch (error) {
         console.error("Error updating README:", error);

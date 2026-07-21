@@ -142,20 +142,8 @@ const currentlyWorkingOn = {
 <!-- 42_STATS_START -->
 
 <div align="center">
-
-![42 Level](https://img.shields.io/badge/42--Cursus-Level%205.07-00babc?style=for-the-badge&logo=42&logoColor=white)
-![42 Grade](https://img.shields.io/badge/Grade-Cadet-00babc?style=for-the-badge&logo=42&logoColor=white)
-![Pool](https://img.shields.io/badge/Pool-january_2025-00babc?style=for-the-badge&logo=42&logoColor=white)
-
+  <img src="assets/42_widget.svg" alt="42 Stats Widget" />
 </div>
-
-<br/>
-<div align="center">
-  <a href="https://Bouly.github.io/bouly">
-    <img src="https://img.shields.io/badge/🌌_Explorer_mon_Holy_Graph_Interactif-00babc?style=for-the-badge&logo=42&logoColor=white" alt="Holy Graph"/>
-  </a>
-</div>
-<br/>
 
 <!-- 42_STATS_END -->
 

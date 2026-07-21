@@ -1,0 +1,27 @@
+<svg width="450" height="160" viewBox="0 0 450 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .bg { fill: #0d1117; }
+        .border { stroke: #30363d; stroke-width: 1.5; }
+        .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: 600; fill: #c9d1d9; }
+        .text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; fill: #8b949e; }
+        .value { fill: #00babc; font-weight: bold; }
+        .progress-bg { fill: #21262d; rx: 4; }
+        .progress-bar { fill: #00babc; rx: 4; }
+    </style>
+    
+    <rect x="0.75" y="0.75" width="448.5" height="158.5" rx="5.25" class="bg border"/>
+    
+    <text x="25" y="40" class="title">42 Cursus Overview</text>
+    
+    <text x="25" y="75" class="text">Level:</text>
+    <text x="75" y="75" class="text value">5.07</text>
+    
+    <text x="25" y="105" class="text">Grade:</text>
+    <text x="75" y="105" class="text value">Cadet</text>
+    
+    <text x="25" y="135" class="text">Pool:</text>
+    <text x="75" y="135" class="text value">january 2025</text>
+
+    <!-- Progress bar calculation -->
+    <text x='250' y='75' class='text'>Exp progress:</text><rect x='250' y='90' width='150' height='12' class='progress-bg'/><rect x='250' y='90' width='10.500000000000043' height='12' class='progress-bar'/><text x='410' y='100' class='text' font-size='12'>7%</text>
+</svg>
