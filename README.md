@@ -151,35 +151,47 @@ const currentlyWorkingOn = {
 
 <!-- 42_STATS_END -->
 
+<!-- 42_TIMELINE_START -->
 <table align="center">
 <tr>
-<td align="center"><a href="https://github.com/Bouly/42-libft"><img src="https://img.shields.io/badge/Libft-✅-success?style=flat-square&logo=42&logoColor=white" alt="Libft"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-libft"><img src="https://img.shields.io/badge/Libft-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="Libft"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/42-ft_printf"><img src="https://img.shields.io/badge/ft__printf-✅-success?style=flat-square&logo=42&logoColor=white" alt="ft_printf"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-ft_printf"><img src="https://img.shields.io/badge/ft__printf-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="ft_printf"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/42-get_next_line"><img src="https://img.shields.io/badge/get__next__line-✅-success?style=flat-square&logo=42&logoColor=white" alt="get_next_line"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-get_next_line"><img src="https://img.shields.io/badge/get__next__line-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="get_next_line"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/42-Pipex"><img src="https://img.shields.io/badge/Pipex-✅-success?style=flat-square&logo=42&logoColor=white" alt="Pipex"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-Push_Swap"><img src="https://img.shields.io/badge/push__swap-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="push_swap"/></a></td>
 </tr>
 <tr>
-<td align="center"><a href="https://github.com/Bouly/42-Push_Swap"><img src="https://img.shields.io/badge/Push__Swap-✅-success?style=flat-square&logo=42&logoColor=white" alt="Push_Swap"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-Fract-ol"><img src="https://img.shields.io/badge/fract--ol-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="fract-ol"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/42-Fract-ol"><img src="https://img.shields.io/badge/Fract--ol-✅-success?style=flat-square&logo=42&logoColor=white" alt="Fract-ol"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/42-Pipex"><img src="https://img.shields.io/badge/pipex-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="pipex"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/Philosophers"><img src="https://img.shields.io/badge/Philosophers-✅-success?style=flat-square&logo=42&logoColor=white" alt="Philosophers"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/Minishell"><img src="https://img.shields.io/badge/minishell-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="minishell"/></a></td>
 <td align="center">➜</td>
-<td align="center"><a href="https://github.com/Bouly/Minishell"><img src="https://img.shields.io/badge/Minishell-✅-success?style=flat-square&logo=42&logoColor=white" alt="Minishell"/></a></td>
+<td align="center"><a href="https://github.com/Bouly/Philosophers"><img src="https://img.shields.io/badge/Philosophers-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="Philosophers"/></a></td>
 </tr>
 <tr>
-<td align="center"><img src="https://img.shields.io/badge/Next...-🔄-blue?style=flat-square&logo=42&logoColor=white" alt="Next"/></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center"><a href="https://github.com/Bouly/cub3d"><img src="https://img.shields.io/badge/cub3d-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="cub3d"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/NetPractice"><img src="https://img.shields.io/badge/NetPractice-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="NetPractice"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/CPP00"><img src="https://img.shields.io/badge/CPP_Module_00-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="CPP Module 00"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/CPP01"><img src="https://img.shields.io/badge/CPP_Module_01-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="CPP Module 01"/></a></td>
+</tr>
+<tr>
+<td align="center"><a href="https://github.com/Bouly/CPP02"><img src="https://img.shields.io/badge/CPP_Module_02-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="CPP Module 02"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/CPP03"><img src="https://img.shields.io/badge/CPP_Module_03-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="CPP Module 03"/></a></td>
+<td align="center">➜</td>
+<td align="center"><a href="https://github.com/Bouly/CPP04"><img src="https://img.shields.io/badge/CPP_Module_04-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="CPP Module 04"/></a></td>
+<td align="center">➜</td>
+<td align="center"><img src="https://img.shields.io/badge/Next...-%F0%9F%94%84-blue?style=flat-square&logo=42&logoColor=white" alt="Next"/></td>
 </tr>
 </table>
+
+<!-- 42_TIMELINE_END -->
 
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" />
 

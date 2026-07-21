@@ -100,7 +100,50 @@ function generateProjectsMarkdown(userData) {
     return md;
 }
 
+function generateTimelineMarkdown(userData) {
+    const projects = userData.projects_users.filter(p => 
+        p['validated?'] === true && 
+        !p.project.name.toLowerCase().includes('exam') &&
+        !p.project.name.toLowerCase().includes('piscine') &&
+        p.project.name !== 'Born2beroot'
+    );
+    projects.sort((a, b) => new Date(a.marked_at) - new Date(b.marked_at));
+
+    let html = '<table align="center">\n';
+    
+    for (let i = 0; i < projects.length; i += 4) {
+        html += '<tr>\n';
+        for (let j = 0; j < 4; j++) {
+            const index = i + j;
+            if (index < projects.length) {
+                const p = projects[index];
+                const name = p.project.name;
+                const link = (PROJECT_DETAILS[name] && PROJECT_DETAILS[name].link) ? PROJECT_DETAILS[name].link : 'https://github.com/Bouly';
+                // replace spaces in name for badge shield
+                const badgeName = name.replace(/-/g, '--').replace(/_/g, '__').replace(/ /g, '_');
+                
+                html += `<td align="center"><a href="${link}"><img src="https://img.shields.io/badge/${badgeName}-%E2%9C%85-success?style=flat-square&logo=42&logoColor=white" alt="${name}"/></a></td>\n`;
+                
+                if (j < 3 && index < projects.length - 1) {
+                    html += `<td align="center">➜</td>\n`;
+                } else if (j < 3) {
+                    html += `<td align="center">➜</td>\n<td align="center"><img src="https://img.shields.io/badge/Next...-%F0%9F%94%84-blue?style=flat-square&logo=42&logoColor=white" alt="Next"/></td>\n`;
+                    // fill the rest of the row with empty tds to keep alignment
+                    for (let k = j + 1; k < 3; k++) {
+                        html += `<td></td>\n<td></td>\n`;
+                    }
+                    break;
+                }
+            }
+        }
+        html += '</tr>\n';
+    }
+    html += '</table>\n';
+    return html;
+}
+
 function replaceInReadme(readmeContent, startTag, endTag, newContent) {
+
     const startIndex = readmeContent.indexOf(startTag);
     const endIndex = readmeContent.indexOf(endTag);
     if (startIndex === -1 || endIndex === -1) return readmeContent;
@@ -122,12 +165,14 @@ async function updateReadme() {
         
         const statsMarkdown = generateStatsMarkdown(userData);
         const projectsMarkdown = generateProjectsMarkdown(userData);
+        const timelineMarkdown = generateTimelineMarkdown(userData);
 
         const readmePath = path.join(__dirname, '..', 'README.md');
         let readmeContent = fs.readFileSync(readmePath, 'utf8');
 
         readmeContent = replaceInReadme(readmeContent, '<!-- 42_STATS_START -->', '<!-- 42_STATS_END -->', statsMarkdown);
         readmeContent = replaceInReadme(readmeContent, '<!-- 42_PROJECTS_START -->', '<!-- 42_PROJECTS_END -->', projectsMarkdown);
+        readmeContent = replaceInReadme(readmeContent, '<!-- 42_TIMELINE_START -->', '<!-- 42_TIMELINE_END -->', timelineMarkdown);
         
         fs.writeFileSync(readmePath, readmeContent, 'utf8');
         console.log('README.md successfully updated!');
