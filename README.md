@@ -130,11 +130,15 @@ const currentlyWorkingOn = {
 ## `> ./42_progress`
 
 <!-- 42_STATS_START -->
+
 <div align="center">
 
-![42](https://img.shields.io/badge/42-Bouly-00babc?style=for-the-badge&logo=42&logoColor=white)
+![42 Level](https://img.shields.io/badge/42--Cursus-Level%205.07-00babc?style=for-the-badge&logo=42&logoColor=white)
+![42 Grade](https://img.shields.io/badge/Grade-Cadet-00babc?style=for-the-badge&logo=42&logoColor=white)
+![Pool](https://img.shields.io/badge/Pool-january_2025-00babc?style=for-the-badge&logo=42&logoColor=white)
 
 </div>
+
 <!-- 42_STATS_END -->
 
 <table align="center">

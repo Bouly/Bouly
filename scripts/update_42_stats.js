@@ -3,7 +3,7 @@ const path = require('path');
 
 const UID = process.env.FORTYTWO_APP_ID;
 const SECRET = process.env.FORTYTWO_APP_SECRET;
-const LOGIN = 'Bouly';
+const LOGIN = 'aboulahd';
 
 async function getAccessToken() {
     console.log('Fetching access token...');
