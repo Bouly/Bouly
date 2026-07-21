@@ -124,6 +124,7 @@ const currentlyWorkingOn = {
 <details open>
 <summary><b>🚀 Side Projects</b></summary>
 <br/>
+
 | Project | Description | Stack |
 |:--------|:------------|:-----:|
 | [**CRM**](https://github.com/Bouly/CRMFront) | Full CRM proof of concept for a real client | ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black) ![Java](https://img.shields.io/badge/-Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) |
