@@ -7,7 +7,7 @@
 <br/>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/ahmed-boulahdjar-1912522b1)
-[![Portfolio](https://img.shields.io/badge/Portfolio-000?style=for-the-badge&logo=vercel&logoColor=white)](https://)
+[![Portfolio](https://img.shields.io/badge/Portfolio-000?style=for-the-badge&logo=vercel&logoColor=white)](#)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ahmedboulahdjar@gmail.com)
 
 </div>
@@ -129,11 +129,13 @@ const currentlyWorkingOn = {
 
 ## `> ./42_progress`
 
+<!-- 42_STATS_START -->
 <div align="center">
 
 ![42](https://img.shields.io/badge/42-Bouly-00babc?style=for-the-badge&logo=42&logoColor=white)
 
 </div>
+<!-- 42_STATS_END -->
 
 <table align="center">
 <tr>

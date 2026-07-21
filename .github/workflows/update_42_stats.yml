@@ -1,0 +1,33 @@
+name: Update 42 Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update README with 42 Stats
+        env:
+          FORTYTWO_APP_ID: ${{ secrets.FORTYTWO_APP_ID }}
+          FORTYTWO_APP_SECRET: ${{ secrets.FORTYTWO_APP_SECRET }}
+        run: node scripts/update_42_stats.js
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md
+          git commit -m "Update 42 stats dynamically" || exit 0
+          git push
