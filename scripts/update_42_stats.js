@@ -177,6 +177,29 @@ async function updateReadme() {
         fs.writeFileSync(readmePath, readmeContent, 'utf8');
         console.log('README.md successfully updated!');
 
+        // Generate data.json for the interactive Holy Graph
+        const cursus = userData.cursus_users.find(c => c.cursus_id === 21) || userData.cursus_users[0];
+        const dataJson = {
+            level: cursus ? cursus.level.toFixed(2) : '--',
+            grade: cursus && cursus.grade ? cursus.grade : 'Student',
+            projects: {}
+        };
+        
+        userData.projects_users.forEach(p => {
+            dataJson.projects[p.project.name] = {
+                status: p.status,
+                validated: p['validated?'],
+                mark: p.final_mark
+            };
+        });
+
+        const docsPath = path.join(__dirname, '..', 'docs');
+        if (!fs.existsSync(docsPath)) {
+            fs.mkdirSync(docsPath, { recursive: true });
+        }
+        fs.writeFileSync(path.join(docsPath, 'data.json'), JSON.stringify(dataJson, null, 2), 'utf8');
+        console.log('docs/data.json successfully generated!');
+
     } catch (error) {
         console.error("Error updating README:", error);
         process.exit(1);

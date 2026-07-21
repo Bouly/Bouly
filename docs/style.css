@@ -1,0 +1,110 @@
+:root {
+    --bg-color: #0d1117;
+    --text-color: #c9d1d9;
+    --accent-color: #00babc;
+    --panel-bg: rgba(13, 17, 23, 0.8);
+    --border-color: #30363d;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
+#mynetwork {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#ui-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 300px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+h1 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+p {
+    font-size: 0.9rem;
+    color: #8b949e;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+#stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+.legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.85rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.color-box.finished {
+    background-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.color-box.available {
+    background-color: #8b949e;
+}
+
+.color-box.locked {
+    background-color: #30363d;
+}
+
+/* vis-network tooltip styling */
+div.vis-tooltip {
+    background-color: rgba(13, 17, 23, 0.9) !important;
+    border: 1px solid var(--accent-color) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 15px rgba(0, 186, 188, 0.3) !important;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holy Graph - 42 Cursus</title>
+    <!-- vis-network CSS and JS -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="ui-overlay">
+        <h1>42 Holy Graph</h1>
+        <div id="stats">
+            <span id="level">Level: --</span>
+            <span id="grade">Grade: --</span>
+        </div>
+        <p>Interactive visualization of my 42 Cursus progression.</p>
+        <div class="legend">
+            <div class="legend-item"><span class="color-box finished"></span> Validated</div>
+            <div class="legend-item"><span class="color-box available"></span> Available</div>
+            <div class="legend-item"><span class="color-box locked"></span> Locked</div>
+        </div>
+    </div>
+    
+    <div id="mynetwork"></div>
+
+    <script src="graph_data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
